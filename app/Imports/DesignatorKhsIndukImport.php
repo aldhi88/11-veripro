@@ -27,56 +27,75 @@ class DesignatorKhsIndukImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $row)
     {
-
         $row = $row->toArray();
-        // dd(count($row));
-        $index=0;
-        foreach ($row as $i => $v) {
-            
-            if (
-                !is_null($v['vol']) && 
-                !is_null($v['material']) && 
-                !is_null($v['jasa']) && 
-                $v['vol']!='x' && 
-                $v['material']!='x' && 
-                $v['jasa']!='x'
-            ) {
-                $data[$index]['khs_induk_id'] = $this->khsId;
-                $v['material_designator'] = $v['material_designator']==''?'-':$v['material_designator'];
-                $v['jasa_designator'] = $v['jasa_designator']==''?'-':$v['jasa_designator'];
-                $v['item_designator_osp_fo'] = $v['item_designator_osp_fo']==''?'-':$v['item_designator_osp_fo'];
+        $fieldList = [
+            'nama_material',
+            'nama_jasa',
+            'nama_designator',
+            'uraian',
+            'satuan',
+            'material',
+            'jasa'
+        ];
 
-                $data[$index]['nama_material'] = $v['material_designator'];
-                $data[$index]['nama_jasa'] = $v['jasa_designator'];
-                $data[$index]['nama'] = $v['item_designator_osp_fo'];
-                $data[$index]['uraian'] = $v['uraian_pekerjaan'];
-                $data[$index]['satuan'] = $v['satuan'];
+        $fieldFile = array_keys($row[0]);
+        $cek = empty(array_diff($fieldList, $fieldFile));
 
-                if(!is_numeric($v['material'] || is_null($v['material']))){
-                    // $this->status = "harga pada kolom material tidak valid (baris ke-".($i).")";
-                    $v['material'] = 0;
+        if(!$cek){
+            $this->status = "nama kolom pada excel tidak sesuai template.";
+        }else{
+
+            $index=0;
+            $open = true;
+            foreach ($row as $i => $v) {
+                if (
+                    $v['vol']=='Z' && 
+                    $v['material']=='Z' && 
+                    $v['jasa']=='Z'
+                ) {
+                    $open = false;
+                    break;
                 }
-                if(!is_numeric($v['jasa'] || is_null($v['jasa']))){
-                    // $this->status = "harga pada kolom jasa tidak valid (baris ke-".($i).")";
-                    $v['jasa'] = 0;
+    
+                if($open){
+                    if (
+                        !is_null($v['vol']) && 
+                        !is_null($v['material']) && 
+                        !is_null($v['jasa']) 
+                    ) {
+                        $data[$index]['khs_induk_id'] = $this->khsId;
+                        $v['nama_material'] = $v['nama_material']==''?'-':$v['nama_material'];
+                        $v['nama_jasa'] = $v['nama_jasa']==''?'-':$v['nama_jasa'];
+                        $v['nama_designator'] = $v['nama_designator']==''?'-':$v['nama_designator'];
+        
+                        $data[$index]['nama_material'] = $v['nama_material'];
+                        $data[$index]['nama_jasa'] = $v['nama_jasa'];
+                        $data[$index]['nama'] = $v['nama_designator'];
+                        $data[$index]['uraian'] = $v['uraian'];
+                        $data[$index]['satuan'] = $v['satuan'];
+        
+                        $v['material'] = str_replace(".", "", $v['material']);
+                        $v['jasa'] = str_replace(".", "", $v['jasa']);
+        
+                        if(!is_numeric($v['material']) || is_null($v['material'])){
+                            $v['material'] = 0;
+                        }
+                        if(!is_numeric($v['jasa']) || is_null($v['jasa'])){
+                            $v['jasa'] = 0;
+                        }
+                        $data[$index]['material'] = $v['material'];
+                        $data[$index]['jasa'] = $v['jasa'];
+                        $index++;
+                    }
                 }
-                $data[$index]['material'] = $v['material'];
-                $data[$index]['jasa'] = $v['jasa'];
-                $index++;
-            }elseif (
-                $v['vol']=='x' && 
-                $v['material']=='x' && 
-                $v['jasa']=='x'
-            ) {
-                break;
             }
-
+            // dd($data);
+            if($this->status == "pass"){
+                KhsIndukDesignator::where('khs_induk_id', $this->khsId)->forceDelete();
+                KhsIndukDesignator::insert($data);
+            }
         }
-        // dd($data);
-        if($this->status == "pass"){
-            KhsIndukDesignator::where('khs_induk_id', $this->khsId)->forceDelete();
-            KhsIndukDesignator::insert($data);
-        }
+        
         
     }
 

@@ -3,6 +3,7 @@
 namespace App\Livewire\Sp;
 
 use App\Imports\DesigImport;
+use App\Imports\LokasiImport;
 use App\Models\KhsAmandemenDesignator;
 use App\Models\KhsInduk;
 use App\Models\KhsIndukDesignator;
@@ -40,16 +41,16 @@ class CreateSp extends Component
     public function rules()
     {
         return [
-            "dt.master_unit_id" => "required",
-            "dt.khs_induk_id" => "required",
-            "dt.khs_amandemen_id" => "",
-            "dt.mitra_id" => "required",
-            "dt.no_sp" => "required|unique:sp_induks,no_sp,NULL,id,deleted_at,NULL",
-            "dt.tgl_sp" => "required",
-            "dt.tgl_toc" => "required",
-            "dt.nama_pekerjaan" => "required",
-            "dt.file_sp" => "required|mimes:pdf|max:2048",
-            "dt.ppn" => "required|numeric",
+            // "dt.master_unit_id" => "required",
+            // "dt.khs_induk_id" => "required",
+            // "dt.khs_amandemen_id" => "",
+            // "dt.mitra_id" => "required",
+            // "dt.no_sp" => "required|unique:sp_induks,no_sp,NULL,id,deleted_at,NULL",
+            // "dt.tgl_sp" => "required",
+            // "dt.tgl_toc" => "required",
+            // "dt.nama_pekerjaan" => "required",
+            // "dt.file_sp" => "required|mimes:pdf|max:2048",
+            // "dt.ppn" => "required|numeric",
         ];
     }
 
@@ -133,9 +134,10 @@ class CreateSp extends Component
             $this->dt['json'] = json_encode($dtJson);
         };
 
-        $import = new DesigImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);
+        $import = new LokasiImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);
         Excel::import($import, $this->formUpload['file']);
     }
+
     public function mount()
     {
         $this->mitras = MasterUser::query()
@@ -146,8 +148,6 @@ class CreateSp extends Component
             ->where('id', '<', 4)
             ->get()->toArray();
         $this->dt['auth_login_id'] = Auth::id();
-
-       
     }
 
     #[On('createsp-pickMitra')]

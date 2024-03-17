@@ -26,50 +26,73 @@ class DesignatorKhsAmanImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $row)
     {
+        $row = $row->toArray();
         $fieldList = [
             'nama_material',
             'nama_jasa',
-            'nama',
+            'nama_designator',
             'uraian',
             'satuan',
             'material',
             'jasa'
         ];
 
-        $fieldFile = array_keys($row->toArray()[0]);
-        if(($fieldList === $fieldFile) == false){
+        $fieldFile = array_keys($row[0]);
+        $cek = empty(array_diff($fieldList, $fieldFile));
+
+        if(!$cek){
             $this->status = "nama kolom pada excel tidak sesuai template.";
         }else{
-            foreach ($row->toArray() as $key => $value) {
-                if(!is_numeric($value['material'])){
-                    $this->status = "harga pada kolom material tidak valid (".$value['material'].")";
+
+            $index=0;
+            $open = true;
+            foreach ($row as $i => $v) {
+                if (
+                    $v['vol']=='Z' && 
+                    $v['material']=='Z' && 
+                    $v['jasa']=='Z'
+                ) {
+                    $open = false;
                     break;
                 }
-                if(!is_numeric($value['jasa'])){
-                    $this->status = "harga pada kolom jasa tidak valid (".$value['jasa'].")";
-                    break;
+    
+                if($open){
+                    if (
+                        !is_null($v['vol']) && 
+                        !is_null($v['material']) && 
+                        !is_null($v['jasa']) 
+                    ) {
+                        $data[$index]['khs_amandemen_id'] = $this->khsId;
+                        $v['nama_material'] = $v['nama_material']==''?'-':$v['nama_material'];
+                        $v['nama_jasa'] = $v['nama_jasa']==''?'-':$v['nama_jasa'];
+                        $v['nama_designator'] = $v['nama_designator']==''?'-':$v['nama_designator'];
+        
+                        $data[$index]['nama_material'] = $v['nama_material'];
+                        $data[$index]['nama_jasa'] = $v['nama_jasa'];
+                        $data[$index]['nama'] = $v['nama_designator'];
+                        $data[$index]['uraian'] = $v['uraian'];
+                        $data[$index]['satuan'] = $v['satuan'];
+        
+                        $v['material'] = str_replace(".", "", $v['material']);
+                        $v['jasa'] = str_replace(".", "", $v['jasa']);
+        
+                        if(!is_numeric($v['material']) || is_null($v['material'])){
+                            $v['material'] = 0;
+                        }
+                        if(!is_numeric($v['jasa']) || is_null($v['jasa'])){
+                            $v['jasa'] = 0;
+                        }
+                        $data[$index]['material'] = $v['material'];
+                        $data[$index]['jasa'] = $v['jasa'];
+                        $index++;
+                    }
                 }
-                $value['nama_material'] = $value['nama_material']==''?'-':$value['nama_material'];
-                $value['nama_jasa'] = $value['nama_jasa']==''?'-':$value['nama_jasa'];
-                $value['nama'] = $value['nama']==''?'-':$value['nama'];
-                
-                $data[$key]['khs_amandemen_id'] = $this->khsId;
-                $data[$key]['nama_material'] = $value['nama_material'];
-                $data[$key]['nama_jasa'] = $value['nama_jasa'];
-                $data[$key]['nama'] = $value['nama'];
-                $data[$key]['uraian'] = $value['uraian'];
-                $data[$key]['satuan'] = $value['satuan'];
-                $data[$key]['material'] = $value['material'];
-                $data[$key]['jasa'] = $value['jasa'];
-                $data[$key]['created_at'] = Carbon::now();
-                $data[$key]['updated_at'] = Carbon::now();
-                
             }
+            // dd($data);
             if($this->status == "pass"){
                 KhsAmandemenDesignator::where('khs_amandemen_id', $this->khsId)->forceDelete();
                 KhsAmandemenDesignator::insert($data);
             }
-
         }
     }
     public function runCallBack()
