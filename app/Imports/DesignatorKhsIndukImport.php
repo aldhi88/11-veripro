@@ -27,53 +27,56 @@ class DesignatorKhsIndukImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $row)
     {
-        $fieldList = [
-            'nama_material',
-            'nama_jasa',
-            'nama',
-            'uraian',
-            'satuan',
-            'material',
-            'jasa'
-        ];
 
-        $fieldFile = array_keys($row->toArray()[0]);
+        $row = $row->toArray();
+        // dd(count($row));
+        $index=0;
+        foreach ($row as $i => $v) {
+            
+            if (
+                !is_null($v['vol']) && 
+                !is_null($v['material']) && 
+                !is_null($v['jasa']) && 
+                $v['vol']!='x' && 
+                $v['material']!='x' && 
+                $v['jasa']!='x'
+            ) {
+                $data[$index]['khs_induk_id'] = $this->khsId;
+                $v['material_designator'] = $v['material_designator']==''?'-':$v['material_designator'];
+                $v['jasa_designator'] = $v['jasa_designator']==''?'-':$v['jasa_designator'];
+                $v['item_designator_osp_fo'] = $v['item_designator_osp_fo']==''?'-':$v['item_designator_osp_fo'];
 
-        if(($fieldList === $fieldFile) == false){
-            $this->status = "nama kolom pada excel tidak sesuai template.";
-        }else{
-            foreach ($row->toArray() as $key => $value) {
-                if(!is_numeric($value['material'])){
-                    $this->status = "harga pada kolom material tidak valid (".$value['material'].")";
-                    break;
+                $data[$index]['nama_material'] = $v['material_designator'];
+                $data[$index]['nama_jasa'] = $v['jasa_designator'];
+                $data[$index]['nama'] = $v['item_designator_osp_fo'];
+                $data[$index]['uraian'] = $v['uraian_pekerjaan'];
+                $data[$index]['satuan'] = $v['satuan'];
+
+                if(!is_numeric($v['material'] || is_null($v['material']))){
+                    // $this->status = "harga pada kolom material tidak valid (baris ke-".($i).")";
+                    $v['material'] = 0;
                 }
-                if(!is_numeric($value['jasa'])){
-                    $this->status = "harga pada kolom jasa tidak valid (".$value['jasa'].")";
-                    break;
+                if(!is_numeric($v['jasa'] || is_null($v['jasa']))){
+                    // $this->status = "harga pada kolom jasa tidak valid (baris ke-".($i).")";
+                    $v['jasa'] = 0;
                 }
-
-                $value['nama_material'] = $value['nama_material']==''?'-':$value['nama_material'];
-                $value['nama_jasa'] = $value['nama_jasa']==''?'-':$value['nama_jasa'];
-                $value['nama'] = $value['nama']==''?'-':$value['nama'];
-                
-                $data[$key]['khs_induk_id'] = $this->khsId;
-                $data[$key]['nama_material'] = $value['nama_material'];
-                $data[$key]['nama_jasa'] = $value['nama_jasa'];
-                $data[$key]['nama'] = $value['nama'];
-                $data[$key]['uraian'] = $value['uraian'];
-                $data[$key]['satuan'] = $value['satuan'];
-                $data[$key]['material'] = $value['material'];
-                $data[$key]['jasa'] = $value['jasa'];
-                $data[$key]['created_at'] = Carbon::now();
-                $data[$key]['updated_at'] = Carbon::now();
-            }
-            if($this->status == "pass"){
-                KhsIndukDesignator::where('khs_induk_id', $this->khsId)->forceDelete();
-                KhsIndukDesignator::insert($data);
+                $data[$index]['material'] = $v['material'];
+                $data[$index]['jasa'] = $v['jasa'];
+                $index++;
+            }elseif (
+                $v['vol']=='x' && 
+                $v['material']=='x' && 
+                $v['jasa']=='x'
+            ) {
+                break;
             }
 
         }
-
+        // dd($data);
+        if($this->status == "pass"){
+            KhsIndukDesignator::where('khs_induk_id', $this->khsId)->forceDelete();
+            KhsIndukDesignator::insert($data);
+        }
         
     }
 

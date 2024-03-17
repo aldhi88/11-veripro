@@ -15,13 +15,11 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('khs_induk_id')->constrained();
-            $table->string('kat1')->nullable();
-            $table->string('kat2')->nullable();
             $table->string('nama')->nullable();
             $table->string('nama_material')->nullable();
             $table->string('nama_jasa')->nullable();
-            $table->text('uraian');
-            $table->string('satuan');
+            $table->text('uraian')->nullable();
+            $table->string('satuan')->nullable();
             $table->unsignedBigInteger('material');
             $table->unsignedBigInteger('jasa');
             $table->boolean('fix_price')->default(1);

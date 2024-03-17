@@ -61,7 +61,6 @@ class CreateKhs extends Component
                     return $item;
                 }
             )->toArray();    
-
     }
 
     public function insertKhs()
