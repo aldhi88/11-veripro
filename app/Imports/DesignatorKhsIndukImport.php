@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\KhsIndukDesignator;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\ToCollection;

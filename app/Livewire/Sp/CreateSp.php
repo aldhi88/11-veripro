@@ -72,6 +72,7 @@ class CreateSp extends Component
 
     public function submit()
     {
+        dd($this->dt);
         $this->reset('msgLokasi');
         $this->validate();
         if(count($this->dtLok)==0){
@@ -127,10 +128,10 @@ class CreateSp extends Component
         }
 
         $callback = function ($data) {
-            $this->dtLok = $data['data'];
-            $this->dtError = $data['error'];
-
-            $dtJson['dtLokasi'] = $data['data'];
+            // dd($data);
+            $this->dtLok = $data['dtLok'];
+            $this->dtError = $data['dtError'];
+            $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
         };
 

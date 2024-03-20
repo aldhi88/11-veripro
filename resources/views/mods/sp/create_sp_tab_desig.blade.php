@@ -72,15 +72,15 @@
                         </td>
                         <td class="border border-success p-1">
                             <h4 class="card-title m-0">Grand Total Material SP</h4>
-                            <span>{{number_format($dtLok['total_material_all'],0,',','.')}}</span>
+                            <span>{{number_format($dtLok['grand_total_material'],0,',','.')}}</span>
                         </td>
                         <td class="border border-success p-1">
                             <h4 class="card-title m-0">Grand Total Jasa SP</h4>
-                            <span>{{number_format($dtLok['total_jasa_all'],0,',','.')}}</span>
+                            <span>{{number_format($dtLok['grand_total_jasa'],0,',','.')}}</span>
                         </td>
                         <td class="border border-success p-1">
                             <h4 class="card-title m-0">Grand Total SP</h4>
-                            <span>{{number_format($dtLok['total_all'],0,',','.')}}</span>
+                            <span>{{number_format($dtLok['grand_total'],0,',','.')}}</span>
                         </td>
                     </tr>
                 </table>
@@ -104,7 +104,7 @@
                         </td>
                         <td class="border border-warning p-1">
                             <h4 class="card-title m-0">Nama STO</h4>
-                            <span>{{$vLok['nama_sto']}}</span>
+                            <span>{{$vLok['sto']}}</span>
                         </td>
                         <td class="border border-warning p-1">
                             <h4 class="card-title m-0">Nama Pekerjaan</h4>
@@ -131,7 +131,7 @@
                         <tr>
                             <th rowspan="2">No</th>
                             <th colspan="3">Quality Enhancement (QE) Akses</th>
-                            <th colspan="3">Harga Satuan</th>
+                            <th colspan="2">Harga Satuan</th>
                             <th rowspan="2">Vol</th>
                             <th colspan="3">Total Harga</th>
                         </tr>
@@ -140,7 +140,7 @@
                             <th>Jasa <br> Designator</th>
                             <th>Item Designator</th>
                             <th>Material</th>
-                            <th>Item <br> Mitra</th>
+                            {{-- <th>Item <br> Mitra</th> --}}
                             <th>Jasa</th>
                             <th>Material</th>
                             <th>Jasa</th>
@@ -154,14 +154,14 @@
                                 <td class="text-center">{{$iDes+1}}</td>
                                 <td class="text-center">{{$vDes['nama_material']}}</td>
                                 <td class="text-center">{{$vDes['nama_jasa']}}</td>
-                                <td class="text-center">{{$vDes['nama']}}</td>
-                                <td class="text-center">{{number_format($vDes['material'],0,',','.')}}</td>
-                                <td class="text-center">{!!$vDes['material_mitra']?'<i class="fas fa-check"></i>':''!!}</td>
-                                <td class="text-center">{{number_format($vDes['jasa'],0,',','.')}}</td>
-                                <td class="text-center">{{number_format($vDes['vol'],0,',','.')}}</td>
-                                <td class="text-center">{{number_format($vDes['total_material'],0,',','.')}}</td>
-                                <td class="text-center">{{number_format($vDes['total_jasa'],0,',','.')}}</td>
-                                <td class="text-center">{{number_format($vDes['total'],0,',','.')}}</td>
+                                <td class="text-center">{{$vDes['nama_designator']}}</td>
+                                <td class="text-right">{{number_format($vDes['material'],0,',','.')}}</td>
+                                {{-- <td class="text-right">{!!$vDes['material_mitra']?'<i class="fas fa-check"></i>':''!!}</td> --}}
+                                <td class="text-right">{{number_format($vDes['jasa'],0,',','.')}}</td>
+                                <td class="text-right">{{number_format($vDes['vol'],0,',','.')}}</td>
+                                <td class="text-right">{{number_format($vDes['total_material'],0,',','.')}}</td>
+                                <td class="text-right">{{number_format($vDes['total_jasa'],0,',','.')}}</td>
+                                <td class="text-right">{{number_format($vDes['total'],0,',','.')}}</td>
                             </tr>
                         @endforeach
                     </tbody>
