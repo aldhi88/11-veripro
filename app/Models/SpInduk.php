@@ -36,49 +36,90 @@ class SpInduk extends Model
         ];
     }
 
+    public static function hasAman($id)
+    {
+        $return = true;
+        $cekAman = SpAmandemen::where('sp_induk_id', $id)->count();
+        if($cekAman==0){
+            $return = false;
+        }
+
+        return $return;
+    }
+
+    public static function hasTagihan($id)
+    {
+        $return = false;
+        $cekTagihan = Tagihan::where('sp_induk_id', $id)
+            ->count();
+        if($cekTagihan > 0){
+            $return = true;
+        }
+
+        return $return;
+    }
+
+    public static function hasTagihanDone($id)
+    {
+        $return = false;
+        $cekTagihan = Tagihan::where('sp_induk_id', $id)
+            ->where('status','>',11)
+            ->count();
+        if($cekTagihan > 0){
+            $return = true;
+        }
+
+        return $return;
+    }
+
+    public static function hasSpDone($id)
+    {
+        $return = false;
+        $cekTagihan = SpInduk::where('id', $id)
+            ->where('status','=',3)
+            ->count();
+        if($cekTagihan > 0){
+            $return = true;
+        }
+
+        return $return;
+    }
+
     public static function allowCreateAman($id)
     {
         //SP induk status baru / 1
         $return = false;
-        $cek = SpInduk::where('id',$id)
-            ->where('status',1)
-            ->get()
-            ->count();
-        if($cek == 1){
-            $return = true;
+        if(
+            !SpInduk::hasTagihanDone($id) &&
+            !SpInduk::hasSpDone($id)
+        ){
+            $return=true;
         }
         return $return;
     }
 
     public static function allowEdit($id)
     {
-        //tidak ada aman
-        //tidak ada tagihan
         $return = false;
-        $cekAman = SpAmandemen::where('sp_induk_id', $id)->count();
-        if($cekAman==0){
-            $cekTagihan = Tagihan::where('sp_induk_id', $id)
-                ->where('status', '>', 11)
-                ->count();
-            if($cekTagihan == 0){
-                $return = true;
-            }
+        if(
+            !SpInduk::hasAman($id) && 
+            !SpInduk::hasTagihanDone($id) &&
+            !SpInduk::hasSpDone($id)
+        ){
+            $return=true;
         }
-
         return $return;
     }
 
     public static function allowDelete($id)
     {
-        //tidak ada aman
-        //tidak ada tagihan
         $return = false;
-        $cekAman = SpAmandemen::where('sp_induk_id', $id)->count();
-        if($cekAman==0){
-            $cekTagihan = Tagihan::where('sp_induk_id', $id)->count();
-            if($cekTagihan == 0){
-                $return = true;
-            }
+        
+        if(
+            !SpInduk::hasAman($id) &&
+            !SpInduk::hasTagihan($id)
+        ){
+            $return = true;
         }
 
         return $return;
@@ -95,10 +136,6 @@ class SpInduk extends Model
     public function khs_induks():BelongsTo
     {
         return $this->belongsTo(KhsInduk::class,'khs_induk_id', 'id');
-    }
-    public function mitras():BelongsTo
-    {
-        return $this->belongsTo(AuthLogin::class,'mitra_id', 'id');
     }
     public function auth_logins():BelongsTo
     {

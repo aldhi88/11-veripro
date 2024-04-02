@@ -55,7 +55,7 @@
                                         </select>
                                     </th>
                                     <th class="text-center">
-                                        <select name="" class="form-control form-control-sm text-center search-col-dt">
+                                        <select style="width: 100%" class="select2 form-control form-control-sm text-center search-col-dt">
                                             <option value="">Semua</option>
                                             @foreach ($dtMitras as $item)
                                                 <option value="{{$item->id}}">{{$item->master_users->nama}}</option>

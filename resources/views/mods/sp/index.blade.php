@@ -36,23 +36,19 @@
         @elseif ($data['page'] == 'create')
 
             @livewire('sp.create-sp')
-            @livewire('components.modal-desig')
+            {{-- @livewire('components.modal-desig') --}}
 
         @elseif ($data['page'] == 'aman-create')
 
             @livewire('sp.aman-create-sp', ['data' => $data])
 
-        @elseif ($data['page'] == 'aman-create')
-
-            @livewire('khs.create-aman-khs', ['data' => $data])
-
         @elseif ($data['page'] == 'edit')
 
             @livewire('sp.edit-sp',['data' => $data])
         
-        @elseif ($data['page'] == 'edit-aman')
+        @elseif ($data['page'] == 'aman-edit-sp')
 
-            @livewire('khs.edit-aman-khs',['data' => $data])
+            @livewire('sp.aman-edit-sp',['data' => $data])
         
         @elseif ($data['page'] == 'detail')
 

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('master_unit_id')->constrained();
             $table->foreignId('khs_induk_id')->constrained();
             $table->foreignId('khs_amandemen_id')->nullable();
-            $table->foreignId('mitra_id');
             $table->foreignId('auth_login_id')->constrained();
             $table->string('no_sp');
             $table->date('tgl_sp');

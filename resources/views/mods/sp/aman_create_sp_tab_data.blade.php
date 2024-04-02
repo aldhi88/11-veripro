@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group">
-                <label>File Amandemen SP</label>
+                <label>File SP</label>
                 <input type="file" wire:model="dt.file_sp" class="form-control @error('dt.file_sp') is-invalid @enderror">
                 @error('dt.file_sp')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -22,25 +22,14 @@
         <div class="col-12 col-md-4">
             <div class="form-group">
                 <label>Tujuan Mitra</label>
-                <div>
-                    <input type="text" class="form-control bg-light" readonly value="{{$dtEdit['khs_induks']['json']['perusahaan']}}">
-                </div>
+                <input type="text" value="{{ $dtEdit['khs_induks']['json']['perusahaan'] }}" class="bg-light form-control" readonly>
             </div>
         </div>
 
         <div class="col-12 col-md-6">
             <div class="form-group">
                 <label>KHS Induk</label>
-                <div wire:ignore>
-                    <select id="select2-khs" wire:model="dt.khs_induk_id" class="form-control">
-                        @foreach ($dtKhs as $item)
-                            <option {{$item['id']==$dtEdit['khs_induk_id']?'selected':null}} value="{{$item['id']}}">{{$item['no']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                @error('dt.khs_induk_id')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
+                <input type="text" value="{{ $dtEdit['khs_induks']['no'] }}" class="bg-light form-control" readonly>
             </div>
         </div>
         <div class="col-12 col-md-6">
@@ -53,11 +42,8 @@
 
         <div class="col-12 col-md-3">
             <div class="form-group">
-                <label>Tanggal Berlaku</label>
-                <input {{ $openTglSpToc?null:'readonly' }} wire:change="changeTglSp" type="date" min="{{ $minTglSp }}" wire:model="dt.tgl_sp" class="{{ $openTglSpToc?null:'bg-light' }} form-control @error('dt.tgl_sp') is-invalid @enderror">
-                @error('dt.tgl_sp')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <label>Tanggal SP</label>
+                <input readonly type="date" wire:model="dt.tgl_sp" class="bg-light form-control">
             </div>
         </div>
         <div class="col-12 col-md-3">

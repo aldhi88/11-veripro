@@ -81,33 +81,6 @@ class LokasiImport implements ToCollection, WithHeadingRow
             $iLok++;
         }
 
-        // foreach ($row as $i => $v) {
-            
-        //     if($row==0){
-        //         $iLok=0;
-        //         for ($i=9; $i < (9+$this->jlhLokasi); $i++) { 
-        //             $data['lokasi'][$iLok]['sto'] = $v[$i];
-        //             $iLok++;
-        //         }
-        //     }
-
-        //     if($i==1){
-        //         $iLok=0;
-        //         for ($i=9; $i < (9+$this->jlhLokasi); $i++) { 
-        //             $data['lokasi'][$iLok]['id_project'] = $v[$i];
-        //             $iLok++;
-        //         }
-        //     }
-
-        //     if($i==2){
-        //         $iLok=0;
-        //         for ($i=9; $i < (9+$this->jlhLokasi); $i++) { 
-        //             $data['lokasi'][$iLok]['id_project'] = $v[$i];
-        //             $iLok++;
-        //         }
-        //     }
-            
-        // }
         $dt['dtLok'] = $data;
         $dt['dtError'] = [];
         call_user_func($this->callback, $dt);

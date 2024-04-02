@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Sp;
 
-use App\Imports\DesigImport;
+use App\Imports\LokasiImport;
 use App\Models\KhsAmandemenDesignator;
 use App\Models\KhsInduk;
 use App\Models\KhsIndukDesignator;
@@ -10,8 +10,9 @@ use App\Models\MasterUnit;
 use App\Models\MasterUser;
 use App\Models\SpAmandemen;
 use App\Models\SpInduk;
+use App\Models\Tagihan;
+use App\Models\TagihanHistory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -25,6 +26,7 @@ class AmanCreateSp extends Component
     public $tab = 'data';
     public $dData = '';
     public $dDesig = 'd-none';
+    public $amanKe;
 
     public $mitras = [];
     public $units = [];
@@ -41,8 +43,7 @@ class AmanCreateSp extends Component
     public $msgLokasi;
     public $editId;
     public $dtEdit;
-    public $amanKe;
-    public $amanId;
+    public $hasTagihan = true;
 
     public function rules()
     {
@@ -51,12 +52,12 @@ class AmanCreateSp extends Component
             "dt.khs_induk_id" => "required",
             "dt.khs_amandemen_id" => "",
             "dt.mitra_id" => "required",
-            "dt.no_sp" => 'required|unique:sp_amandemens,no_sp,'.$this->amanId.',id,deleted_at,NULL',
+            "dt.no_sp" => 'required|unique:sp_induks,no_sp,'.$this->editId.',id,deleted_at,NULL',
             "dt.tgl_sp" => "required",
             "dt.tgl_toc" => "required",
             "dt.nama_pekerjaan" => "required",
             "dt.file_sp" => "required|mimes:pdf|max:2048",
-            "dt.ppn" => "required|numeric",
+            "dt.ppn" => "required|numeric|max:100",
         ];
     }
 
@@ -103,7 +104,29 @@ class AmanCreateSp extends Component
                 }
                 $this->dt['file_lokasi'] = $newFileName;
             }
+
+            unset(
+                $this->dt['mitra_id'],
+                $this->dt['khs_induk_id'],
+                $this->dt['khs_amandemen_id'],
+                $this->dt['auth_login_id'],
+            );
             SpAmandemen::create($this->dt);
+
+            if(SpInduk::hasTagihan($this->dt['sp_induk_id'])){
+                $q = Tagihan::where('sp_induk_id', $this->dt['sp_induk_id'])->first();
+                $q->update(['status' => 1]);
+                $tagihanId = $q->id;
+                $tagihanJson = $q->json;
+
+                TagihanHistory::create([
+                    'tagihan_id' => $tagihanId,
+                    'status' => 1,
+                    'json' => $tagihanJson,
+                ]);
+                
+
+            }
             session()->flash('message', 'Data Amandemen SP baru berhasil dibuat.');
             return redirect()->to('/sp/index');
         }
@@ -151,63 +174,21 @@ class AmanCreateSp extends Component
         }
 
         $callback = function ($data) {
-            $this->dtLok = $data['data'];
-            $this->dtError = $data['error'];
-
-            $dtJson['dtLokasi'] = $data['data'];
+            $this->dtLok = $data['dtLok'];
+            $this->dtError = $data['dtError'];
+            $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
         };
 
-        $import = new DesigImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);
+        $import = new LokasiImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);
         Excel::import($import, $this->formUpload['file']);
     }
     public function mount($data)
     {
         $this->editId = $data['key'];
-        $dtAmans = (SpAmandemen::where('sp_induk_id',$this->editId)
-            ->orderBy('tgl_sp', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->with([
-                'sp_induks'=>function($q){
-                    $q->select('id','mitra_id');
-                },
-                'khs_amandemens',
-                'khs_induks'
-            ])
-            ->get())
-            ->map(function($item){
-                $item['json'] = json_decode($item['json'],true);
-                unset(
-                    $item['created_at'],
-                    $item['created_at'],
-                    $item['deleted_at'],
-                    $item['updated_at'],
-                    $item['khs_induks']['created_at'],
-                    $item['khs_induks']['deleted_at'],
-                    $item['khs_induks']['updated_at'],
-                );
-                return $item;
-            })->toArray();
-            
-        $this->amanKe = count($dtAmans)+1;
-        if($this->amanKe>1){
-            $this->amanId = $dtAmans[0]['id'];
-            $this->dtEdit = $dtAmans[0];
-            $this->dtEdit['khs_induks']['json'] = json_decode($this->dtEdit['khs_induks']['json'],true);
-            $mitraId = $this->dtEdit['sp_induks']['mitra_id'];
-            $this->dt = $this->dtEdit;
-            unset(
-                $this->dt['id'],
-                $this->dt['file_sp'],
-                $this->dt['file_lokasi'],
-                $this->dt['khs_amandemens'],
-                $this->dt['khs_induks'],
-                $this->dt['sp_induks'],
-            );
-            // dd($this->dt);
+        $this->amanKe = (SpAmandemen::where('sp_induk_id',$this->editId)->count())+1;
 
-        }else{
-
+        if($this->amanKe==1){
             $this->dtEdit = (SpInduk::where('id',$this->editId)
                 ->with(['khs_induks','khs_amandemens'])
                 ->get())
@@ -227,26 +208,57 @@ class AmanCreateSp extends Component
                 })
                 ->first()
                 ->toArray();
-            $mitraId = $this->dtEdit['mitra_id'];
-            $this->amanId = $this->editId;
-            $this->dt = $this->dtEdit;
-            unset(
-                $this->dt['khs_induks'],
-                $this->dt['status_label'],
-                $this->dt['status'],
-                $this->dt['file_sp'],
-                $this->dt['file_lokasi'],
-                $this->dt['khs_amandemens'],
-            );
-
+        }else{
+            $this->dtEdit = (SpAmandemen::where('sp_induk_id',$this->editId)
+                ->with([
+                    'sp_induks.khs_induks.auth_logins.master_users',
+                    'sp_induks.khs_amandemens',
+                ])
+                ->orderBy('id','desc')
+                ->get())
+                ->map(function($item){
+                    $item['json'] = json_decode($item['json'], true);
+                    $item['sp_induks']['khs_induks']['json'] = json_decode($item['sp_induks']['khs_induks']['json'], true);
+                    $item['khs_induks'] = ($item['sp_induks']['khs_induks'])->toArray();
+                    $item['khs_amandemens'] = $item['sp_induks']['khs_amandemens'];
+                    $item['status'] = $item['sp_induks']['khs_induks']['status'];
+                    $item['khs_induk_id'] = $item['sp_induks']['khs_induk_id'];
+                    unset(
+                        $item['sp_induks'],
+                        $item['id'],
+                        $item['created_at'],
+                        $item['deleted_at'],
+                        $item['updated_at'],
+                    );
+                    return $item;
+                })
+                ->first()
+                ->toArray();
+            
         }
 
-        
         if(!is_null($this->dtEdit['khs_amandemens'])){
             $this->noAman = $this->dtEdit['khs_amandemens']['no'];
         }
-        $this->dt['json'] = json_encode($this->dt['json']);
 
+        $this->dt = $this->dtEdit;
+        $this->dt['no_sp'] = "";
+        $this->dt['mitra_id'] = $this->dtEdit['khs_induks']['auth_login_id'];
+        $this->dt['json'] = json_encode($this->dt['json']);
+        unset(
+            $this->dt['khs_induks'],
+            $this->dt['status_label'],
+            $this->dt['status'],
+            $this->dt['file_sp'],
+            $this->dt['file_lokasi'],
+            $this->dt['khs_amandemens'],
+        );
+
+        if($this->dtEdit['status']==1){
+            $this->mitras = MasterUser::query()
+                ->where('auth_role_id', 4)
+                ->get()->toArray();
+        }
         $this->units = MasterUnit::query()
             ->where('id', '>', 1)
             ->where('id', '<', 4)
@@ -254,14 +266,16 @@ class AmanCreateSp extends Component
         $this->dt['auth_login_id'] = Auth::id();
         $this->dt['sp_induk_id'] = $this->editId;
 
-        $this->genKhs($mitraId);
+        $this->genKhs();
         $this->dtLok = $this->dtEdit['json']['dtLokasi'];
+
+        // dd($this->all());
     }
 
-    public function genKhs($mitraId)
+    public function genKhs()
     {
         $this->dtKhs = (KhsInduk::query()
-                ->where('auth_login_id', $mitraId)
+                ->where('auth_login_id', $this->dt['mitra_id'])
                 ->with([
                     "khs_amandemens",
                 ])
@@ -287,12 +301,31 @@ class AmanCreateSp extends Component
                     return $item;
                 }
             )->toArray();
+
+        $this->dispatch('editspatc-generateKhs', data: $this->dtKhs);
     }
 
-    #[On('createsp-pickKhs')] 
+    #[On('editsp-pickMitra')]
+    public function pickMitra()
+    {
+        $this->reset(
+            'dtKhs',
+            'dt.tgl_sp',
+            'dt.tgl_toc',
+            'noAman',
+            'openTglSpToc',
+        );
+
+        $this->genKhs();
+            
+        $this->dispatch('editspatc-generateKhs', data: $this->dtKhs);
+    }
+
+    #[On('editsp-pickKhs')] 
     public function pickKhs()
     {
         $this->reset(
+            'noAman',
             'dt.tgl_sp',
             'dt.tgl_toc'
         );
@@ -308,8 +341,6 @@ class AmanCreateSp extends Component
         $this->reset(
             'dt.tgl_toc',
             'dt.khs_amandemen_id',
-            'dtLok',
-            'dtError',
         );
 
         $selKhs = (collect($this->dtKhs))

@@ -8,6 +8,7 @@ use App\Models\KhsInduk;
 use App\Models\KhsIndukDesignator;
 use App\Models\MasterUnit;
 use App\Models\MasterUser;
+use App\Models\SpAmandemen;
 use App\Models\SpInduk;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 
-class EditSp extends Component
+class AmanEditSp extends Component
 {
     use WithFileUploads;
 
@@ -48,12 +49,12 @@ class EditSp extends Component
             "dt.khs_induk_id" => "required",
             "dt.khs_amandemen_id" => "",
             "dt.mitra_id" => "required",
-            "dt.no_sp" => 'required|unique:sp_induks,no_sp,'.$this->editId.',id,deleted_at,NULL',
+            "dt.no_sp" => 'required|unique:sp_amandemens,no_sp,'.$this->editId.',id,deleted_at,NULL',
             "dt.tgl_sp" => "required",
             "dt.tgl_toc" => "required",
             "dt.nama_pekerjaan" => "required",
             "dt.file_sp" => "nullable|mimes:pdf|max:2048",
-            "dt.ppn" => "required|numeric",
+            "dt.ppn" => "required|numeric|max:100",
         ];
     }
 
@@ -83,19 +84,24 @@ class EditSp extends Component
             if(isset($this->dt['file_sp'])){
                 if(Storage::exists(str_replace('storage/','public/', $this->dtEdit['file_sp']))){
                     Storage::delete(str_replace('storage/','public/', $this->dtEdit['file_sp']));
-                    $this->dt['file_sp'] = str_replace('public/','storage/',$this->dt['file_sp']->store('public/sp'));
+                    $this->dt['file_sp'] = str_replace('public/','storage/',$this->dt['file_sp']->store('public/sp_aman'));
                 }
             }
 
             if(isset($this->dt['file_lokasi'])){
                 if(Storage::exists(str_replace('storage/','public/', $this->dtEdit['file_lokasi']))){
                     Storage::delete(str_replace('storage/','public/', $this->dtEdit['file_lokasi']));
-                    $this->dt['file_lokasi'] = str_replace('public/','storage/',$this->dt['file_lokasi']->store('public/sp'));
+                    $this->dt['file_lokasi'] = str_replace('public/','storage/',$this->dt['file_lokasi']->store('public/sp_aman'));
                 }
             }
-            unset($this->dt['mitra_id']);
-            SpInduk::find($this->editId)->update($this->dt);
-            session()->flash('message', 'Data SP berhasil diperbaharui.');
+            unset(
+                $this->dt['mitra_id'],
+                $this->dt['khs_induk_id'],
+                $this->dt['khs_amandemen_id'],
+                $this->dt['auth_login_id'],
+            );
+            SpAmandemen::find($this->editId)->update($this->dt);
+            session()->flash('message', 'Data Amandemen SP berhasil diperbaharui.');
             return redirect()->to('/sp/index');
         }
     }
@@ -154,27 +160,32 @@ class EditSp extends Component
     public function mount($data)
     {
         $this->editId = $data['key'];
-        $this->hasTagihan = SpInduk::hasTagihan($this->editId);
 
-        $this->dtEdit = (SpInduk::where('id',$this->editId)
-            ->with(['khs_induks','khs_amandemens'])
-            ->get())
-            ->map(function($item){
-                $item['json'] = json_decode($item['json'], true);
-                $item['khs_induks']['json'] = json_decode($item['khs_induks']['json'], true);
-                unset(
-                    $item['id'],
-                    $item['created_at'],
-                    $item['deleted_at'],
-                    $item['updated_at'],
-                    $item['khs_induks']['created_at'],
-                    $item['khs_induks']['deleted_at'],
-                    $item['khs_induks']['updated_at'],
-                );
-                return $item;
-            })
-            ->first()
-            ->toArray();
+        $this->dtEdit = (SpAmandemen::where('id',$this->editId)
+                ->with([
+                    'sp_induks.khs_induks.auth_logins.master_users',
+                    'sp_induks.khs_amandemens',
+                ])
+                ->orderBy('id','desc')
+                ->get())
+                ->map(function($item){
+                    $item['json'] = json_decode($item['json'], true);
+                    $item['sp_induks']['khs_induks']['json'] = json_decode($item['sp_induks']['khs_induks']['json'], true);
+                    $item['khs_induks'] = ($item['sp_induks']['khs_induks'])->toArray();
+                    $item['khs_amandemens'] = $item['sp_induks']['khs_amandemens'];
+                    $item['status'] = $item['sp_induks']['khs_induks']['status'];
+                    $item['khs_induk_id'] = $item['sp_induks']['khs_induk_id'];
+                    unset(
+                        $item['sp_induks'],
+                        $item['id'],
+                        $item['created_at'],
+                        $item['deleted_at'],
+                        $item['updated_at'],
+                    );
+                    return $item;
+                })
+                ->first()
+                ->toArray();
         
         if(!is_null($this->dtEdit['khs_amandemens'])){
             $this->noAman = $this->dtEdit['khs_amandemens']['no'];
@@ -315,6 +326,6 @@ class EditSp extends Component
 
     public function render()
     {
-        return view('mods.sp.edit_sp');
+        return view('mods.sp.aman_edit_sp');
     }
 }

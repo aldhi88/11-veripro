@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('master_unit_id')->constrained();
             $table->text('nama');
             $table->text('photo')->nullable();
-            $table->text('detail')->nullable();
+            $table->json('detail')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

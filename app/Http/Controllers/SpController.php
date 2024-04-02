@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SpAmandemen;
 use App\Models\SpInduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,17 @@ class SpController extends Controller
             return redirect()->route('sp.index');
         }
     }
+    public function editAman($editId)
+    {
+        if(SpAmandemen::allowEditDelete($editId)){
+            $data['page'] = 'aman-edit-sp';
+            $data['title'] = "Edit Amandemen Surat Pesanan";
+            $data['key'] = $editId;
+            return view('mods.sp.index', compact('data'));
+        }else{
+            return redirect()->route('sp.index');
+        }
+    }
     public function detail($spId)
     {
         $data['page'] = 'detail';
@@ -69,10 +81,9 @@ class SpController extends Controller
         ->withCount('sp_amandemens')
         ->with([
             'khs_induks',
+            'khs_induks.auth_logins.master_users',
             'auth_logins.master_users',
-            'mitras.master_users'
-        ])
-        ;
+        ]);
 
         return DataTables::of($data)
             ->addColumn('action', function($data){
@@ -91,7 +102,7 @@ class SpController extends Controller
 
 
                 $return .= '
-                    <a class="dropdown-item" href="'.asset($data->file_sp).'" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> Lihat File SP</a>
+                    <a class="dropdown-item" href="'.asset($data->file_sp).'" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> Lihat File SP Induk</a>
                 ';
 
                 

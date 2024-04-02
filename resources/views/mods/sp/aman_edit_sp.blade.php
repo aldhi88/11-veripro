@@ -20,7 +20,7 @@
                         <li class="nav-item" wire:click="changeTab('data')"  style="cursor: pointer">
                             <a class="nav-link {{ $tab=='data'?'active':null }}">
                                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                <span class="d-none d-sm-block">Data SP</span> 
+                                <span class="d-none d-sm-block">Data Amandemen SP</span> 
                             </a>
                         </li>
                         
@@ -39,11 +39,11 @@
 
                         <div class="tab-pane active" id="tab1" role="tabpanel">
                             <div class="{{$dData}}">
-                                @include('mods.sp.edit_sp_tab_data')
+                                @include('mods.sp.aman_edit_sp_tab_data')
                             </div>
                             
                             <div class="{{$dDesig}}">
-                                @include('mods.sp.edit_sp_tab_desig')
+                                @include('mods.sp.aman_edit_sp_tab_desig')
                             </div>
                         </div>
 
@@ -52,7 +52,7 @@
                     <hr>
                     <div class="row">
                         <div class="col text-right">
-                            <button type="button" wire:click="submit" class="btn btn-primary">Simpan Perubahan SP</button>
+                            <button type="button" wire:click="submit" class="btn btn-primary">Simpan Perubahan</button>
                         </div>
                     </div>
 
@@ -62,6 +62,6 @@
         </div>
     </div>
 
-    @include('mods.sp.atc.edit_sp_atc')
+    @include('mods.sp.atc.aman_edit_sp_atc')
     
 </div>

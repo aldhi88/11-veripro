@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Sp;
 
-use App\Imports\DesigImport;
 use App\Imports\LokasiImport;
 use App\Models\KhsAmandemenDesignator;
 use App\Models\KhsInduk;
@@ -41,16 +40,16 @@ class CreateSp extends Component
     public function rules()
     {
         return [
-            // "dt.master_unit_id" => "required",
-            // "dt.khs_induk_id" => "required",
-            // "dt.khs_amandemen_id" => "",
-            // "dt.mitra_id" => "required",
-            // "dt.no_sp" => "required|unique:sp_induks,no_sp,NULL,id,deleted_at,NULL",
-            // "dt.tgl_sp" => "required",
-            // "dt.tgl_toc" => "required",
-            // "dt.nama_pekerjaan" => "required",
-            // "dt.file_sp" => "required|mimes:pdf|max:2048",
-            // "dt.ppn" => "required|numeric",
+            "dt.master_unit_id" => "required",
+            "dt.khs_induk_id" => "required",
+            "dt.khs_amandemen_id" => "",
+            "dt.mitra_id" => "required",
+            "dt.no_sp" => "required|unique:sp_induks,no_sp,NULL,id,deleted_at,NULL",
+            "dt.tgl_sp" => "required",
+            "dt.tgl_toc" => "required",
+            "dt.nama_pekerjaan" => "required",
+            "dt.file_sp" => "required|mimes:pdf|max:2048",
+            "dt.ppn" => "required|numeric|max:100",
         ];
     }
 
@@ -72,12 +71,13 @@ class CreateSp extends Component
 
     public function submit()
     {
-        dd($this->dt);
+        
         $this->reset('msgLokasi');
         $this->validate();
         if(count($this->dtLok)==0){
             $this->msgLokasi = 'Data Lokasi belum valid, pastikan anda sudah upload data lokasi dan sudah tidak ada error lokasi';
         }else{
+            unset($this->dt['mitra_id']);
             $this->dt['file_sp'] = str_replace('public/','storage/',$this->dt['file_sp']->store('public/sp'));
             $this->dt['file_lokasi'] = str_replace('public/','storage/',$this->dt['file_lokasi']->store('public/sp'));
             SpInduk::create($this->dt);

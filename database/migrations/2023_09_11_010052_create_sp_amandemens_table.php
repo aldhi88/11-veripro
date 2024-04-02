@@ -14,11 +14,7 @@ return new class extends Migration
         Schema::create('sp_amandemens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sp_induk_id')->constrained();
-            $table->foreignId('auth_login_id')->constrained();
-            $table->foreignId('khs_induk_id')->constrained();
             $table->foreignId('master_unit_id')->constrained();
-            $table->foreignId('khs_amandemen_id')->nullable();
-            $table->foreignId('mitra_id');
             $table->string('no_sp');
             $table->date('tgl_sp');
             $table->date('tgl_toc');
@@ -26,7 +22,7 @@ return new class extends Migration
             $table->string('file_sp');
             $table->string('file_lokasi');
             $table->unsignedTinyInteger('ppn');
-            $table->text('json');
+            $table->json('json');
             $table->timestamps();
             $table->softDeletes();
         });

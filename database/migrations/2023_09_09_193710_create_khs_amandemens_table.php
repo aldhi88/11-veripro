@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('no');
             $table->string('judul');
             $table->date('tgl_berlaku');
-            $table->text('json');
+            $table->json('json');
             $table->timestamps();
             $table->softDeletes();
         });
