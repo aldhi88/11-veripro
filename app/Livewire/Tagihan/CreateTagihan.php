@@ -25,10 +25,54 @@ class CreateTagihan extends Component
 
     public $dt = [];
 
-    public function render()
+    public function rules()
     {
-        return view('mods.tagihan.create_tagihan');
+        return [
+            "dt.dt_tagihan.tgl_ut" => "required",
+            "dt.dt_tagihan.no_ut" => "required",
+            "dt.dt_tagihan.tgl_baut" => "required",
+            "dt.dt_tagihan.tgl_laut" => "required",
+            "dt.dt_tagihan.tgl_mohon" => "required",
+            "dt.dt_tagihan.no_mohon" => "required",
+            "dt.dt_tagihan.tgl_ba_rekon" => "required",
+            "dt.dt_tagihan.tgl_ba_gambar" => "required",
+            "dt.dt_tagihan.tgl_turnkey" => "nullable",
+
+            "dt.dt_tagihan.dt_ttd.gm_ta" => "required",
+            "dt.dt_tagihan.dt_ttd.mgr_unit" => "required",
+            "dt.dt_tagihan.dt_ttd.sm_unit" => "required",
+            "dt.dt_tagihan.dt_ttd.mgr_shared" => "required",
+            "dt.dt_tagihan.dt_ttd.waspang" => "required",
+            "dt.dt_tagihan.dt_ttd.gudang" => "required",
+
+            "dt.dt_tagihan.dt_lokasi.*.nama_lokasi" => "required",
+            "dt.dt_tagihan.dt_lokasi.*.nama_sto" => "required",
+            "dt.dt_tagihan.dt_lokasi.*.desig_items.*.id" => "required",
+
+        ];
     }
+
+    protected $validationAttributes = [
+        "dt.dt_lokasi.*.nama_lokasi" => "Nama Lokasi",
+        "dt.dt_lokasi.*.nama_sto" => "Nama STO",
+        "dt.dt_lokasi.*.desig_items.*.id" => "Item Designator",
+
+        "dt.dt_tagihan.tgl_ut" => "Tgl UT",
+        "dt.dt_tagihan.no_ut" => "No UT",
+        "dt.dt_tagihan.tgl_baut" => "Tgl BAUT",
+        "dt.dt_tagihan.tgl_laut" => "Tgl LAUT",
+        "dt.dt_tagihan.tgl_mohon" => "Tgl Permohonan",
+        "dt.dt_tagihan.no_mohon" => "No Permohonan",
+        "dt.dt_tagihan.tgl_ba_rekon" => "Tgl BA Rekon",
+        "dt.dt_tagihan.tgl_ba_gambar" => "Tgl BA Gambar",
+
+        "dt.dt_tagihan.dt_ttd.gm_ta" => " GM. Telkom Akses ",
+        "dt.dt_tagihan.dt_ttd.mgr_unit" => "Mgr. Unit",
+        "dt.dt_tagihan.dt_ttd.sm_unit" => " SM. Unit",
+        "dt.dt_tagihan.dt_ttd.mgr_shared" => " Mgr. Shared Service",
+        "dt.dt_tagihan.dt_ttd.waspang" => "waspang",
+        "dt.dt_tagihan.dt_ttd.gudang" => "Petugas Gudang ",
+    ];
 
     public function mount($data)
     {
@@ -395,10 +439,6 @@ class CreateTagihan extends Component
     public function setPejabat()
     {
         $lov = Lov::select('key', 'value')->get()->toArray();
-        foreach ($lov as $key => $value) {
-            $lov[$key]['value'] = json_decode($value['value']);
-            unset($lov[$key]['status_label']); 
-        }
 
         $this->pejabat['gm_ta'] = array_values((collect($lov))->where('key', 'gm_ta')->toArray())[0];
         $this->pejabat['mgr_konstruksi'] = array_values((collect($lov))->where('key', 'mgr_konstruksi')->toArray())[0];
@@ -406,7 +446,7 @@ class CreateTagihan extends Component
         $this->pejabat['mgr_maintenance'] = array_values((collect($lov))->where('key', 'mgr_maintenance')->toArray())[0];
         $this->pejabat['sm_maintenance'] = array_values((collect($lov))->where('key', 'sm_maintenance')->toArray())[0];
         $this->pejabat['mgr_shared'] = array_values((collect($lov))->where('key', 'mgr_shared')->toArray())[0];
-        $this->pejabat['wapang'] = array_values((collect($lov))->where('key', 'wapang')->toArray())[0];
+        $this->pejabat['waspang'] = array_values((collect($lov))->where('key', 'waspang')->toArray())[0];
         $this->pejabat['gudang'] = array_values((collect($lov))->where('key', 'gudang')->toArray())[0];
     }
 
@@ -669,55 +709,6 @@ class CreateTagihan extends Component
         $this->setGudang();
     }
 
-    public function rules()
-    {
-        return [
-            "dt.dt_tagihan.tgl_ut" => "required",
-            "dt.dt_tagihan.no_ut" => "required",
-            "dt.dt_tagihan.tgl_baut" => "required",
-            "dt.dt_tagihan.tgl_laut" => "required",
-            "dt.dt_tagihan.tgl_mohon" => "required",
-            "dt.dt_tagihan.no_mohon" => "required",
-            "dt.dt_tagihan.tgl_ba_rekon" => "required",
-            "dt.dt_tagihan.tgl_ba_gambar" => "required",
-            "dt.dt_tagihan.tgl_turnkey" => "nullable",
-
-            "dt.dt_tagihan.dt_ttd.gm_ta" => "required",
-            "dt.dt_tagihan.dt_ttd.mgr_unit" => "required",
-            "dt.dt_tagihan.dt_ttd.sm_unit" => "required",
-            "dt.dt_tagihan.dt_ttd.mgr_shared" => "required",
-            "dt.dt_tagihan.dt_ttd.wapang" => "required",
-            "dt.dt_tagihan.dt_ttd.gudang" => "required",
-
-            "dt.dt_tagihan.dt_lokasi.*.nama_lokasi" => "required",
-            "dt.dt_tagihan.dt_lokasi.*.nama_sto" => "required",
-            "dt.dt_tagihan.dt_lokasi.*.desig_items.*.id" => "required",
-
-        ];
-    }
-
-    protected $validationAttributes = [
-        "dt.dt_lokasi.*.nama_lokasi" => "Nama Lokasi",
-        "dt.dt_lokasi.*.nama_sto" => "Nama STO",
-        "dt.dt_lokasi.*.desig_items.*.id" => "Item Designator",
-
-        "dt.dt_tagihan.tgl_ut" => "Tgl UT",
-        "dt.dt_tagihan.no_ut" => "No UT",
-        "dt.dt_tagihan.tgl_baut" => "Tgl BAUT",
-        "dt.dt_tagihan.tgl_laut" => "Tgl LAUT",
-        "dt.dt_tagihan.tgl_mohon" => "Tgl Permohonan",
-        "dt.dt_tagihan.no_mohon" => "No Permohonan",
-        "dt.dt_tagihan.tgl_ba_rekon" => "Tgl BA Rekon",
-        "dt.dt_tagihan.tgl_ba_gambar" => "Tgl BA Gambar",
-
-        "dt.dt_tagihan.dt_ttd.gm_ta" => " GM. Telkom Akses ",
-        "dt.dt_tagihan.dt_ttd.mgr_unit" => "Mgr. Unit",
-        "dt.dt_tagihan.dt_ttd.sm_unit" => " SM. Unit",
-        "dt.dt_tagihan.dt_ttd.mgr_shared" => " Mgr. Shared Service",
-        "dt.dt_tagihan.dt_ttd.wapang" => "Wapang",
-        "dt.dt_tagihan.dt_ttd.gudang" => "Petugas Gudang ",
-    ];
-
     #[On('createsp-initSelect2')]
     public function initSelect2($data)
     {
@@ -752,6 +743,11 @@ class CreateTagihan extends Component
         $this->dt['dt_tagihan']['dt_lokasi'][$iLok]['desig_items'][$iRow]['boxmat_rekon'] = "checked";
         $this->dt['dt_tagihan']['dt_lokasi'][$iLok]['desig_items'][$iRow]['boxjas_rekon'] = "checked";
         $this->reTotal($iLok, $iRow);
+    }
+
+    public function render()
+    {
+        return view('mods.tagihan.create_tagihan');
     }
 }
 

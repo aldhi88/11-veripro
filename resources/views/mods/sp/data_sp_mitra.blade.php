@@ -18,7 +18,6 @@
                                 <th class="text-center">Tanggal <br> TOC</th>
                                 <th class="text-center">PPN (%)</th>
                                 <th class="text-center">Nama <br> Pekerjaan</th>
-                                <th class="text-center">ID <br> Project</th>
 
                                
                             </tr>
@@ -48,7 +47,6 @@
                                     <th class="text-center"><input type="text" class="form-control form-control-sm text-center search-col-dt"></th>
                                     <th class="text-center"><input type="date" class="form-control form-control-sm text-center search-col-dt"></th>
                                     <th class="text-center"><input type="date" class="form-control form-control-sm text-center search-col-dt"></th>
-                                    <th class="text-center"><input type="text" class="form-control form-control-sm text-center search-col-dt"></th>
                                     <th class="text-center"><input type="text" class="form-control form-control-sm text-center search-col-dt"></th>
                                     <th class="text-center"><input type="text" class="form-control form-control-sm text-center search-col-dt"></th>
                                 </tr>

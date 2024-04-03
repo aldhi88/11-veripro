@@ -19,14 +19,13 @@
         columns: [
             { data: 'action', name: 'created_at', orderable: false, searchable:false },
             { data: 'status_label', name: 'status', orderable: true, searchable:true },
-            { data: 'mitras.master_users.nama', name: 'mitras.master_users.nama', orderable: true, searchable:true },
-            { data: 'khs_induks.no_kontrak', name: 'khs_induks.no_kontrak', orderable: true, searchable:true },
+            { data: 'khs_induks.auth_logins.master_users.nama', name: 'khs_induks.auth_logins.master_users.nama', orderable: true, searchable:true },
+            { data: 'khs_induks.no', name: 'khs_induks.no', orderable: true, searchable:true },
             { data: 'no_sp', name: 'no_sp', orderable: true, searchable:true },
             { data: 'tgl_sp_format', name: 'tgl_sp', orderable: true, searchable:true },
             { data: 'tgl_toc_format', name: 'tgl_toc', orderable: true, searchable:true },
-            { data: 'json_format.ppn', name: 'json', orderable: true, searchable:true },
-            { data: 'json_format.nama_pekerjaan', name: 'json', orderable: true, searchable:true },
-            { data: 'json_format.id_project', name: 'json', orderable: true, searchable:true },
+            { data: 'ppn', name: 'json', orderable: true, searchable:true },
+            { data: 'nama_pekerjaan', name: 'json', orderable: true, searchable:true },
             
         ],
         initComplete: function(settings){

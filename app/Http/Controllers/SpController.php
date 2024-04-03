@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use DataTables;
+use Illuminate\Database\Eloquent\Builder;
 
 class SpController extends Controller
 {
@@ -155,11 +156,15 @@ class SpController extends Controller
 
             )
             ->orderBy('tgl_sp', 'desc')
-            ->where('mitra_id', Auth::id())
+            ->whereHas(
+                'khs_induks', function(Builder $q){
+                    $q->where('auth_login_id', Auth::id());
+                },
+            )
             ->with([
                 'khs_induks',
+                'khs_induks.auth_logins.master_users',
                 'auth_logins.master_users',
-                'mitras.master_users'
             ])
         ;
 
