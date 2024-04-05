@@ -111,10 +111,10 @@ class LovCmd extends Command
         ];
         $data = [
             ['key'=>'gm_ta','value'=>json_encode($gmTa)],
-            ['key'=>'mgr_konstruksi','value'=>json_encode($mgrKonstruksi)],
-            ['key'=>'sm_konstruksi','value'=>json_encode($smKonstruksi)],
-            ['key'=>'mgr_maintenance','value'=>json_encode($mgrMaintenance)],
-            ['key'=>'sm_maintenance','value'=>json_encode($smMaintenance)],
+            ['key'=>'mgr_osp-fo','value'=>json_encode($mgrKonstruksi)],
+            ['key'=>'sm_osp-fo','value'=>json_encode($smKonstruksi)],
+            ['key'=>'mgr_qe','value'=>json_encode($mgrMaintenance)],
+            ['key'=>'sm_qe','value'=>json_encode($smMaintenance)],
             ['key'=>'mgr_shared','value'=>json_encode($mgrShared)],
             ['key'=>'waspang','value'=>json_encode($waspang)],
             ['key'=>'gudang','value'=>json_encode($gudang)],
