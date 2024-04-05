@@ -209,49 +209,7 @@
                                 @endforeach
                                 
                             </div>
-                            {{-- <div>
-                                <h6 class="bg-light p-1 text-center">
-                                    <span>DATA REKENING</span>
-                                </h6>
-                                <div class="row">
-                                    <div class="form-group mb-0 col-12 col-md">
-                                        <h6>Bank</h6>
-                                        <p>{{ $dtKhs['json']['bank'] }}</p>
-                                    </div>
-                                    <div class="form-group mb-0 col-12 col-md">
-                                        <h6>Cabang</h6>
-                                        <p>{{ $dtKhs['json']['cabang'] }}</p>
-                                    </div>
-                                    <div class="form-group mb-0 col-12 col-md">
-                                        <h6>No.Rekening</h6>
-                                        <p>{{ $dtKhs['json']['rekening'] }}</p>
-                                    </div>
-                                    <div class="form-group mb-0 col-12 col-md">
-                                        <h6>Pemilik</h6>
-                                        <p>{{ $dtKhs['json']['nama_rekening'] }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h6 class="bg-light p-1 text-center">
-                                    <span>DATA ALAMAT</span>
-                                </h6>
-                                <div class="row">
-                                    <div class="form-group mb-0 col-12 col-md">
-                                        <p>{{ $dtKhs['json']['alamat'] }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h6 class="bg-light p-1 text-center">
-                                    <span>DATA DESIGNATOR</span>
-                                </h6>
-                                <div class="row">
-                                    <div class="form-group mb-0 col-12 col-md">
-                                        tes
-                                    </div>
-                                </div>
-                            </div> --}}
+                            
                         </div>
                     </div>
                     

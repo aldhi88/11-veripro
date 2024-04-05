@@ -27,7 +27,13 @@
                             <li class="nav-item" wire:click="changeTab(2)" style="cursor: pointer">
                                 <a class="nav-link {{ $tab==2?'active':null }}">
                                     <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                    <span class="d-none d-sm-block">Designator</span>   
+                                    <span class="d-none d-sm-block">Designator SP</span>   
+                                </a>
+                            </li>
+                            <li class="nav-item" wire:click="changeTab(6)" style="cursor: pointer">
+                                <a class="nav-link {{ $tab==6?'active':null }}">
+                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                    <span class="d-none d-sm-block">Designator Rekon</span>   
                                 </a>
                             </li>
                             <li class="nav-item" wire:click="changeTab(4)"  style="cursor: pointer">
@@ -53,6 +59,7 @@
                         
                         <div class="tab-content text-muted pt-4">
                             
+                            {{-- data tagihan --}}
                             <div class="tab-pane {{ $tab==1?'active':null }}" id="tab1" role="tabpanel">
                                 
                                 <div class="row">
@@ -133,6 +140,283 @@
                                 
                             </div>
 
+                            {{-- designator SP --}}
+                            <div class="tab-pane {{ $tab==2?'active':null }}" id="tab2" role="tabpanel">
+                                <h6 class="bg-light p-1 text-center">
+                                    <span>DATA GRAND TOTAL</span>
+                                </h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="w-100">
+                                            <tr class="text-center bg-soft-success">
+                                                <td class="border border-success p-1 bg-success">
+                                                    <h5 class="mb-0">SP</h5>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Jumlah Lokasi</h4>
+                                                    <span>{{count($dt['dt_sp']['json']['dtLokasi']['lokasi'])}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Grand Total Material SP</h4>
+                                                    <span>{{number_format($dt['dt_sp']['json']['dtLokasi']['grand_total_material'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Grand Total Jasa SP</h4>
+                                                    <span>{{number_format($dt['dt_sp']['json']['dtLokasi']['grand_total_jasa'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Grand Total SP</h4>
+                                                    <span>{{number_format($dt['dt_sp']['json']['dtLokasi']['grand_total'],0,',','.')}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                                <h6 class="bg-light p-1 text-center">
+                                    <span>DATA LOKASI</span>
+                                </h6>
+                                @foreach ($dt['dt_sp']['json']['dtLokasi']['lokasi'] as $iLok => $vLok)
+            
+                                    <div class="table-responsive mb-2">
+                                        <table class="w-100">
+                                            <tr class="text-center bg-success">
+                                                <td colspan="3" class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Lokasi {{$iLok+1}}</h4>
+                                                </td>
+                                            </tr>
+                                            <tr class="text-center bg-soft-success">
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Nama Lokasi</h4>
+                                                    <span>{{$vLok['nama_lokasi']}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Nama STO</h4>
+                                                    <span>{{$vLok['sto']}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">ID Project</h4>
+                                                    <span>{{$vLok['id_project']}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="w-100 mt-1">
+                                            <tr class="text-center bg-soft-success">
+                                                <td class="border border-success p-1 bg-success">
+                                                    <h5 class="mb-0">SP</h5>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Total Material</h4>
+                                                    <span>{{number_format($vLok['total_material_lokasi'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Total Jasa</h4>
+                                                    <span>{{number_format($vLok['total_jasa_lokasi'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-success p-1">
+                                                    <h4 class="card-title m-0">Total</h4>
+                                                    <span>{{number_format($vLok['total_lokasi'],0,',','.')}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="table-responsive mt-1">
+                                            <table class="lh-80 small td-middle table table-sm table-bordered table-striped m-0">
+                                                <thead class="bg-light text-center">
+                                                    <tr>
+                                                        <th rowspan="2">No</th>
+                                                        <th colspan="3">Quality Enhancement (QE) Akses</th>
+                                                        <th colspan="2">Harga Satuan</th>
+                                                        <th rowspan="2" class="bg-soft-success">Vol <br> SP</th>
+                                                        <th colspan="3" class="bg-soft-success">Total Harga SP</th>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Material <br> Designator</th>
+                                                        <th>Jasa <br> Designator</th>
+                                                        <th>Item Designator</th>
+                                                        <th>Material</th>
+                                                        <th>Jasa</th>
+                                                        <th>Material</th>
+                                                        <th>Jasa</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+    
+                                                <tbody>
+                                                    @foreach ($vLok['desigs'] as $iDes=>$vDes)
+                                                        <tr>
+                                                            <td class="text-center">{{$iDes+1}}</td>
+                                                            <td class="text-center">{{$vDes['nama_material']}}</td>
+                                                            <td class="text-center">{{$vDes['nama_jasa']}}</td>
+                                                            <td class="text-center">{{$vDes['nama_designator']}}</td>
+                                                            <td class="text-right">{{number_format($vDes['material'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['jasa'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['vol'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['total_material'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['total_jasa'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['total'],0,',','.')}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                                
+                            </div>
+
+                            {{-- designator Rekon --}}
+                            <div class="tab-pane {{ $tab==6?'active':null }}" id="tab6" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="custom-file">
+                                            <input type="file" wire:model="formUpload.file" class="custom-file-input" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Upload File Lokasi Rekon</label>
+                                        </div>
+                                        @error('formUpload.file')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group">
+                                            <input type="number" min="1" value="1" placeholder="jumlah lokasi" wire:model="formUpload.jumlah" class="form-control">
+                                            @error('formUpload.jumlah')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md">
+                                        <button type="button" wire:click="uploadLokasi" class="btn btn-success">Upload & Proses File</button>
+                                        <a href="{{ asset($dt['dt_sp']['file_lokasi']) }}" class="btn btn-danger">Download File Excel</a>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <h6 class="bg-light p-1 text-center">
+                                    <span>DATA GRAND TOTAL</span>
+                                </h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="w-100">
+                                            <tr class="text-center bg-soft-warning">
+                                                <td class="border border-warning p-1 bg-warning">
+                                                    <h5 class="mb-0">Rekon</h5>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Jumlah Lokasi</h4>
+                                                    <span>{{count($dt['dt_tagihan']['dt_lokasi'])}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Grand Total Material SP</h4>
+                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_material_rekon'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Grand Total Jasa SP</h4>
+                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_jasa_rekon'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Grand Total SP</h4>
+                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_all_rekon'],0,',','.')}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br>
+                                <h6 class="bg-light p-1 text-center">
+                                    <span>DATA LOKASI</span>
+                                </h6>
+                                @foreach ($dt['dt_tagihan']['dt_lokasi'] as $iLok => $vLok)
+            
+                                    <div class="table-responsive mb-2">
+                                        <table class="w-100">
+                                            <tr class="text-center bg-warning">
+                                                <td colspan="3" class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Lokasi {{$iLok+1}}</h4>
+                                                </td>
+                                            </tr>
+                                            <tr class="text-center bg-soft-warning">
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Nama Lokasi</h4>
+                                                    <span>{{$vLok['nama_lokasi']}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Nama STO</h4>
+                                                    <span>{{$vLok['sto']}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">ID Project</h4>
+                                                    <span>{{$vLok['id_project']}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="w-100 mt-1">
+                                            <tr class="text-center bg-soft-warning">
+                                                <td class="border border-warning p-1 bg-warning">
+                                                    <h5 class="mb-0">Rekon</h5>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Total Material</h4>
+                                                    <span>{{number_format($vLok['total_material_lokasi_rekon'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Total Jasa</h4>
+                                                    <span>{{number_format($vLok['total_jasa_lokasi_rekon'],0,',','.')}}</span>
+                                                </td>
+                                                <td class="border border-warning p-1">
+                                                    <h4 class="card-title m-0">Total</h4>
+                                                    <span>{{number_format($vLok['total_lokasi_rekon'],0,',','.')}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="table-responsive mt-1">
+                                            <table class="lh-80 small td-middle table table-sm table-bordered table-striped m-0">
+                                                <thead class="bg-light text-center">
+                                                    <tr>
+                                                        <th rowspan="2">No</th>
+                                                        <th colspan="3">Quality Enhancement (QE) Akses</th>
+                                                        <th colspan="2">Harga Satuan</th>
+                                                        <th rowspan="2" class="bg-soft-warning">Vol <br> Re <br> Kon</th>
+                                                        <th colspan="3" class="bg-soft-warning">Total Harga Rekon</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Material <br> Designator</th>
+                                                        <th>Jasa <br> Designator</th>
+                                                        <th>Item Designator</th>
+                                                        <th>Material</th>
+                                                        <th>Jasa</th>
+                                                        <th>Material</th>
+                                                        <th>Jasa</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+    
+                                                <tbody>
+                                                    @foreach ($vLok['desig_items'] as $iDes=>$vDes)
+                                                        <tr>
+                                                            <td class="text-center">{{$iDes+1}}</td>
+                                                            <td class="text-center">{{$vDes['nama_material']}}</td>
+                                                            <td class="text-center">{{$vDes['nama_jasa']}}</td>
+                                                            <td class="text-center">{{$vDes['nama_designator']}}</td>
+                                                            <td class="text-right">{{number_format($vDes['material'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['jasa'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['volume_rekon'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['total_material_rekon'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['total_jasa_rekon'],0,',','.')}}</td>
+                                                            <td class="text-right">{{number_format($vDes['total_rekon'],0,',','.')}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                                
+                            </div>
+
+                            {{-- turnkey --}}
                             <div class="tab-pane {{ $tab==4?'active':null }}" id="tab4" role="tabpanel">
                                 
                                 <div class="row">
@@ -204,532 +488,8 @@
                                 
                             </div>
 
-                            <div class="tab-pane {{ $tab==2?'active':null }}" id="tab2" role="tabpanel">
 
-                                <div class="row mb-2 text-dark">
-                                    <div class="col">
-                                        <table class="w-100">
-                                            <tr class="text-center bg-soft-success">
-                                                <td class="border border-success p-1 bg-success">
-                                                    <h5 class="mb-0">SP</h5>
-                                                </td>
-                                                <td class="border border-success p-1">
-                                                    <h4 class="card-title m-0">Jumlah Lokasi</h4>
-                                                    <span>{{count($dt['dt_sp']['json']['lokasi'])}}</span>
-                                                </td>
-                                                <td class="border border-success p-1">
-                                                    <h4 class="card-title m-0">Grand Total Material</h4>
-                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_material'],0,',','.')}}</span>
-                                                </td>
-                                                <td class="border border-success p-1">
-                                                    <h4 class="card-title m-0">Grand Total Jasa</h4>
-                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_jasa'],0,',','.')}}</span>
-                                                </td>
-                                                <td class="border border-success p-1">
-                                                    <h4 class="card-title m-0">Grand Total</h4>
-                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_all'],0,',','.')}}</span>
-                                                </td>
-                                            </tr>
-                                            <tr class="text-center bg-soft-warning">
-                                                <td class="border border-warning p-1 bg-warning">
-                                                    <h5 class="mb-0">REKON</h5>
-                                                </td>
-                                                <td class="border border-warning p-1">
-                                                    <h4 class="card-title m-0"></i> Jumlah Lokasi</h4>
-                                                    <span>{{count($dt['dt_tagihan']['dt_lokasi'])}}</span>
-                                                </td>
-                                                <td class="border border-warning p-1">
-                                                    <h4 class="card-title m-0">Grand Total Material</h4>
-                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_material_rekon'],0,',','.')}}</span>
-                                                </td>
-                                                <td class="border border-warning p-1">
-                                                    <h4 class="card-title m-0">Grand Total Jasa</h4>
-                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_jasa_rekon'],0,',','.')}}</span>
-                                                </td>
-                                                <td class="border border-warning p-1">
-                                                    <h4 class="card-title m-0">Grand Total</h4>
-                                                    <span>{{number_format($dt['dt_tagihan']['grand_total_all_rekon'],0,',','.')}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                @for ($a=0;$a<count($dt['dt_tagihan']['dt_lokasi']);$a++)
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="bg-soft-secondary border border-secondary p-1 text-center">
-                                                @if ($a+1>1)
-                                                    <a class="float-left" wire:click="delLoc({{$a}})" href="javascript:void(0)"><i class="fas fa-trash-alt text-danger"></i></a>
-                                                @endif
-                                                <h4 class="card-title m-0">Lokasi {{$a+1}}</h4>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 my-1">
-                                            <div class="row">
-                                                <div class="col-9 pr-0">
-                                                    <div class="border border-secondary p-1">
-                                                        <input placeholder="Ketik Nama Lokasi" wire:model="dt.dt_tagihan.dt_lokasi.{{$a}}.nama_lokasi" type="text" class="w-100 border-0 @error('dt.dt_tagihan.dt_lokasi.'.strval($a).'.nama_lokasi') bg-soft-danger @enderror">
-                                                    </div>
-                                                </div>
-                                                <div class="col pl-0">
-                                                    <div class="border border-secondary border-left-0 p-1">
-                                                        <input placeholder="Ketik Nama STO" wire:model="dt.dt_tagihan.dt_lokasi.{{$a}}.nama_sto" type="text" class="w-100 border-0 @error('dt.dt_tagihan.dt_lokasi.'.strval($a).'.nama_sto') bg-soft-danger @enderror">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 pr-1">
-                                            <div class="row">
-                                                <div class="col-12 mb-1">
-                                                    <div class="bg-soft-success border border-success p-1 text-center">
-                                                        <h4 class="card-title m-0">SP</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 pr-1">
-                                                    <div class="border border-success p-1 text-center">
-                                                        <h4 class="card-title m-0">Total Material</h4>
-                                                        <span>{{number_format($dt['dt_tagihan']['dt_lokasi'][$a]['total_material_lokasi'],0,',','.')}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 px-1">
-                                                    <div class="border border-success p-1 text-center">
-                                                        <h4 class="card-title m-0">Total Jasa</h4>
-                                                        <span>{{number_format($dt['dt_tagihan']['dt_lokasi'][$a]['total_jasa_lokasi'],0,',','.')}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 pl-1">
-                                                    <div class="border border-success p-1 text-center">
-                                                        <h4 class="card-title m-0">Total</h4>
-                                                        <span>{{number_format($dt['dt_tagihan']['dt_lokasi'][$a]['total_lokasi'],0,',','.')}}</span>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6 pl-1">
-                                            <div class="row">
-                                                <div class="col-12 mb-1">
-                                                    <div class="bg-soft-warning border border-warning p-1 text-center">
-                                                        <h4 class="card-title m-0">Rekon</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 pr-1">
-                                                    <div class="border border-warning p-1 text-center">
-                                                        <h4 class="card-title m-0">Total Material</h4>
-                                                        <span>{{number_format($dt['dt_tagihan']['dt_lokasi'][$a]['total_material_lokasi_rekon'],0,',','.')}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 px-1">
-                                                    <div class="border border-warning p-1 text-center">
-                                                        <h4 class="card-title m-0">Total Jasa</h4>
-                                                        <span>{{number_format($dt['dt_tagihan']['dt_lokasi'][$a]['total_jasa_lokasi_rekon'],0,',','.')}}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 pl-1">
-                                                    <div class="border border-warning p-1 text-center">
-                                                        <h4 class="card-title m-0">Total</h4>
-                                                        <span>{{number_format($dt['dt_tagihan']['dt_lokasi'][$a]['total_lokasi_rekon'],0,',','.')}}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="table-responsive mt-1">
-                                        <table class="lh-80 small td-middle table table-sm table-bordered table-striped m-0">
-                                            <thead>
-                                                <tr class="bg-light">
-                                                    <th rowspan="2" width="40" class="text-center"></th>
-                                                    <th rowspan="2" width="40" class="text-center">No</th>
-                                                    <th rowspan="2" class="text-center" style="min-width: 250px">Designator</th>
-                                                    <th colspan="4" class="text-center text-dark bg-soft-secondary ">Harga Satuan</th>
-                                                    <th colspan="4" class="text-center bg-success text-dark">Data SP</th>
-                                                    <th colspan="4" class="text-center bg-warning text-dark">Data Rekon</th>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    <th class="bg-light text-center" style="min-width: 120px">Material</th>
-                                                    <th class="bg-light text-center" style="max-width: 10px"></th>
-                                                    <th class="bg-light text-center" style="min-width: 120px">Jasa</th>
-                                                    <th class="bg-light text-center" style="max-width: 10px"></th>
-                                                    <th class="bg-soft-success text-center">Vol</th>
-                                                    <th class="bg-soft-success text-center">Material</th>
-                                                    <th class="bg-soft-success text-center">Jasa</th>
-                                                    <th class="bg-soft-success text-center">Total</th>
-                                                    <th class="bg-soft-warning text-center" style="min-width: 90px">Vol</th>
-                                                    <th class="bg-soft-warning text-center" style="min-width: 110px">Material</th>
-                                                    <th class="bg-soft-warning text-center" style="min-width: 110px">Jasa</th>
-                                                    <th class="bg-soft-warning text-center" style="min-width: 110px">Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            
-                                            @for ($i=0;$i<count($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items']);$i++)
-
-                                                <tr class="text-center">
-
-                                                    <td class="text-center">
-                                                        @if ($i > 0)
-                                                            <a wire:click="delDesig({{$a}},{{$i}})" href="javascript:void(0)" class="btn btn-sm btn-danger"><i class="fas fa-times fa-fw"></i></a>
-                                                        @else
-                                                            <a wire:click="initDesig({{$a}},{{ count($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items']) }})" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">{{$i+1}}</td>
-                                                    
-                                                    <td class="text-left">
-                                                        <div wire:ignore class="text-left">
-                                                            <select data-lokasi="{{$a}}" data-row="{{$i}}" id="select_{{($a)."_".($i)}}" class="item-desig form-control form-control-sm w-100">
-                                                            </select>
-                                                        </div>
-                                                        @error('dt_lokasi.'.strval($a).'.desig_items.'.strval($i).'.id')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
-                                                    </td>
-                                                    <td class="text-right">
-                                                        @if (
-                                                            $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['fix_price'] === null ||  
-                                                            $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['fix_price'] == 1 ||  
-                                                            $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['boxmat_rekon'] === "" 
-                                                        )
-                                                            {{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['material_b_rekon'],0,',','.') }}
-                                                        @else
-                                                            <input min="0" 
-                                                                class="form-control form-control-sm text-center" 
-                                                                wire:model="dt.dt_tagihan.dt_lokasi.{{$a}}.desig_items.{{$i}}.material_b_rekon" 
-                                                                wire:change="reTotal({{$a}},{{$i}})" 
-                                                                type="number">
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input id="boxmat_rekon_{{($a)."_".($i)}}" type="checkbox" 
-                                                            wire:change="checkMatJas({{$a}},{{$i}},'{{$dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['boxmat_rekon']}}', 'material_rekon')" 
-                                                            {{ $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['boxmat_rekon'] }}>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        @if (
-                                                            $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['fix_price'] === null || 
-                                                            $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['fix_price'] == 1 ||  
-                                                            $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['boxjas_rekon'] === "" 
-                                                        )
-                                                            {{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['jasa_b_rekon'],0,',','.') }}
-                                                        @else
-                                                            <input min="0"  
-                                                                class="form-control form-control-sm text-center" 
-                                                                wire:model="dt.dt_tagihan.dt_lokasi.{{$a}}.desig_items.{{$i}}.jasa_b_rekon" 
-                                                                wire:change="reTotal({{$a}},{{$i}})" 
-                                                                type="number">
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input id="boxjas_rekon_{{($a)."_".($i)}}" type="checkbox" 
-                                                            wire:change="checkMatJas({{$a}},{{$i}},'{{$dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['boxjas_rekon']}}', 'jasa_rekon')" 
-                                                            {{ $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['boxjas_rekon'] }}>
-                                                    </td>
-                                                    <td>{{ $dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['volume'] }}</td>
-                                                    <td class="text-right">{{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['total_material'],0,',','.') }}</td>
-                                                    <td class="text-right">{{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['total_jasa'],0,',','.') }}</td>
-                                                    <td class="text-right">{{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['total'],0,',','.') }}</td>
-
-                                                    <td>
-                                                        <input min="0" wire:change="reTotal({{$a}},{{$i}})" class="form-control form-control-sm text-center" wire:model="dt.dt_tagihan.dt_lokasi.{{$a}}.desig_items.{{$i}}.volume_rekon" type="number">
-                                                    </td>
-                                                    <td class="text-right">{{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['total_material_rekon'],0,',','.') }}</td>
-                                                    <td class="text-right">{{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['total_jasa_rekon'],0,',','.') }}</td>
-                                                    <td class="text-right">{{ number_format($dt['dt_tagihan']['dt_lokasi'][$a]['desig_items'][$i]['total_rekon'],0,',','.') }}</td>
-                                                    
-                                                </tr>
-                                                
-                                            @endfor
-
-                                            </tbody>
-                                        </table>
-
-                                        @if ($a+1 == count($dt['dt_tagihan']['dt_lokasi']))
-                                            <hr>
-                                            <button wire:click="initLoc({{ count($dt['dt_tagihan']['dt_lokasi']) }})" type="button" class="rounded-0 btn btn-sm btn-success"><i class="fas fa-plus"></i> Tambah Lokasi</button>
-                                        @endif
-                    
-                                    </div>
-                                @endfor
-                                
-                            </div>
-
-                            <div class="tab-pane {{ $tab==3?'active':null }}" id="tab3" role="tabpanel">
-                                
-                                {{-- diambil --}}
-                                <div class="row">
-                                    <div class="col">
-                                        <h6>MATERIAL YANG DIAMBIL</h6>
-                                        <table class="table-bordered lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
-                                            <thead class="bg-light text-center">
-                                                <tr>
-                                                    <th rowspan="2" width="50">
-                                                        <a wire:click="addAmbil({{count($dt['dt_tagihan']['dt_gudang']['ambil']['data'])}})" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
-                                                    </th>
-                                                    <th rowspan="2">No</th>
-                                                    <th rowspan="2">No. RFC</th>
-                                                    <th rowspan="2" width="130">Tgl. RFC</th>
-                                                    @foreach ($allDesigs as $item)
-                                                    <th>
-                                                        <div class="verticalTableHeader">{{$item['nama']}}</div>
-                                                    </th>
-                                                    @endforeach
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    @foreach ($allDesigs as $item)
-                                                    <th width="60">{{$item['satuan']}}</th>
-                                                    @endforeach
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <tr><td></td></tr>
-                                                @foreach ($dt['dt_tagihan']['dt_gudang']['ambil']['data'] as $iRowAmbil=>$vRowAmbil)
-                                                    <tr class="text-center">
-                                                        <td>
-                                                            <a wire:click="delAmbil({{$iRowAmbil}})" href="javascript:void(0)" class="btn btn-sm btn-danger"><i class="fas fa-times fa-fw"></i></a>
-                                                        </td>
-                                                        <td>{{$iRowAmbil+1}}</td>
-                                                        <td>
-                                                            <input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.ambil.data.{{$iRowAmbil}}.no_rfc">
-                                                        </td>
-                                                        <td>
-                                                            <input class="w-100" type="date" wire:model="dt.dt_tagihan.dt_gudang.ambil.data.{{$iRowAmbil}}.tgl_rfc">
-                                                        </td>
-                                                        @foreach ($vRowAmbil['nilai'] as $iNilaiAmbil=>$vNilaiAmbil)
-                                                        <td>
-                                                            <input id="{{rand()}}" wire:change="reTotalAmbil()" min="0" style="width: 60px" class="w-100" type="number" wire:model="dt.dt_tagihan.dt_gudang.ambil.data.{{$iRowAmbil}}.nilai.{{$iNilaiAmbil}}">
-                                                        </td>
-                                                        @endforeach
-                                                        
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                            <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="m-0 p-0"></td></tr>
-                                            <tfoot class="bg-light">
-                                                <tr class="text-dark">
-                                                    <th colspan="4">TOTAL MATERIAL</th>
-                                                    @foreach ($dt['dt_tagihan']['dt_gudang']['ambil']['total'] as $iNilaiAmbil=>$vNilaiAmbil)
-                                                    <th class="text-center">{{$vNilaiAmbil}}</th>
-                                                    @endforeach
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-                                        
-                                    </div>
-                                </div>
-
-                                {{-- dipakai --}}
-                                <hr> 
-                                <div class="row">
-                                    <div class="col">
-                                        <h6>MATERIAL YANG DIPAKAI</h6>
-                                        <table class="lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
-                                            <thead class="bg-light text-center">
-                                                <tr>
-                                                    <th rowspan="2" width="50">No</th>
-                                                    <th rowspan="2">Nama Lokasi</th>
-                                                    <th rowspan="2" width="130">ID Project</th>
-                                                    @foreach ($allDesigs as $item)
-                                                    <th>
-                                                        <div class="verticalTableHeader">{{$item['nama']}}</div>
-                                                    </th>
-                                                    @endforeach
-                                                </tr>
-                                                <tr>
-                                                    @foreach ($allDesigs as $item)
-                                                    <th width="60">{{$item['satuan']}}</th>
-                                                    @endforeach
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                @foreach ($dt['dt_tagihan']['dt_lokasi'] as $iLok=>$vLok)
-                                                    <tr class="text-center">
-                                                        <td>{{$iLok+1}}</td>
-                                                        <td>{{$vLok['nama_lokasi']}}</td>
-                                                        <td>{{$dt['dt_sp']['json']['id_project']}}</td>
-                                                        @foreach ($allDesigs as $iDesMat=>$vDesMat)
-                                                        <td>
-                                                            <input wire:change="reTotalPakai()" style="width: 60px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.pakai.data.{{$iLok}}.{{$iDesMat}}">
-                                                        </td>
-                                                        @endforeach
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                            <tr><td colspan="{{ count($allDesigs)+3 }}"><hr class="m-0 p-0"></td></tr>
-                                            <tfoot class="bg-light">
-                                                <tr class="text-dark">
-                                                    <th colspan="3">TOTAL MATERIAL</th>
-                                                    @foreach ($allDesigs as $iDesMat=>$vDesMat)
-                                                    <th class="text-center">{{$dt['dt_tagihan']['dt_gudang']['pakai']['total'][$iDesMat]}}</th>
-                                                    @endforeach
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-                                        
-                                    </div>
-                                </div>
-
-                                {{-- kembali --}}
-                                <hr> 
-                                <div class="row">
-                                    <div class="col">
-                                        <h6>PENGEMBALIAN MATERIAL</h6>
-                                        <table class="table-bordered lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
-                                            <thead class="bg-light text-center">
-                                                <tr>
-                                                    <th rowspan="2" width="50">
-                                                        <a wire:click="addKembali({{count($dt['dt_tagihan']['dt_gudang']['kembali']['data'])}})" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
-                                                    </th>
-                                                    <th rowspan="2">No</th>
-                                                    <th rowspan="2">ID Pengembalian</th>
-                                                    <th rowspan="2" width="130">Tgl. RFR</th>
-                                                    @foreach ($allDesigs as $item)
-                                                    <th><div class="verticalTableHeader">{{$item['nama']}}</div></th>
-                                                    @endforeach
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    @foreach ($allDesigs as $item)
-                                                    <th width="60">{{$item['satuan']}}</th>
-                                                    @endforeach
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <tr><td></td></tr>
-                                                @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['data'] as $iRowKembali=>$vRowKembali)
-                                                    <tr class="text-center">
-                                                        <td>
-                                                            <a wire:click="delKembali({{$iRowKembali}})" href="javascript:void(0)" class="btn btn-sm btn-danger"><i class="fas fa-times fa-fw"></i></a>
-                                                        </td>
-                                                        <td>{{$iRowKembali+1}}</td>
-                                                        <td>
-                                                            <input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.id_kembali">
-                                                        </td>
-                                                        <td>
-                                                            <input class="w-100" type="date" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.tgl_rfr">
-                                                        </td>
-                                                        @foreach ($vRowKembali['nilai'] as $iNilaiKembali=>$vNilaiKembali)
-                                                        <td>
-                                                            <input id="{{rand()}}" wire:change="reTotalKembali()" min="0" style="width: 60px" class="w-100" type="number" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.nilai.{{$iNilaiKembali}}">
-                                                        </td>
-                                                        @endforeach
-                                                        
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                            <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="m-0 p-0"></td></tr>
-                                            <tfoot class="bg-light">
-                                                <tr class="text-dark">
-                                                    <th colspan="4">TOTAL PENGEMBALIAN MATERIAL</th>
-                                                    @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['total'] as $iNilaiKembali=>$vNilaiKembali)
-                                                    <th class="text-center">{{$vNilaiKembali}}</th>
-                                                    @endforeach
-                                                </tr>
-                                                <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="mb-0 bg-warning"></td></tr>
-                                                <tr class="text-dark bg-soft-warning">
-                                                    <th colspan="4" class="border border-warning">GRAND TOTAL SISA MATERIAL</th>
-                                                    @foreach ($dt['dt_tagihan']['dt_gudang']['grand_total'] as $iGt=>$vGt)
-                                                    <th class="border border-warning text-center">{{$vGt}}</th>
-                                                    @endforeach
-                                                </tr>
-                                            </tfoot>
-                                            
-                                        </table>
-
-                                        
-                                    </div>
-                                </div>
-                                <div class="row mt-1">
-                                    <div class="col">
-                                        <h6>Keterangan: 
-                                            <a wire:click="addKetKembali()" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
-                                        </h6>
-                                        <table class="w-100">
-                                            @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['ket'] as $i=>$v)
-                                            <tr>
-                                                <td width="20"><i wire:click="delKetKembali({{$i}})" class="fas fa-times text-danger float-left"></i></td>
-                                                <td><input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.kembali.ket.{{$i}}"></td>
-                                            </tr>
-                                            @endforeach
-                                        </table>
-                                    </div>
-                                </div>
-
-                                {{-- rekon material --}}
-                                <hr> 
-                                <div class="row">
-                                    <div class="col">
-                                        <h6>HASIL REKON MATERIAL</h6>
-                                        <table class="lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
-                                            <thead class="bg-light text-center">
-                                                <tr>
-                                                    <th rowspan="2" width="40">No</th>
-                                                    <th rowspan="2">Nama Barang</th>
-                                                    <th rowspan="2">Nama Barang <br> Alista</th>
-                                                    <th rowspan="2" width="60">Hasil <br> Rekon</th>
-                                                    <th colspan="3">Pemakaian Material</th>
-                                                    <th rowspan="2">Keterangan</th>
-                                                </tr>
-                                                <tr>
-                                                    <th width="70">TA</th>
-                                                    <th width="70">Mitra</th>
-                                                    <th width="60">Pengembalian</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                @php $no=1; @endphp
-                                                @foreach ($dt['dt_tagihan']['dt_gudang']['rekon'] as $iDr => $vDr)
-                                                @if ($vDr['sum_rekon'] > 0)
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td><textarea class="w-100" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.nama_barang_alista" rows="3"></textarea></td>
-                                                    <td class="text-center">{{$vDr['nama_barang']}}</td>
-                                                    <td class="text-center">{{$vDr['sum_rekon']}}</td>
-                                                    <td><input style="width: 70px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.v_ta" wire:change="rePemakaian({{$iDr}},'v_ta')" max="{{$vDr['v_ta']+$vDr['v_mitra']}}"></td>
-                                                    <td><input style="width: 70px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.v_mitra" wire:change="rePemakaian({{$iDr}},'v_mitra')" max="{{$vDr['v_ta']+$vDr['v_mitra']}}"></td>
-                                                    <td class="text-center">{{$vDr['v_back']}}</td>
-                                                    <td><textarea class="w-100" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.ket" rows="3"></textarea></td>
-                                                </tr>
-                                                @endif
-                                                @endforeach
-                                                
-                                            </tbody>
-                                        </table>
-                                        <div class="row mt-2">
-                                            <div class="col">
-                                                <h6>Keterangan Material Lokasi: 
-                                                </h6>
-                                                <table class="w-100">
-                                                    @foreach ($dt['dt_tagihan']['dt_gudang']['rekon'] as $iDr => $vDr)
-                                                    @if ($vDr['sum_rekon'] > 0)
-                                                    <tr>
-                                                        <td><input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.ket_matlok"></td>
-                                                    </tr>
-                                                    @endif
-                                                    @endforeach
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        
-                                    </div>
-                                </div>
-
-                                
-                            </div>
-
+                            {{-- pejabat --}}
                             <div class="tab-pane {{ $tab==5?'active':null }}" id="tab5" role="tabpanel">
                                 
                                 <div class="row">
@@ -737,76 +497,158 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
-                                                    <label>GM. Telkom Akses</label>
-                                                    <select wire:model="dt.dt_tagihan.dt_ttd.gm_ta" class="form-control @error('dt.dt_tagihan.dt_ttd.gm_ta') is-invalid @enderror">
+                                                    <label>GM. Telkom Akses (Pejabat)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.gm_ta_pejabat" class="form-control @error('dt.dt_tagihan.dt_ttd.gm_ta_pejabat') is-invalid @enderror">
                                                         <option value="">Pilih nama</option>
-                                                        @foreach ($pejabat['gm_ta']['value'] as $item)
+                                                        @foreach ($pejabat['gm_ta']['value']['nama'] as $item)
                                                         <option value="{{ $item }}">{{$item}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('dt.dt_tagihan.dt_ttd.gm_ta')
+                                                    @error('dt.dt_tagihan.dt_ttd.gm_ta_pejabat')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="col">
-                                                    <label>Mgr. {{$dt['dt_sp']['master_units']['nama']}}</label>
-                                                    <select wire:model="dt.dt_tagihan.dt_ttd.mgr_unit" class="form-control @error('dt.dt_tagihan.dt_ttd.mgr_unit') is-invalid @enderror">
-                                                        <option value="">Pilih nama</option>@foreach ($pejabat['mgr_'.strtolower($dt['dt_sp']['master_units']['nama'])]['value'] as 
-                                                        $item)
+                                                    <label>GM. Telkom Akses (Jabatan)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.gm_ta_jabatan" class="form-control @error('dt.dt_tagihan.dt_ttd.gm_ta_jabatan') is-invalid @enderror">
+                                                        <option value="">Pilih jabatan</option>
+                                                        @foreach ($pejabat['gm_ta']['value']['jabatan'] as $item)
                                                         <option value="{{ $item }}">{{$item}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('dt.dt_tagihan.dt_ttd.mgr_unit')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="col">
-                                                    <label>SM. {{$dt['dt_sp']['master_units']['nama']}}</label>
-                                                    <select wire:model="dt.dt_tagihan.dt_ttd.sm_unit" class="form-control @error('dt.dt_tagihan.dt_ttd.sm_unit') is-invalid @enderror">
-                                                        <option value="">Pilih nama</option>@foreach ($pejabat['sm_'.strtolower($dt['dt_sp']['master_units']['nama'])]['value'] as 
-                                                        $item)
-                                                        <option value="{{ $item }}">{{$item}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('dt.dt_tagihan.dt_ttd.sm_unit')
+                                                    @error('dt.dt_tagihan.dt_ttd.gm_ta_jabatan')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col">
-                                                    <label>Mgr. Shared Service</label>
-                                                    <select wire:model="dt.dt_tagihan.dt_ttd.mgr_shared" class="form-control @error('dt.dt_tagihan.dt_ttd.mgr_shared') is-invalid @enderror">
+                                                    <label>Mgr. {{$dt['dt_sp']['master_units']['nama']}} (Pejabat)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.mgr_unit_pejabat" class="form-control @error('dt.dt_tagihan.dt_ttd.mgr_unit_pejabat') is-invalid @enderror">
                                                         <option value="">Pilih nama</option>
-                                                        @foreach ($pejabat['mgr_shared']['value'] as $item)
+                                                        
+                                                        @foreach ($pejabat['mgr_'.strtolower($dt['dt_sp']['master_units']['nama'])]['value']['nama'] as $item)
                                                         <option value="{{ $item }}">{{$item}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('dt.dt_tagihan.dt_ttd.mgr_shared')
+                                                    @error('dt.dt_tagihan.dt_ttd.mgr_unit_pejabat')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="col">
-                                                    <label>Waspang</label>
-                                                    <select wire:model="dt.dt_tagihan.dt_ttd.wapang" class="form-control @error('dt.dt_tagihan.dt_ttd.wapang') is-invalid @enderror">
-                                                        <option value="">Pilih nama</option>
-                                                        @foreach ($pejabat['wapang']['value'] as $item)
+                                                    <label>Mgr. {{$dt['dt_sp']['master_units']['nama']}} (Jabatan)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.mgr_unit_jabatan" class="form-control @error('dt.dt_tagihan.dt_ttd.mgr_unit_jabatan') is-invalid @enderror">
+                                                        <option value="">Pilih jabatan</option>
+                                                        
+                                                        @foreach ($pejabat['mgr_'.strtolower($dt['dt_sp']['master_units']['nama'])]['value']['jabatan'] as $item)
                                                         <option value="{{ $item }}">{{$item}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('dt.dt_tagihan.dt_ttd.wapang')
+                                                    @error('dt.dt_tagihan.dt_ttd.mgr_unit_jabatan')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label>SM. {{$dt['dt_sp']['master_units']['nama']}} (Pejabat)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.sm_unit_pejabat" class="form-control @error('dt.dt_tagihan.dt_ttd.sm_unit_pejabat') is-invalid @enderror">
+                                                        <option value="">Pilih nama</option>@foreach ($pejabat['sm_'.strtolower($dt['dt_sp']['master_units']['nama'])]['value']['nama'] as 
+                                                        $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.sm_unit_pejabat')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="col">
-                                                    <label>Petugas Gudang</label>
-                                                    <select wire:model="dt.dt_tagihan.dt_ttd.gudang" class="form-control @error('dt.dt_tagihan.dt_ttd.gudang') is-invalid @enderror">
-                                                        <option value="">Pilih nama</option>
-                                                        @foreach ($pejabat['gudang']['value'] as $item)
+                                                    <label>SM. {{$dt['dt_sp']['master_units']['nama']}} (Jabatan)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.sm_unit_jabatan" class="form-control @error('dt.dt_tagihan.dt_ttd.sm_unit_jabatan') is-invalid @enderror">
+                                                        <option value="">Pilih jabatan</option>@foreach ($pejabat['sm_'.strtolower($dt['dt_sp']['master_units']['nama'])]['value']['jabatan'] as 
+                                                        $item)
                                                         <option value="{{ $item }}">{{$item}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('dt.dt_tagihan.dt_ttd.gudang')
+                                                    @error('dt.dt_tagihan.dt_ttd.sm_unit_jabatan')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label>Mgr. Shared Service (Pejabat)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.mgr_shared_pejabat" class="form-control @error('dt.dt_tagihan.dt_ttd.mgr_shared_pejabat') is-invalid @enderror">
+                                                        <option value="">Pilih nama</option>
+                                                        @foreach ($pejabat['mgr_shared']['value']['nama'] as $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.mgr_shared_pejabat')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col">
+                                                    <label>Mgr. Shared Service (Jabatan)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.mgr_shared_jabatan" class="form-control @error('dt.dt_tagihan.dt_ttd.mgr_shared_jabatan') is-invalid @enderror">
+                                                        <option value="">Pilih jabatan</option>
+                                                        @foreach ($pejabat['mgr_shared']['value']['jabatan'] as $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.mgr_shared_jabatan')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label>Waspang (Pejabat)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.waspang_pejabat" class="form-control @error('dt.dt_tagihan.dt_ttd.waspang_pejabat') is-invalid @enderror">
+                                                        <option value="">Pilih nama</option>
+                                                        @foreach ($pejabat['waspang']['value']['nama'] as $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.waspang_pejabat')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col">
+                                                    <label>Waspang (Jabatan)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.waspang_jabatan" class="form-control @error('dt.dt_tagihan.dt_ttd.waspang_jabatan') is-invalid @enderror">
+                                                        <option value="">Pilih jabatan</option>
+                                                        @foreach ($pejabat['waspang']['value']['jabatan'] as $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.waspang_jabatan')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <label>Petugas Gudang (Pejabat)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.gudang_pejabat" class="form-control @error('dt.dt_tagihan.dt_ttd.gudang_pejabat') is-invalid @enderror">
+                                                        <option value="">Pilih nama</option>
+                                                        @foreach ($pejabat['gudang']['value']['nama'] as $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.gudang_pejabat')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col">
+                                                    <label>Petugas Gudang (Jabatan)</label>
+                                                    <select wire:model="dt.dt_tagihan.dt_ttd.gudang_jabatan" class="form-control @error('dt.dt_tagihan.dt_ttd.gudang_jabatan') is-invalid @enderror">
+                                                        <option value="">Pilih jabatan</option>
+                                                        @foreach ($pejabat['gudang']['value']['jabatan'] as $item)
+                                                        <option value="{{ $item }}">{{$item}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('dt.dt_tagihan.dt_ttd.gudang_jabatan')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -816,29 +658,14 @@
                                 </div>
                                 
                             </div>
+
+                            
+                            {{--  --}}
                             
                         </div>
     
                         <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                @if (count($errors)>0)
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    Masih terdapat error pada input form, silahkan cek kembali
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                @endif
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-light">Reset Semua Form</button>
-                            </div>
-                            <div class="col text-right">
-                                
-                                <button type="submit" class="btn btn-primary">Kirim Tagihan</button>
-                            </div>
-                        </div>
+                        {{--  --}}
 
                     </form>
 
