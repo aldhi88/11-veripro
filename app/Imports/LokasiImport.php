@@ -11,12 +11,14 @@ class LokasiImport implements ToCollection, WithHeadingRow
     private $callback;
     private $jlhLokasi;
     private $dtDesigAcuan = [];
+    private $error;
 
     public function __construct($callback, $jlhLokasi, $dtDesigAcuan)
     {
         $this->callback = $callback;
         $this->jlhLokasi = $jlhLokasi;
         $this->dtDesigAcuan = $dtDesigAcuan;
+        $this->error = 'pass';
     }
 
     public function collection(Collection $row)
@@ -28,6 +30,10 @@ class LokasiImport implements ToCollection, WithHeadingRow
         $grand_total_jasa=0;
         $grand_total=0;
         for ($i=9; $i < (9+$this->jlhLokasi); $i++) { 
+            if(!isset($row[0][$i])){
+                $this->error = 'Jumlah lokasi tidak valid';
+                break;
+            }
             $data['lokasi'][$iLok]['sto'] = $row[0][$i];
             $data['lokasi'][$iLok]['id_project'] = $row[1][$i];
             $data['lokasi'][$iLok]['nama_lokasi'] = $row[2][$i];
@@ -42,12 +48,17 @@ class LokasiImport implements ToCollection, WithHeadingRow
 
                 if($iRow>=5){
                     if(!is_null($vRow[$i])){
+                        $vRow['nama_material'] = ($vRow['nama_material']==''||$vRow['nama_material']=='-')?null:$vRow['nama_material'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['nama_material'] = $vRow['nama_material'];
+                        $vRow['nama_jasa'] = ($vRow['nama_jasa']==''||$vRow['nama_jasa']=='-')?null:$vRow['nama_jasa'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['nama_jasa'] = $vRow['nama_jasa'];
+                        $vRow['nama_designator'] = ($vRow['nama_designator']==''||$vRow['nama_designator']=='-')?null:$vRow['nama_designator'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['nama_designator'] = $vRow['nama_designator'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['uraian'] = $vRow['uraian'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['satuan'] = $vRow['satuan'];
+                        $vRow['material'] = ($vRow['material']=='-'||$vRow['material']=='')?0:$vRow['material'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['material'] = $vRow['material'];
+                        $vRow['jasa'] = ($vRow['jasa']=='-'||$vRow['jasa']=='')?0:$vRow['jasa'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['jasa'] = $vRow['jasa'];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['vol'] = $vRow[$i];
                         $data['lokasi'][$iLok]['desigs'][$iDes]['total_material'] = $vRow['material']*$vRow[$i];
@@ -82,7 +93,7 @@ class LokasiImport implements ToCollection, WithHeadingRow
         }
 
         $dt['dtLok'] = $data;
-        $dt['dtError'] = [];
+        $dt['dtError'] = $this->error;
         call_user_func($this->callback, $dt);
         // dd($data);
     }

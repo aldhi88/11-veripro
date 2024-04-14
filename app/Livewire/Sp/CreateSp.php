@@ -129,8 +129,11 @@ class CreateSp extends Component
 
         $callback = function ($data) {
             // dd($data);
-            $this->dtLok = $data['dtLok'];
             $this->dtError = $data['dtError'];
+            $this->dtLok = $data['dtLok'];
+            if($data['dtError']!='pass'){
+                session()->flash('message', $data['dtError']);
+            }
             $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
         };
