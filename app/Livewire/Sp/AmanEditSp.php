@@ -10,6 +10,7 @@ use App\Models\MasterUnit;
 use App\Models\MasterUser;
 use App\Models\SpAmandemen;
 use App\Models\SpInduk;
+use App\Models\Tagihan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
@@ -100,7 +101,25 @@ class AmanEditSp extends Component
                 $this->dt['khs_amandemen_id'],
                 $this->dt['auth_login_id'],
             );
-            SpAmandemen::find($this->editId)->update($this->dt);
+            $q = SpAmandemen::where('id', '=', $this->editId)->first();
+            $q->update($this->dt);
+            $spIndukId = $q->sp_induk_id;
+
+            SpInduk::find($spIndukId)
+                ->update(['json' => $this->dt['json']]);
+
+            if(SpInduk::hasTagihan($spIndukId)){
+                $q = Tagihan::where('sp_induk_id', $this->editId)->first();
+                $q->update(['status' => 1]);
+                $tagihanId = $q->id;
+                $tagihanJson = $q->json;
+
+                TagihanHistory::create([
+                    'tagihan_id' => $tagihanId,
+                    'status' => 1,
+                    'json' => $tagihanJson,
+                ]);
+            }
             session()->flash('message', 'Data Amandemen SP berhasil diperbaharui.');
             return redirect()->to('/sp/index');
         }
@@ -114,42 +133,45 @@ class AmanEditSp extends Component
         ]);
 
         $this->dt['file_lokasi'] = $this->formUpload['file'];
-
-        if(is_null($this->dt['khs_amandemen_id'])){
-            $dtDesigAcuan = (KhsIndukDesignator::query()
-                ->where('khs_induk_id',$this->dt['khs_induk_id'])
-                ->get())
-                ->map(function ($item) {
-                        unset(
-                            $item['id'],
-                            $item['khs_induk_id'],
-                            $item['created_at'],
-                            $item['updated_at'],
-                            $item['deleted_at'],
-                        );
-                        return $item;
-                    })
-                ->toArray();   
-        }else{
-            $dtDesigAcuan = (KhsAmandemenDesignator::query()
-                ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
-                ->get())
-                ->map(function ($item) {
-                        unset(
-                            $item['id'],
-                            $item['khs_amandemen_id'],
-                            $item['created_at'],
-                            $item['updated_at'],
-                            $item['deleted_at'],
-                        );
-                        return $item;
-                    })
-                ->toArray();
-        }
+        $dtDesigAcuan = [];
+        // if(is_null($this->dt['khs_amandemen_id'])){
+        //     $dtDesigAcuan = (KhsIndukDesignator::query()
+        //         ->where('khs_induk_id',$this->dt['khs_induk_id'])
+        //         ->get())
+        //         ->map(function ($item) {
+        //                 unset(
+        //                     $item['id'],
+        //                     $item['khs_induk_id'],
+        //                     $item['created_at'],
+        //                     $item['updated_at'],
+        //                     $item['deleted_at'],
+        //                 );
+        //                 return $item;
+        //             })
+        //         ->toArray();   
+        // }else{
+        //     $dtDesigAcuan = (KhsAmandemenDesignator::query()
+        //         ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
+        //         ->get())
+        //         ->map(function ($item) {
+        //                 unset(
+        //                     $item['id'],
+        //                     $item['khs_amandemen_id'],
+        //                     $item['created_at'],
+        //                     $item['updated_at'],
+        //                     $item['deleted_at'],
+        //                 );
+        //                 return $item;
+        //             })
+        //         ->toArray();
+        // }
 
         $callback = function ($data) {
             $this->dtLok = $data['dtLok'];
             $this->dtError = $data['dtError'];
+            if($data['dtError']!='pass'){
+                session()->flash('message', $data['dtError']);
+            }
             $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
         };
@@ -217,7 +239,6 @@ class AmanEditSp extends Component
         $this->genKhs();
         $this->dtLok = $this->dtEdit['json']['dtLokasi'];
 
-        // dd($this->all());
     }
 
     public function genKhs()

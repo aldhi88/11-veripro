@@ -21,8 +21,7 @@
                                 <th class="text-center">Mitra</th>
                                 <th class="text-center">SP</th>
                                 <th class="text-center">KHS</th>
-                                <th class="text-center">Jumlah <br> Lokasi <br> SP</th>
-                                <th class="text-center">Jumlah <br> Lokasi <br> Rekon</th>
+                                <th class="text-center">Jumlah <br> Lokasi</th>
                                 <th class="text-center">Total SP</th>
                                 <th class="text-center">Total Rekon</th>
                                 <th class="text-center" width="50">Status</th>
@@ -52,7 +51,6 @@
                                             @endforeach
                                         </select>
                                     </th>
-                                    <th class="text-center"><input type="hidden" class="form-control text-center search-col-dt"></th>
                                     <th class="text-center"><input type="hidden" class="form-control text-center search-col-dt"></th>
                                     <th class="text-center"></th>
                                     <th class="text-center"></th>

@@ -30,18 +30,21 @@
         ajax: '{{ route("tagihan.indexMitra.dt") }}',
         columns: [
             { data: 'action', name: 'created_at', orderable: true, searchable:false},
-            { data: 'json_format_mitra.perusahaan', name: 'mitras.master_users.detail', orderable: false, searchable:true },
+            { data: 'sp_induks.khs_induks.json', name: 'sp_induks.khs_induks.json', orderable: false, searchable:true ,render: function (data, type, row) {
+                const decodedJsonString = data.replace(/&quot;/g, '"');
+                const jsonObject = JSON.parse(decodedJsonString);
+                return jsonObject.perusahaan;
+            }},
             { data: 'sp_induks.no_sp', name: 'sp_induks.no_sp', orderable: false, searchable:true },
-            { data: 'sp_induks.khs_induks.no_kontrak', name: 'sp_induks.khs_induks.no_kontrak', orderable: false, searchable:true },
-            { data: 'json_format_sp.lokasi.length', name: 'json', orderable: false, searchable:true },
-            { data: 'json_format.dt_tagihan.dt_lokasi.length', name: 'json', orderable: false, searchable:true },
-            { data: 'json_format.dt_tagihan.grand_total_all', name: 'json', orderable: false, searchable:false, render: function (data, type, row) {
+            { data: 'sp_induks.khs_induks.no', name: 'sp_induks.khs_induks.no', orderable: false, searchable:true },
+            { data: 'json_format.dt_sp.json.dtLokasi.lokasi.length', name: 'json', orderable: false, searchable:true },
+            { data: 'json_format.dt_tagihan.dt_lokasi.grand_total', name: 'json', orderable: false, searchable:false, render: function (data, type, row) {
                 if (type === 'display' || type === 'filter') {
                     return data.toLocaleString('id-ID');;
                 }
                 return data;
             }},
-            { data: 'json_format.dt_tagihan.grand_total_all_rekon', name: 'json', orderable: false, searchable:false, render: function (data, type, row) {
+            { data: 'json_format.dt_tagihan.dt_lokasi.grand_total_rekon', name: 'json', orderable: false, searchable:false, render: function (data, type, row) {
                 if (type === 'display' || type === 'filter') {
                     return data.toLocaleString('id-ID');;
                 }

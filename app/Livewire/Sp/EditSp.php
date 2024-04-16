@@ -9,6 +9,8 @@ use App\Models\KhsIndukDesignator;
 use App\Models\MasterUnit;
 use App\Models\MasterUser;
 use App\Models\SpInduk;
+use App\Models\Tagihan;
+use App\Models\TagihanHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
@@ -95,6 +97,20 @@ class EditSp extends Component
             }
             unset($this->dt['mitra_id']);
             SpInduk::find($this->editId)->update($this->dt);
+
+            if(SpInduk::hasTagihan($this->editId)){
+                $q = Tagihan::where('sp_induk_id', $this->editId)->first();
+                $q->update(['status' => 1]);
+                $tagihanId = $q->id;
+                $tagihanJson = $q->json;
+
+                TagihanHistory::create([
+                    'tagihan_id' => $tagihanId,
+                    'status' => 1,
+                    'json' => $tagihanJson,
+                ]);
+            }
+
             session()->flash('message', 'Data SP berhasil diperbaharui.');
             return redirect()->to('/sp/index');
         }
@@ -108,44 +124,48 @@ class EditSp extends Component
         ]);
 
         $this->dt['file_lokasi'] = $this->formUpload['file'];
-
-        if(is_null($this->dt['khs_amandemen_id'])){
-            $dtDesigAcuan = (KhsIndukDesignator::query()
-                ->where('khs_induk_id',$this->dt['khs_induk_id'])
-                ->get())
-                ->map(function ($item) {
-                        unset(
-                            $item['id'],
-                            $item['khs_induk_id'],
-                            $item['created_at'],
-                            $item['updated_at'],
-                            $item['deleted_at'],
-                        );
-                        return $item;
-                    })
-                ->toArray();   
-        }else{
-            $dtDesigAcuan = (KhsAmandemenDesignator::query()
-                ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
-                ->get())
-                ->map(function ($item) {
-                        unset(
-                            $item['id'],
-                            $item['khs_amandemen_id'],
-                            $item['created_at'],
-                            $item['updated_at'],
-                            $item['deleted_at'],
-                        );
-                        return $item;
-                    })
-                ->toArray();
-        }
+        $dtDesigAcuan = [];
+        // if(is_null($this->dt['khs_amandemen_id'])){
+        //     $dtDesigAcuan = (KhsIndukDesignator::query()
+        //         ->where('khs_induk_id',$this->dt['khs_induk_id'])
+        //         ->get())
+        //         ->map(function ($item) {
+        //                 unset(
+        //                     $item['id'],
+        //                     $item['khs_induk_id'],
+        //                     $item['created_at'],
+        //                     $item['updated_at'],
+        //                     $item['deleted_at'],
+        //                 );
+        //                 return $item;
+        //             })
+        //         ->toArray();   
+        // }else{
+        //     $dtDesigAcuan = (KhsAmandemenDesignator::query()
+        //         ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
+        //         ->get())
+        //         ->map(function ($item) {
+        //                 unset(
+        //                     $item['id'],
+        //                     $item['khs_amandemen_id'],
+        //                     $item['created_at'],
+        //                     $item['updated_at'],
+        //                     $item['deleted_at'],
+        //                 );
+        //                 return $item;
+        //             })
+        //         ->toArray();
+        // }
 
         $callback = function ($data) {
-            $this->dtLok = $data['dtLok'];
             $this->dtError = $data['dtError'];
+            $this->dtLok = $data['dtLok'];
+            if($data['dtError']!='pass'){
+                session()->flash('message', $data['dtError']);
+            }
             $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
+            $this->dt['json_sp'] = json_encode($dtJson);
         };
 
         $import = new LokasiImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);

@@ -64,12 +64,30 @@ class DetailSp extends Component
     #[On('detailsp-delete')] 
     public function delete($data)
     {
-        $spIndukId = SpAmandemen::select('sp_induk_id')
-            ->where('id',$data['id'])
-            ->first()
-            ->getAttribute('sp_induk_id');
+        $q = SpAmandemen::where('id', $data['id'])->first();
+        $q->delete();
 
-        SpAmandemen::where('id', $data['id'])->delete();
+        $spIndukId = $q->sp_induk_id;
+
+        // $spIndukId = SpAmandemen::select('sp_induk_id')
+        //     ->where('id',$data['id'])
+        //     ->first()
+        //     ->getAttribute('sp_induk_id');
+
+        $q = SpAmandemen::where('sp_induk_id', $spIndukId)
+            ->orderBy('tgl_sp', 'desc')
+            ->get();
+
+        if(count($q)>0){
+            $json = $q[0]['json'];
+        }else{
+            $json = SpInduk::select('json_sp')
+                ->where('id',$spIndukId)
+                ->first()
+                ->getAttribute('json_sp');
+        }
+
+        SpInduk::find($spIndukId)->update(['json' => $json]);
 
         $qTagihan = Tagihan::where('sp_induk_id', $spIndukId);
         $cekTagihan = $qTagihan;

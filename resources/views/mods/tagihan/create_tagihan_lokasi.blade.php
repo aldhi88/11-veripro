@@ -1,5 +1,12 @@
 <div>
     <div class="row">
+        <div class="col">
+            <div class="alert alert-warning text-center" role="alert">
+                Perubahan data designator akan menghapus data gudang.
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-4">
             <div class="custom-file">
                 <input type="file" wire:model="formUpload.file" class="custom-file-input" id="customFile">

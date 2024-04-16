@@ -162,6 +162,8 @@ class TagihanController extends Controller
             
         ;
 
+        // dd($data->get()->toArray());
+
         return DataTables::of($data)
             ->addColumn('action', function($data){
                 $return = '
@@ -247,14 +249,6 @@ class TagihanController extends Controller
                 $detail = json_decode($data->json, true);
                 return $detail;
             })
-            ->addColumn('json_format_mitra', function($data){
-                $return = json_decode($data->mitras->master_users->detail, true);
-                return $return;
-            })
-            ->addColumn('json_format_sp', function($data){
-                $return = json_decode($data->sp_induks->json, true);
-                return $return;
-            })
             ->rawColumns(['action','status_label'])
             ->toJson();
     } 
@@ -328,14 +322,6 @@ class TagihanController extends Controller
             ->addColumn('json_format', function($data){
                 $detail = json_decode($data->json, true);
                 return $detail;
-            })
-            ->addColumn('json_format_mitra', function($data){
-                $return = json_decode($data->mitras->master_users->detail, true);
-                return $return;
-            })
-            ->addColumn('json_format_sp', function($data){
-                $return = json_decode($data->sp_induks->json, true);
-                return $return;
             })
             ->rawColumns(['action','status_label'])
             ->toJson();
@@ -425,14 +411,7 @@ class TagihanController extends Controller
                 $detail = json_decode($data->json, true);
                 return $detail;
             })
-            ->addColumn('json_format_mitra', function($data){
-                $return = json_decode($data->mitras->master_users->detail, true);
-                return $return;
-            })
-            ->addColumn('json_format_sp', function($data){
-                $return = json_decode($data->sp_induks->json, true);
-                return $return;
-            })
+            
             ->rawColumns(['action','status_label'])
             ->toJson();
     }

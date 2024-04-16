@@ -74,6 +74,7 @@ class CreateSp extends Component
         
         $this->reset('msgLokasi');
         $this->validate();
+        // dd($this->dt);
         if(count($this->dtLok)==0){
             $this->msgLokasi = 'Data Lokasi belum valid, pastikan anda sudah upload data lokasi dan sudah tidak ada error lokasi';
         }else{
@@ -94,38 +95,38 @@ class CreateSp extends Component
         ]);
 
         $this->dt['file_lokasi'] = $this->formUpload['file'];
-
-        if(is_null($this->dt['khs_amandemen_id'])){
-            $dtDesigAcuan = (KhsIndukDesignator::query()
-                ->where('khs_induk_id',$this->dt['khs_induk_id'])
-                ->get())
-                ->map(function ($item) {
-                        unset(
-                            $item['id'],
-                            $item['khs_induk_id'],
-                            $item['created_at'],
-                            $item['updated_at'],
-                            $item['deleted_at'],
-                        );
-                        return $item;
-                    })
-                ->toArray();   
-        }else{
-            $dtDesigAcuan = (KhsAmandemenDesignator::query()
-                ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
-                ->get())
-                ->map(function ($item) {
-                        unset(
-                            $item['id'],
-                            $item['khs_amandemen_id'],
-                            $item['created_at'],
-                            $item['updated_at'],
-                            $item['deleted_at'],
-                        );
-                        return $item;
-                    })
-                ->toArray();
-        }
+        $dtDesigAcuan = [];
+        // if(is_null($this->dt['khs_amandemen_id'])){
+        //     $dtDesigAcuan = (KhsIndukDesignator::query()
+        //         ->where('khs_induk_id',$this->dt['khs_induk_id'])
+        //         ->get())
+        //         ->map(function ($item) {
+        //                 unset(
+        //                     $item['id'],
+        //                     $item['khs_induk_id'],
+        //                     $item['created_at'],
+        //                     $item['updated_at'],
+        //                     $item['deleted_at'],
+        //                 );
+        //                 return $item;
+        //             })
+        //         ->toArray();   
+        // }else{
+        //     $dtDesigAcuan = (KhsAmandemenDesignator::query()
+        //         ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
+        //         ->get())
+        //         ->map(function ($item) {
+        //                 unset(
+        //                     $item['id'],
+        //                     $item['khs_amandemen_id'],
+        //                     $item['created_at'],
+        //                     $item['updated_at'],
+        //                     $item['deleted_at'],
+        //                 );
+        //                 return $item;
+        //             })
+        //         ->toArray();
+        // }
 
         $callback = function ($data) {
             // dd($data);
@@ -136,6 +137,7 @@ class CreateSp extends Component
             }
             $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
+            $this->dt['json_sp'] = json_encode($dtJson);
         };
 
         $import = new LokasiImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);

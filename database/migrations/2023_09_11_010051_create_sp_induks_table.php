@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('ppn');
             $table->unsignedTinyInteger('status')->default(1);
             $table->json('json');
+            $table->json('json_sp');
             $table->timestamps();
             $table->softDeletes();
         });

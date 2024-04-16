@@ -1,4 +1,11 @@
 <div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-warning text-center" role="alert">
+                Pastikan tidak ada perubahan data designator sebelum membuat data gudang.
+            </div>
+        </div>
+    </div>
     {{-- diambil --}}
     <div class="row">
         <div class="col">
@@ -12,7 +19,7 @@
                                 <a wire:click="addAmbil({{count($dt['dt_tagihan']['dt_gudang']['ambil']['data'])}})" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
                             </th>
                             <th rowspan="2">No</th>
-                            <th rowspan="2" style="min-width: 60px">No. RFC</th>
+                            <th rowspan="2" style="min-width: 80px">No. RFC</th>
                             <th rowspan="2" width="130">Tgl. RFC</th>
                             @foreach ($allDesigs as $item)
                             <th>
@@ -77,7 +84,7 @@
     </div>
 
     {{-- dipakai --}}
-    {{-- <hr> 
+    <hr> 
     <div class="row">
         <div class="col">
             <h6>MATERIAL YANG DIPAKAI</h6>
@@ -89,7 +96,15 @@
                         <th rowspan="2" width="130">ID Project</th>
                         @foreach ($allDesigs as $item)
                         <th>
-                            <div class="verticalTableHeader">{{$item['nama_designator']}}</div>
+                            <div class="verticalTableHeader">
+                                @php
+                                if($item['nama_designator']=='' || is_null($item['nama_designator'])){
+                                    echo $item['nama_jasa'];
+                                }else{
+                                    echo $item['nama_designator'];
+                                }
+                                @endphp
+                            </div>
                         </th>
                         @endforeach
                     </tr>
@@ -127,10 +142,10 @@
 
             
         </div>
-    </div> --}}
+    </div>
 
     {{-- kembali --}}
-    {{-- <hr> 
+    <hr> 
     <div class="row">
         <div class="col">
             <h6>PENGEMBALIAN MATERIAL</h6>
@@ -144,7 +159,17 @@
                         <th rowspan="2">ID Pengembalian</th>
                         <th rowspan="2" width="130">Tgl. RFR</th>
                         @foreach ($allDesigs as $item)
-                        <th><div class="verticalTableHeader">{{$item['nama_designator']}}</div></th>
+                        <th>
+                            <div class="verticalTableHeader">
+                                @php
+                                if($item['nama_designator']=='' || is_null($item['nama_designator'])){
+                                    echo $item['nama_jasa'];
+                                }else{
+                                    echo $item['nama_designator'];
+                                }
+                                @endphp
+                            </div>
+                        </th>
                         @endforeach
                         
                     </tr>
@@ -214,10 +239,10 @@
                 @endforeach
             </table>
         </div>
-    </div> --}}
+    </div>
 
     {{-- rekon material --}}
-    {{-- <hr> 
+    <hr> 
     <div class="row">
         <div class="col">
             <h6>HASIL REKON MATERIAL</h6>
@@ -244,8 +269,8 @@
                     @if ($vDr['sum_rekon'] > 0)
                     <tr>
                         <td>{{ $no++ }}</td>
-                        <td><textarea class="w-100" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.nama_barang_alista" rows="3"></textarea></td>
-                        <td class="text-center">{{$vDr['nama_barang']}}</td>
+                        <td><textarea class="w-100" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.nama_barang" rows="3"></textarea></td>
+                        <td class="text-center">{{$vDr['nama_barang_alista']}}</td>
                         <td class="text-center">{{$vDr['sum_rekon']}}</td>
                         <td><input style="width: 70px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.v_ta" wire:change="rePemakaian({{$iDr}},'v_ta')" max="{{$vDr['v_ta']+$vDr['v_mitra']}}"></td>
                         <td><input style="width: 70px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.v_mitra" wire:change="rePemakaian({{$iDr}},'v_mitra')" max="{{$vDr['v_ta']+$vDr['v_mitra']}}"></td>
@@ -275,5 +300,5 @@
 
             
         </div>
-    </div> --}}
+    </div>
 </div>

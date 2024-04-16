@@ -36,31 +36,16 @@
     </form>
     <hr>
 
-    @if (isset($dtError) && count($dtError)>0)
-        <div class="alert alert-danger" role="alert">
-            <h6>Error Data Designator Tidak Sesuai dengan KHS : </h6>
-            <ol>
-                @foreach ($dtError as $iErrorSheet => $vErrorSheet)
-                    <li>
-                        Lokasi: {{$iErrorSheet+1}}: 
-                        <ul>
-                        @foreach ($vErrorSheet as $iErrorRow => $vErrorRow)
-                            <li>Baris: {{$vErrorRow['row']}}</li>
-                        @endforeach
-                        </ul>
-                    </li>
-                @endforeach
-            </ol>
+    @if (session()->has('message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
         </div>
-    @else
-        @if (is_null($dtError) && count($dtLok)>0)
-            <div class="alert alert-success" role="alert">
-                <i class="fas fa-check fa-fw"></i> Data lokasi valid.
-            </div>
-        @endif
     @endif
 
-    @if (isset($dtLok) && count($dtLok)>0)
+    @if (isset($dtError) && $dtError=='pass')
         
         <div class="row">
             <div class="col">

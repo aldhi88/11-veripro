@@ -9,6 +9,13 @@
         </div>
     </div><hr>
 
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-warning text-center border border-warning" role="alert">
+                Perubahan data SP akan me-reset ulang data tagihan yang telah di buat mitra.
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col">
