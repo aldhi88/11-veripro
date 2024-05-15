@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('tagihan_id')->constrained();
             $table->unsignedTinyInteger('status');
             $table->text('revisi')->nullable();
-            $table->text('json');
+            $table->json('json');
             $table->timestamps();
             $table->softDeletes();
         });
