@@ -41,8 +41,8 @@ class DetailKhs extends Component
                 )->first()->toArray();   
         
         $this->dtKhs = $this->dtKhsInduk;
-        
-        $dtAman = KhsAmandemen::where('khs_induk_id',1);
+    
+        $dtAman = KhsAmandemen::where('khs_induk_id',$this->dtId);
 
         if($dtAman->get()->count() > 0){
             $this->dtAman = ($dtAman->get())

@@ -209,7 +209,7 @@ class TagihanController extends Controller
                     }
 
                     $return .= '
-                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> Detail Tagihan</a>
+                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> History Tagihan</a>
                     ';
 
                     $return .= '
@@ -231,7 +231,7 @@ class TagihanController extends Controller
 
                 }else{
                     $return .= '
-                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> Detail Tagihan</a>
+                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> History Tagihan</a>
                     ';
                     $return .= '
                         <a class="dropdown-item" href="'.route('tagihan.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>
@@ -294,7 +294,7 @@ class TagihanController extends Controller
                     }
 
                     $return .= '
-                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> Detail Tagihan</a>
+                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> History Tagihan</a>
                     ';
 
                     $return .= '
@@ -303,7 +303,7 @@ class TagihanController extends Controller
 
                 }else{
                     $return .= '
-                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> Detail Tagihan</a>
+                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> History Tagihan</a>
                     ';
                     $return .= '
                         <a class="dropdown-item" href="'.route('tagihan.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>
@@ -382,7 +382,7 @@ class TagihanController extends Controller
                     }
 
                     $return .= '
-                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> Detail Tagihan</a>
+                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> History Tagihan</a>
                     ';
 
                     $return .= '
@@ -391,7 +391,7 @@ class TagihanController extends Controller
 
                 }else{
                     $return .= '
-                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> Detail Tagihan</a>
+                        <a class="dropdown-item" data-id="'.$data->id.'" href="javascript:void(0);" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history fa-fw"></i> History Tagihan</a>
                     ';
                     $return .= '
                         <a class="dropdown-item" href="'.route('tagihan.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>

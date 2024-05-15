@@ -89,6 +89,7 @@ class DesignatorKhsAmanImport implements ToCollection, WithHeadingRow
                 }
             }
             // dd($data);
+            $this->status = "pass";
             if($this->status == "pass"){
                 KhsAmandemenDesignator::where('khs_amandemen_id', $this->khsId)->forceDelete();
                 KhsAmandemenDesignator::insert($data);

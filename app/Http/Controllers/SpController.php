@@ -188,9 +188,9 @@ class SpController extends Controller
                 }
 
                 
-                $return .= '
-                    <a class="dropdown-item" href="'.asset($data->file_sp).'" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> Lihat File SP</a>
-                ';
+                // $return .= '
+                //     <a class="dropdown-item" href="'.asset($data->file_sp).'" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> Lihat File SP</a>
+                // ';
 
                 $return .='
                     </div>

@@ -89,10 +89,11 @@ class DesignatorKhsIndukImport implements ToCollection, WithHeadingRow
                 }
             }
             // dd($data);
-            if($this->status == "pass"){
-                KhsIndukDesignator::where('khs_induk_id', $this->khsId)->forceDelete();
-                KhsIndukDesignator::insert($data);
-            }
+            $this->status="pass";
+            // if($this->status == "pass"){
+            //     KhsIndukDesignator::where('khs_induk_id', $this->khsId)->forceDelete();
+            //     KhsIndukDesignator::insert($data);
+            // }
         }
         
         

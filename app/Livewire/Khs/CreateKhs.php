@@ -32,7 +32,7 @@ class CreateKhs extends Component
             "dt.json.rekening" => "required",
             "dt.json.cabang" => "required",
             "dt.json.nama_rekening" => "required",
-            "desig" => "required|mimes:xlsx|max:2048",
+            // "desig" => "required|mimes:xlsx|max:2048",
         ];
     }
 
@@ -47,7 +47,7 @@ class CreateKhs extends Component
         "dt.json.rekening" => "No.Rekening",
         "dt.json.cabang" => "Kantor Cabang Bank",
         "dt.json.nama_rekening" => "Nama Pemilik Rekening",
-        "desig" => "File Designator",
+        // "desig" => "File Designator",
     ];
 
     public function mount()
@@ -72,7 +72,7 @@ class CreateKhs extends Component
         MasterUser::where('auth_login_id', $dt['auth_login_id'])
             ->update(['detail'=>$dt['json']]);
         $import = new DesignatorKhsIndukImport($q->id);
-        Excel::import($import, $this->desig);
+        // Excel::import($import, $this->desig);
         $this->reset();
         $this->rand++;
         

@@ -37,7 +37,7 @@ class CreateAmanKhs extends Component
             "dtEdit.json.cabang" => "required",
             "dtEdit.json.nama_rekening" => "required",
             "dtEdit.json.alamat" => "required",
-            "desigFile" => "nullable|mimes:xlsx|max:2048",
+            // "desigFile" => "nullable|mimes:xlsx|max:2048",
         ];
     }
 
@@ -119,7 +119,7 @@ class CreateAmanKhs extends Component
         $khsId = $this->khsId;
         if(!is_null($this->desigFile)){
             $import = new DesignatorKhsAmanImport($q->id);
-            Excel::import($import, $this->desigFile);
+            // Excel::import($import, $this->desigFile);
            
             if(($import->runCallBack())!="pass"){
                 KhsAmandemen::where('id',$q->id)->forceDelete();
