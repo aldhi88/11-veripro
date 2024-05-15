@@ -34,6 +34,14 @@
             </div> --}}
         </div>
     </form>
+    @if (session()->has('msg-upload-ok'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('msg-upload-ok') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    @endif
     <hr>
 
     @if (session()->has('message'))

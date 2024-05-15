@@ -138,6 +138,7 @@ class CreateSp extends Component
             $dtJson['dtLokasi'] = $data['dtLok'];
             $this->dt['json'] = json_encode($dtJson);
             $this->dt['json_sp'] = json_encode($dtJson);
+            session()->flash('msg-upload-ok','Upload Success');
         };
 
         $import = new LokasiImport($callback, $this->formUpload['jumlah'], $dtDesigAcuan);
