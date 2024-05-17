@@ -69,28 +69,28 @@
                                                 <tr>
                                                     <th style="width: 200px">File SP</th>
                                                     <td style="width: 10px">:</td>
-                                                    <td><a target="_blank" class="btn btn-sm btn-danger" href="{{asset(str_replace('public/','storage/',$item['json']['dt_sp']['json']['file_sp']))}}">Lihat</a></td>
+                                                    <td><a target="_blank" class="btn btn-sm btn-danger" href="{{asset(str_replace('public/','storage/',$item['json']['dt_sp']['file_sp']))}}">Lihat</a></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Nomor SP</th>
                                                     <td>:</td>
-                                                    <td>{{ $item['json']['dt_sp']['json']['no_sp']}}</td>
+                                                    <td>{{ $item['json']['dt_sp']['no_sp']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Tujuan Mitra</th>
                                                     <td>:</td>
-                                                    <td>{{ $item['json']['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }}</td>
+                                                    <td>{{ $item['json']['dt_sp']['khs_induks']['json']['perusahaan'] }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>KHS Induk</th>
                                                     <td>:</td>
-                                                    <td>{{ $item['json']['dt_sp']['khs_induks']['no_kontrak'] }}</td>
+                                                    <td>{{ $item['json']['dt_sp']['khs_induks']['no'] }}</td>
                                                 </tr>
-                                                <tr>
+                                                {{-- <tr>
                                                     <th>KHS Amandemen</th>
                                                     <td>:</td>
-                                                    <td>{{ $item['json']['dt_sp']['json']['no_aman'] }}</td>
-                                                </tr>
+                                                    <td>{{ $item['json']['dt_sp']['json']['no'] }}</td>
+                                                </tr> --}}
                                                 <tr>
                                                     <th>Tanggal SP</th>
                                                     <td>:</td>
@@ -109,17 +109,17 @@
                                                 <tr>
                                                     <th>PPN %</th>
                                                     <td>:</td>
-                                                    <td>{{ $item['json']['dt_sp']['json']['ppn'] }}</td>
+                                                    <td>{{ $item['json']['dt_sp']['ppn'] }}</td>
                                                 </tr>
-                                                <tr>
+                                                {{-- <tr>
                                                     <th>ID Project</th>
                                                     <td>:</td>
                                                     <td>{{ $item['json']['dt_sp']['json']['id_project'] }}</td>
-                                                </tr>
+                                                </tr> --}}
                                                 <tr>
                                                     <th>Nama Pekerjaan</th>
                                                     <td>:</td>
-                                                    <td>{{ $item['json']['dt_sp']['json']['nama_pekerjaan'] }}</td>
+                                                    <td>{{ $item['json']['dt_sp']['nama_pekerjaan'] }}</td>
                                                 </tr>
                                                 
                                             </tbody>
@@ -189,7 +189,7 @@
                     
                                         <h6>DATA LOKASI & DESIGNATOR</h6>
                     
-                                        @foreach ($item['json']['dt_tagihan']['dt_lokasi'] as $key => $iJson)
+                                        @foreach ($item['json']['dt_tagihan']['dt_lokasi']['lokasi'] as $key => $iJson)
                                             
                                             <div class="row">
                                                 <div class="col">
@@ -197,7 +197,7 @@
                                                         <tbody>
                                                             <tr class="text-center bg-soft-warning" style="font-weight: bold">
                                                                 <th class="text-left">Nama Lokasi {{$key+1}}:  {{ $iJson['nama_lokasi'] }}</th>
-                                                                <th>STO: {{ $iJson['nama_sto'] }}</th>
+                                                                <th>STO: {{ $iJson['sto'] }}</th>
                                                                 <th class="text-right">Total SP: {{ number_format($iJson['total_lokasi'] ,0,',','.') }}</th>
                                                                 <th class="text-right">Total Rekon: {{ number_format($iJson['total_lokasi_rekon'] ,0,',','.') }}</th>
                                                             </tr>
@@ -237,7 +237,17 @@
                                                         @foreach ($iJson['desig_items'] as $i=>$val)
                                                             <tr>
                                                                 <td>{{$i+1}}</td>
-                                                                <td>{{ $val['nama'] }}</td>
+                                                                <td>
+                                                                    @php
+                                                                        if($item['json']['dt_sp']['master_units']['nama']=='OSP-FO'){
+                                                                            echo $val['nama_designator'];
+                                                                        }else if($val['jasa']==0){
+                                                                            echo $val['nama_material'];
+                                                                        }else{  
+                                                                            echo $val['nama_jasa'];
+                                                                        }
+                                                                    @endphp
+                                                                </td>
                                                                 <td>
                                                                     <span title="{{$val['uraian']}}">
                                                                         {{ Str::limit($val['uraian'], 35, '...') }}
@@ -246,7 +256,7 @@
                                                                 <td>{{ $val['satuan'] }}</td>
                                                                 <td>{{ number_format($val['material'] ,0,',','.')}}</td>
                                                                 <td>{{ number_format($val['jasa'] ,0,',','.')}}</td>
-                                                                <td>{{ number_format($val['volume'] ,0,',','.')}}</td>
+                                                                <td>{{ number_format($val['vol'] ,0,',','.')}}</td>
                                                                 <td>{{ number_format($val['total_material'] ,0,',','.')}}</td>
                                                                 <td>{{ number_format($val['total_jasa'] ,0,',','.')}}</td>
                                                                 <td>{{ number_format($val['total_material']+$val['total_jasa'] ,0,',','.')}}</td>
@@ -262,9 +272,9 @@
 
                                             </div>
 
-                    
                                         @endforeach
 
+                                        
                                         {{-- ambil --}}
                                         <hr>
                                         <div class="row">
@@ -278,7 +288,7 @@
                                                             <th rowspan="2" width="130">Tgl. RFC</th>
                                                             @foreach ($item['json']['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
                                                             <th>
-                                                                <div class="verticalTableHeader">{{$vDes['nama']}}</div>
+                                                                <div class="verticalTableHeader">{{$vDes['nama_material']}}</div>
                                                             </th>
                                                             @endforeach
                                                             
@@ -331,7 +341,7 @@
                                                             <th rowspan="2" width="130">ID Project</th>
                                                             @foreach ($item['json']['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
                                                             <th>
-                                                                <div class="verticalTableHeader">{{$vDes['nama']}}</div>
+                                                                <div class="verticalTableHeader">{{$vDes['nama_material']}}</div>
                                                             </th>
                                                             @endforeach
                                                         </tr>
@@ -343,11 +353,11 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        @foreach ($item['json']['dt_tagihan']['dt_lokasi'] as $iLok=>$vLok)
+                                                        @foreach ($item['json']['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok=>$vLok)
                                                             <tr class="text-center">
                                                                 <td>{{$iLok+1}}</td>
-                                                                <td>{{$vLok['nama_lokasi']}}</td>
-                                                                <td>{{$item['json']['dt_sp']['json']['id_project']}}</td>
+                                                                <td class="text-left">{{$vLok['nama_lokasi']}}</td>
+                                                                <td>{{$vLok['id_project']}}</td>
                                                                 @foreach ($item['json']['dt_tagihan']['dt_gudang']['all_desig'] as $iDesMat=>$vDesMat)
                                                                 <td>{{$item['json']['dt_tagihan']['dt_gudang']['pakai']['data'][$iLok][$iDesMat]}}</td>
                                                                 @endforeach
@@ -381,7 +391,7 @@
                                                             <th rowspan="2">ID Pengembalian</th>
                                                             <th rowspan="2" width="130">Tgl. RFR</th>
                                                             @foreach ($item['json']['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-                                                            <th><div class="verticalTableHeader">{{$vDes['nama']}}</div></th>
+                                                            <th><div class="verticalTableHeader">{{$vDes['nama_material']}}</div></th>
                                                             @endforeach
                                                             
                                                         </tr>

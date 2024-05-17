@@ -16,14 +16,19 @@ class DetailTagihan extends Component
     public $status;
     public function mount($data)
     {
-        $this->his = TagihanHistory::where('tagihan_id',$data['key'])
+        $this->his =(TagihanHistory::where('tagihan_id',$data['key'])
             ->orderBy('created_at', 'asc')
-            ->get()
+            ->get())
+            ->map(function ($item) {
+                $item['json'] = json_decode($item['json'],true);
+                // $item['dt_sp']['json_sp'] = json_decode($item['dt_sp']['json_sp'],true);
+                return $item;
+            })
             ->toArray();
-        
-        foreach ($this->his as $key => $value) {
-            $this->his[$key]['json'] = json_decode($this->his[$key]['json'], true);
-        }
+        $this->his = collect($this->his)->map(function($item){
+            $item['json']['dt_sp']['json_sp'] = json_decode($item['json']['dt_sp']['json_sp'],true);
+            return $item;
+        })->toArray();
         $this->status = TagihanHistory::dtStatus();
         // dd($this->all());
     }

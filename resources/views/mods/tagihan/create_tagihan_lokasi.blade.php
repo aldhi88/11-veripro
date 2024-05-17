@@ -31,6 +31,14 @@
             <a href="{{ asset($dt['dt_sp']['file_lokasi']) }}" class="btn btn-danger btn-block">Download File Excel</a>
         </div>
     </div>
+    @if (session()->has('msg-upload-ok'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('msg-upload-ok') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    @endif
     <hr>
 
     <h6 class="bg-secondary text-light p-1 text-center">

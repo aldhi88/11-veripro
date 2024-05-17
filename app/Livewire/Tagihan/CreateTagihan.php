@@ -128,6 +128,7 @@ class CreateTagihan extends Component
                 }
             }else{
                 $this->dt['dt_tagihan']['dt_lokasi'] = $data['dtLok'];
+                session()->flash('msg-upload-ok','Upload Success');
             }
         };
         $import = new LokasiRekonImport($callback, $this->formUpload['jumlah'], $this->dt['dt_tagihan']['dt_lokasi']);
