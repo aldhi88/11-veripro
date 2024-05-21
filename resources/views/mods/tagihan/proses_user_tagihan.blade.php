@@ -15,7 +15,6 @@
             <div class="card">
                 <div class="card-body">
 
-
                     <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                         <li class="nav-item" wire:click="changeTab(0)"  style="cursor: pointer">
                             <a class="nav-link {{ $tab==0?'active':null }}">
@@ -57,8 +56,6 @@
                                 <span class="d-none d-sm-block">Gudang</span> 
                             </a>
                         </li>
-
-                        
                     </ul>
                     
                     <div class="tab-content text-muted pt-4">

@@ -105,7 +105,7 @@ class EditTagihan extends Component
         $this->setPejabat();
         $this->setDtEdit($data['key']);
         $this->setGudangEdit();
-        // dd($this->all());
+        // dd($this->dt);
     }
 
     public function uploadLokasi()
@@ -130,6 +130,7 @@ class EditTagihan extends Component
         $import = new LokasiRekonImport($callback, $this->formUpload['jumlah'], $this->dt['dt_tagihan']['dt_lokasi']);
         Excel::import($import, $this->formUpload['file']);
         $this->setGudang();
+
     }
 
     public function setDtEdit($id)
@@ -281,6 +282,7 @@ class EditTagihan extends Component
     {
         $this->allDesigs = [];
         $iAllDesig = 0;
+        $this->dt['dt_tagihan']['dt_gudang']['all_desig'] = [];
         foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
             foreach ($vLok['desig_items'] as $iRow => $vRow) {
                 if(
@@ -302,7 +304,6 @@ class EditTagihan extends Component
                 }
             }
         }
-        // dd($this->all());
 
         $this->dt['dt_tagihan']['dt_gudang']['pakai'] = [];
         foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {

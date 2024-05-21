@@ -25,11 +25,9 @@ class DetailTagihan extends Component
                 return $item;
             })
             ->toArray();
-        $this->his = collect($this->his)->map(function($item){
-            $item['json']['dt_sp']['json_sp'] = json_decode($item['json']['dt_sp']['json_sp'],true);
-            return $item;
-        })->toArray();
+        
         $this->status = TagihanHistory::dtStatus();
         // dd($this->all());
+    
     }
 }

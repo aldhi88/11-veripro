@@ -25,11 +25,12 @@
                             <th>
                                 <div class="verticalTableHeader">
                                     @php
-                                    if($item['nama_designator']=='' || is_null($item['nama_designator'])){
-                                        echo $item['nama_jasa'];
-                                    }else{
-                                        echo $item['nama_designator'];
-                                    }
+                                    echo $item['nama_material'];
+                                    // if($item['nama_designator']=='' || is_null($item['nama_designator'])){
+                                    //     echo $item['nama_jasa'];
+                                    // }else{
+                                    //     echo $item['nama_designator'];
+                                    // }
                                     @endphp
                                 </div>
                             </th>
@@ -96,11 +97,12 @@
                         <th>
                             <div class="verticalTableHeader">
                                 @php
-                                if($item['nama_designator']=='' || is_null($item['nama_designator'])){
-                                    echo $item['nama_jasa'];
-                                }else{
-                                    echo $item['nama_designator'];
-                                }
+                                echo $item['nama_material'];
+                                // if($item['nama_designator']=='' || is_null($item['nama_designator'])){
+                                //     echo $item['nama_jasa'];
+                                // }else{
+                                //     echo $item['nama_designator'];
+                                // }
                                 @endphp
                             </div>
                         </th>
@@ -158,11 +160,12 @@
                         <th>
                             <div class="verticalTableHeader">
                                 @php
-                                if($item['nama_designator']=='' || is_null($item['nama_designator'])){
-                                    echo $item['nama_jasa'];
-                                }else{
-                                    echo $item['nama_designator'];
-                                }
+                                echo $item['nama_material'];
+                                // if($item['nama_designator']=='' || is_null($item['nama_designator'])){
+                                //     echo $item['nama_jasa'];
+                                // }else{
+                                //     echo $item['nama_designator'];
+                                // }
                                 @endphp
                             </div>
                         </th>

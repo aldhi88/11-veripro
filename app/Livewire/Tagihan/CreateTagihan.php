@@ -140,6 +140,7 @@ class CreateTagihan extends Component
                     ->get()
                 )->map(function ($item) {
                         $item['json'] = json_decode($item['json'],true);
+                        $item['json_sp'] = json_decode($item['json_sp'],true);
                         $item['khs_induks']['json'] = json_decode($item['khs_induks']['json'],true);
                         $item['khs_induks']['auth_logins']['master_users']['detail'] = json_decode($item['khs_induks']['auth_logins']['master_users']['detail'],true);
                         unset(
@@ -156,7 +157,6 @@ class CreateTagihan extends Component
                 )
             ->first()
             ->toArray(); 
-            
         $this->formUpload['jumlah'] = count($this->dt['dt_sp']['json']['dtLokasi']['lokasi']);
         for ($i = 0; $i < 8; $i++) {
             $this->dt['dt_tagihan']['dt_turnkey']['rincian'][$i] = 0;
@@ -233,6 +233,7 @@ class CreateTagihan extends Component
         $dt['status'] = 2;
         $dt['json'] = json_encode($dtJson);
 
+        // dd($dt);
         $tagihan = Tagihan::where('sp_induk_id', $this->editId)->get();
         if(count($tagihan) == 0){
             $q = Tagihan::create($dt);
