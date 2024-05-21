@@ -3,18 +3,14 @@
 namespace App\Livewire\Tagihan;
 
 use App\Imports\LokasiRekonImport;
-use App\Models\KhsInduk;
 use App\Models\Lov;
 use App\Models\SpInduk;
 use App\Models\Tagihan;
 use App\Models\TagihanHistory;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\Console\Helper\Dumper;
 
 class CreateTagihan extends Component
 {
@@ -34,8 +30,6 @@ class CreateTagihan extends Component
     public $formUpload = [];
     public $dtLok = [];
     public $dtError = [];
-
-
 
     public function rules()
     {
@@ -272,7 +266,8 @@ class CreateTagihan extends Component
                         ->where('nama_jasa', $vRow['nama_jasa'])
                         ->count() < 1
                 ){
-                    if($vRow['material']==0){
+                    // dump($vRow);
+                    if($vRow['material']!=0){
                         $this->allDesigs[$iAllDesig] = $vRow;
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_designator'] = $vRow['nama_designator'];
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_material'] = $vRow['nama_material'];
@@ -283,7 +278,7 @@ class CreateTagihan extends Component
                 }
             }
         }
-        // dump($this->all());
+        // dd($this->all());
 
         $this->dt['dt_tagihan']['dt_gudang']['pakai'] = [];
         foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
@@ -339,7 +334,7 @@ class CreateTagihan extends Component
                             $item['nama_jasa'] == $vDd['nama_jasa'];
                     });
                     $tempDesig[] = $vDd;
-                    if($vDd['material']==0){
+                    if($vDd['material']!=0){
                         $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator']; 
                         $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material']; 
                         $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator']; 

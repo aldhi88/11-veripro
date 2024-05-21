@@ -78,8 +78,6 @@
                 </table>
 
             </div>
-
-            
         </div>
     </div>
 
@@ -139,8 +137,6 @@
                     </tr>
                 </tfoot>
             </table>
-
-            
         </div>
     </div>
 
@@ -221,8 +217,6 @@
                 </tfoot>
                 
             </table>
-
-            
         </div>
     </div>
     <div class="row mt-1">
