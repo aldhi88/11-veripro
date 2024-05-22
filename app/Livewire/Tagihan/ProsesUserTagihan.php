@@ -38,7 +38,6 @@ class ProsesUserTagihan extends Component
         $dt = $this->dtTagih;
         $dt['status'] = 5;
         $dt['json'] = json_encode($this->dt);
-        
         Tagihan::find($this->dtTagih['id'])->update($dt);
         TagihanHistory::create([
             'tagihan_id' => $this->dtTagih['id'],
@@ -58,21 +57,24 @@ class ProsesUserTagihan extends Component
         $dt['tagihan_id'] = $this->dtTagih['id'];
         $dt['status'] = 3;
 
+        $dtRevis['status'] = 3;
+        $dtRevis['revisi'] = $dt['revisi'];
+        $dtRevis['json'] = $dt['json'];
         TagihanHistory::create($dt);
-        Tagihan::find($this->dtTagih['id'])->update([
-            'status' => 3,
-            'revisi' => $dt['revisi'],
-        ]);
+        Tagihan::find($this->dtTagih['id'])->update($dtRevis);
         session()->flash('message', 'Revisi data tagihan sudah berhasil dikirimkan.');
         return redirect()->to('/tagihan/user/index');
     }
 
     public function mount($data)
     {
+        
         $this->trixId = 'trix-' . uniqid();
         $this->doc = Tagihan::dtDokTurnkey();
         $this->dtTagih = Tagihan::whereId($data['key'])->first()->toArray();
         $this->dtTagih['json'] = json_decode($this->dtTagih['json'], true);
+        $this->dtTagih['json']['dt_tagihan']['no_nodin'] = "";
+        $this->dtTagih['json']['dt_tagihan']['tgl_nodin'] = "";
         $this->dtTagih['revisi'] = "";
         unset(
             $this->dtTagih['created_at'],
@@ -83,23 +85,20 @@ class ProsesUserTagihan extends Component
         );
         $this->dt = $this->dtTagih['json'];
         $this->setPejabat();
+        // dd($this->all());
     }
 
     public function setPejabat()
     {
         $lov = Lov::select('key', 'value')->get()->toArray();
-        foreach ($lov as $key => $value) {
-            $lov[$key]['value'] = json_decode($value['value']);
-            unset($lov[$key]['status_label']); 
-        }
 
         $this->pejabat['gm_ta'] = array_values((collect($lov))->where('key', 'gm_ta')->toArray())[0];
-        $this->pejabat['mgr_konstruksi'] = array_values((collect($lov))->where('key', 'mgr_konstruksi')->toArray())[0];
-        $this->pejabat['sm_konstruksi'] = array_values((collect($lov))->where('key', 'sm_konstruksi')->toArray())[0];
-        $this->pejabat['mgr_maintenance'] = array_values((collect($lov))->where('key', 'mgr_maintenance')->toArray())[0];
-        $this->pejabat['sm_maintenance'] = array_values((collect($lov))->where('key', 'sm_maintenance')->toArray())[0];
+        $this->pejabat['mgr_osp-fo'] = array_values((collect($lov))->where('key', 'mgr_osp-fo')->toArray())[0];
+        $this->pejabat['sm_osp-fo'] = array_values((collect($lov))->where('key', 'sm_osp-fo')->toArray())[0];
+        $this->pejabat['mgr_qe'] = array_values((collect($lov))->where('key', 'mgr_qe')->toArray())[0];
+        $this->pejabat['sm_qe'] = array_values((collect($lov))->where('key', 'sm_qe')->toArray())[0];
         $this->pejabat['mgr_shared'] = array_values((collect($lov))->where('key', 'mgr_shared')->toArray())[0];
-        $this->pejabat['wapang'] = array_values((collect($lov))->where('key', 'wapang')->toArray())[0];
+        $this->pejabat['waspang'] = array_values((collect($lov))->where('key', 'waspang')->toArray())[0];
         $this->pejabat['gudang'] = array_values((collect($lov))->where('key', 'gudang')->toArray())[0];
     }
     
