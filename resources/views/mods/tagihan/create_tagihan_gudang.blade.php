@@ -6,7 +6,17 @@
             </div>
         </div>
     </div>
-    {{-- diambil --}}
+    
+    @if (count($allDesigs)==0)
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-danger text-center" role="alert">
+                    Tidak ada designator material, hanya jasa saja
+                </div>
+            </div>
+        </div>
+    @else
+        {{-- diambil --}}
     <div class="row">
         <div class="col">
             <h6>MATERIAL YANG DIAMBIL</h6>
@@ -298,4 +308,5 @@
             
         </div>
     </div>
+    @endif
 </div>

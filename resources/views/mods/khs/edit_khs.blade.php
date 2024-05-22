@@ -135,7 +135,7 @@
                         </div>
                         <br>
                         
-                        <h6 class="bg-light p-1 text-center">DATA DESIGNATOR</h6>
+                        {{-- <h6 class="bg-light p-1 text-center">DATA DESIGNATOR</h6>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
                             
-                        </div>
+                        </div> --}}
 
                         <hr>
 
