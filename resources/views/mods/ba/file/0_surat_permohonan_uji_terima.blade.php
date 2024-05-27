@@ -37,12 +37,12 @@
         
         <p style="text-align: justify">
             Dengan Hormat, <br><br>
-            Menunjuk surat pesanan pekerjaan <strong>{{ $dt['dt_sp']['json']['nama_pekerjaan'] }}</strong> antara PT. Telkom Akses dan {{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }} Nomor : <strong>{{ $dt['dt_sp']['no_sp'] }} Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</strong>. 
+            Menunjuk surat pesanan pekerjaan <strong>{{ $dt['dt_sp']['nama_pekerjaan'] }}</strong> antara PT. Telkom Akses dan {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor : <strong>{{ $dt['dt_sp']['no_sp'] }} Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</strong>. 
             <br><br>
             Semua progres pelaksanaan pekerjaan dilapangan saat ini kami telah menyelesaikan {{ count($dt['dt_tagihan']['dt_lokasi']) }} lokasi : <br>
     
             <ol>
-                @foreach ($dt['dt_tagihan']['dt_lokasi'] as $item)
+                @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $item)
                     <li>{{ $item['nama_lokasi'] }}</li>
                 @endforeach
             </ol>
@@ -58,9 +58,9 @@
         
     <div style="page-break-inside: avoid">
         Hormat kami <br>
-        <strong>{{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }}</strong>
+        <strong>{{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }}</strong>
         <div style="height: 100px"></div>
-        <strong>{{ $dt['dt_sp']['mitras']['master_users']['detail']['direktur'] }}</strong>
+        <strong>{{ $dt['dt_sp']['khs_induks']['json']['direktur'] }}</strong>
         <br>
         DIREKTUR
     </div>

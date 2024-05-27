@@ -26,7 +26,7 @@
             <tr style="font-weight: bold">
                 <td>NOMOR PERJANJIAN KERJASAMA</td>
                 <td>:</td>
-                <td>{{ $dt['dt_sp']['khs_induks']['no_kontrak']  }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_kontrak'])->isoFormat('DD MMMM Y') }}</td>
+                <td>{{ $dt['dt_sp']['khs_induks']['no']  }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
             
             @if (count($dt['aman_khs'])>0)
@@ -40,7 +40,7 @@
                             </ol>
                         </td>
                         <td>:</td>
-                        <td>{{ $item['no_aman'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('DD MMMM Y') }}</td>
+                        <td>{{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
                     </tr>
                     
                 @endforeach
@@ -73,12 +73,12 @@
             <tr style="font-weight: bold">
                 <td>PEKERJAAN</td>
                 <td>:</td>
-                <td>{{ $dt['dt_sp']['json']['nama_pekerjaan'] }}</td>
+                <td>{{ $dt['dt_sp']['nama_pekerjaan'] }}</td>
             </tr>
             <tr style="font-weight: bold">
                 <td>PELAKSANA PEKERJAAN</td>
                 <td>:</td>
-                <td>{{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }} (selanjutnya disebut MITRA)</td>
+                <td>{{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} (selanjutnya disebut MITRA)</td>
             </tr>
             <tr style="font-weight: bold">
                 <td>REGIONAL</td>
@@ -93,7 +93,20 @@
             <tr style="font-weight: bold">
                 <td>ID PROJECT</td>
                 <td>:</td>
-                <td>{{ $dt['dt_sp']['json']['id_project'] }}</td>
+                <td>
+                    @php
+                        $aryProject = [];
+                        foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $key => $value) {
+                            if (!in_array($value['id_project'], $aryProject)) {
+                                if($key!=0){
+                                    echo ', ';
+                                }
+                                echo $value['id_project'];
+                                array_push($aryProject, $value['id_project']); 
+                            }
+                        }
+                    @endphp
+                </td>
             </tr>
             
         </table>
@@ -113,13 +126,13 @@
             <li style="font-weight: bold;"><u>Dasar pelaksanaan Uji Terima I :</u>
     
                 <ol style="font-weight: normal;text-align: justify">
-                    <li>Perjanjian Kerjasama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outsite Plant Fiber Optik (OSP-FO) Nomor : {{ $dt['dt_sp']['khs_induks']['no_kontrak']  }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_kontrak'])->isoFormat('DD MMMM Y') }}</li>
+                    <li>Perjanjian Kerjasama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outsite Plant Fiber Optik (OSP-FO) Nomor : {{ $dt['dt_sp']['khs_induks']['no']  }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</li>
     
                     @if (count($dt['aman_khs'])>0)
     
                         @foreach ($dt['aman_khs'] as $i=>$item)
     
-                            <li>Amandemen {{$i+1}} Perjanjian Kerjasama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outsite Plant Fiber Optik (OSP-FO) Nomor : {{ $item['no_aman'] }}, Tanggal {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('DD MMMM Y') }}</li>
+                            <li>Amandemen {{$i+1}} Perjanjian Kerjasama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outsite Plant Fiber Optik (OSP-FO) Nomor : {{ $item['no'] }}, Tanggal {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</li>
                             
                         @endforeach
                     
@@ -135,7 +148,7 @@
                         @endforeach
                     
                     @endif
-                    <li>Surat permohonan Uji Terima I dari {{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }} Nomor {{ $dt['dt_tagihan']['no_ut'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ut'])->isoFormat('DD MMMM Y') }}, perihal Permohonan Uji Terima Pertama</li>
+                    <li>Surat permohonan Uji Terima I dari {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor {{ $dt['dt_tagihan']['no_ut'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ut'])->isoFormat('DD MMMM Y') }}, perihal Permohonan Uji Terima Pertama</li>
                     <li>Nota Dinas Pelaksanaan Uji Terima I  Nomor : {{ $dt['dt_tagihan']['no_nodin'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_nodin'])->isoFormat('DD MMMM Y') }}</li>
                 </ol>
     
@@ -151,16 +164,12 @@
                         Berdasarkan Nota Dinas Penunjukan Tim Uji Terima dan Nota Dinas Pelaksanaan Uji Terima I maka Uji Terima dilaksanakan Oleh :
                         <br>
                         <span>
-                            {{$dt['dt_tagihan']['dt_ttd']['sm_unit']}} 
+                            {{$dt['dt_tagihan']['dt_ttd']['sm_unit_pejabat']}} 
                             / 
-                            @if ($dt['dt_sp']['json']['master_unit_id'] == 2)
-                                Site Manager Project Deployment
-                            @else
-                                Site Manager Corrective Maintenance
-                            @endif
+                            {{$dt['dt_tagihan']['dt_ttd']['sm_unit_jabatan']}}
                            
                             <br>
-                            {{$dt['dt_sp']['mitras']['master_users']['detail']['direktur']}} / DIREKTUR
+                            {{$dt['dt_sp']['khs_induks']['json']['direktur']}} / DIREKTUR
                         </span>
                     </li>
                 </ol>
@@ -210,7 +219,7 @@
                             }
                             // dd($json);
                         @endphp
-                        Dari uraian diatas disimpulkan bahwa Pekerjaan {{$json['json']['nama_pekerjaan']}}, Perjanjian Kerjasama No. {{ $dt['dt_sp']['khs_induks']['no_kontrak'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_kontrak'])->isoFormat('DD MMMM Y') }}, Surat Pesanan  No. {{ $json['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($json['tgl_sp'])->isoFormat('DD MMMM Y') }}.
+                        Dari uraian diatas disimpulkan bahwa Pekerjaan {{$dt['dt_sp']['nama_pekerjaan']}}, Perjanjian Kerjasama No. {{ $dt['dt_sp']['khs_induks']['no'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}, Surat Pesanan  No. {{ $json['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($json['tgl_sp'])->isoFormat('DD MMMM Y') }}.
                         <br>
                         <strong><center>DITERIMA / <del>DITOLAK</del></center></strong>
                     </li>
@@ -232,22 +241,18 @@
             </tr>
             <tr>
                 <td style="width: 50%">
-                    {{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }}
+                    {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }}
                     <div style="height: 100px"></div>
-                    <u>{{ $dt['dt_sp']['mitras']['master_users']['detail']['direktur'] }}</u>
+                    <u>{{ $dt['dt_sp']['khs_induks']['json']['direktur'] }}</u>
                     <br>
                     DIREKTUR
                 </td>
                 <td>
                     PT. TELKOM AKSES
                     <div style="height: 100px"></div>
-                    <u>{{$dt['dt_tagihan']['dt_ttd']['sm_unit']}}</u>
+                    <u>{{$dt['dt_tagihan']['dt_ttd']['sm_unit_pejabat']}}</u>
                     <br>
-                    @if ($dt['dt_sp']['json']['master_unit_id'] == 2)
-                        Site Manager Project Deployment
-                    @else
-                        Site Manager Corrective Maintenance
-                    @endif
+                    {{$dt['dt_tagihan']['dt_ttd']['sm_unit_jabatan']}}
                 </td>
             </tr>
     
@@ -259,20 +264,16 @@
                 <td>
                     PT. TELKOM AKSES
                     <div style="height: 100px"></div>
-                    <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit']}}</u>
+                    <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit_pejabat']}}</u>
                     <br>
-                    @if ($dt['dt_sp']['json']['master_unit_id'] == 2)
-                        Mgr. Konstruksi Medan
-                    @else
-                        Mgr. Assurance & Maintenance Medan
-                    @endif 
+                    {{$dt['dt_tagihan']['dt_ttd']['mgr_unit_jabatan']}} 
                 </td>
                 <td>
                     PT. TELKOM AKSES
                     <div style="height: 100px"></div>
-                    <u>{{$dt['dt_tagihan']['dt_ttd']['gm_ta']}}</u>
+                    <u>{{$dt['dt_tagihan']['dt_ttd']['gm_ta_pejabat']}}</u>
                     <br>
-                    GM TA MEDAN
+                    {{$dt['dt_tagihan']['dt_ttd']['gm_ta_jabatan']}}
                 </td>
             </tr>
         </table>

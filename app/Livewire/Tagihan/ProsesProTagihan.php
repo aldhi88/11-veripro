@@ -74,12 +74,12 @@ class ProsesProTagihan extends Component
         $dt['revisi'] = $this->dtTagih['revisi'];
         $dt['tagihan_id'] = $this->dtTagih['id'];
         $dt['status'] = 6;
-
         TagihanHistory::create($dt);
-        Tagihan::find($this->dtTagih['id'])->update([
-            'status' => 6,
-            'revisi' => $dt['revisi'],
-        ]);
+
+        $dtRevis['status'] = 6;
+        $dtRevis['revisi'] = $dt['revisi'];
+        $dtRevis['json'] = $dt['json'];
+        Tagihan::find($this->dtTagih['id'])->update($dtRevis);
         session()->flash('message', 'Revisi data tagihan sudah berhasil dikirimkan.');
         return redirect()->to('/tagihan/pro/index');
     }
@@ -100,7 +100,7 @@ class ProsesProTagihan extends Component
         );
         $this->dt = $this->dtTagih['json'];
         $this->setPejabat();
-        if($this->dt['dt_tagihan']['grand_total_all'] != $this->dt['dt_tagihan']['grand_total_all_rekon']){
+        if($this->dt['dt_tagihan']['dt_lokasi']['grand_total'] != $this->dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']){
             $this->isAmanPenutup = true;
         }
     }
@@ -108,18 +108,14 @@ class ProsesProTagihan extends Component
     public function setPejabat()
     {
         $lov = Lov::select('key', 'value')->get()->toArray();
-        foreach ($lov as $key => $value) {
-            $lov[$key]['value'] = json_decode($value['value']);
-            unset($lov[$key]['status_label']); 
-        }
 
         $this->pejabat['gm_ta'] = array_values((collect($lov))->where('key', 'gm_ta')->toArray())[0];
-        $this->pejabat['mgr_konstruksi'] = array_values((collect($lov))->where('key', 'mgr_konstruksi')->toArray())[0];
-        $this->pejabat['sm_konstruksi'] = array_values((collect($lov))->where('key', 'sm_konstruksi')->toArray())[0];
-        $this->pejabat['mgr_maintenance'] = array_values((collect($lov))->where('key', 'mgr_maintenance')->toArray())[0];
-        $this->pejabat['sm_maintenance'] = array_values((collect($lov))->where('key', 'sm_maintenance')->toArray())[0];
+        $this->pejabat['mgr_osp-fo'] = array_values((collect($lov))->where('key', 'mgr_osp-fo')->toArray())[0];
+        $this->pejabat['sm_osp-fo'] = array_values((collect($lov))->where('key', 'sm_osp-fo')->toArray())[0];
+        $this->pejabat['mgr_qe'] = array_values((collect($lov))->where('key', 'mgr_qe')->toArray())[0];
+        $this->pejabat['sm_qe'] = array_values((collect($lov))->where('key', 'sm_qe')->toArray())[0];
         $this->pejabat['mgr_shared'] = array_values((collect($lov))->where('key', 'mgr_shared')->toArray())[0];
-        $this->pejabat['wapang'] = array_values((collect($lov))->where('key', 'wapang')->toArray())[0];
+        $this->pejabat['waspang'] = array_values((collect($lov))->where('key', 'waspang')->toArray())[0];
         $this->pejabat['gudang'] = array_values((collect($lov))->where('key', 'gudang')->toArray())[0];
     }
     

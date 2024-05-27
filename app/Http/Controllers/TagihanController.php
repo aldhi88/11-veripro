@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\KhsAmandemen;
-use App\Models\Lov;
 use App\Models\SpAmandemen;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
@@ -11,99 +10,11 @@ use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 
 
 class TagihanController extends Controller
 {
-    public function index()
-    {
-        $data['page'] = 'index';
-        $data['title'] = "Data Tagihan";
-        return view('mods.tagihan.index', compact('data'));
-    }
-
-    public function indexUser()
-    {
-        $data['page'] = 'index-user';
-        $data['title'] = "Data Tagihan";
-        return view('mods.tagihan.index', compact('data'));
-    }
-
-    public function indexPro()
-    {
-        $data['page'] = 'index-pro';
-        $data['title'] = "Data Tagihan";
-        return view('mods.tagihan.index', compact('data'));
-    }
-
-    public function create($spId)
-    {
-        $data['page'] = 'create';
-        $data['title'] = "Buat Tagihan Baru";
-        $data['key'] = $spId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-
-    public function edit($tagihanId)
-    {
-        $data['page'] = 'edit';
-        $data['title'] = "Edit Data Tagihan";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-    public function invoice($tagihanId)
-    {
-        $data['page'] = 'invoice';
-        $data['title'] = "Tagihan Tahap 2";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-    public function invoiceRevisi($tagihanId)
-    {
-        $data['page'] = 'invoice-revisi';
-        $data['title'] = "Revisi Tagihan Tahap 2";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-    public function revisi($tagihanId)
-    {
-        $data['page'] = 'revisi';
-        $data['title'] = "Revisi Data Tagihan";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-    public function prosesUser($tagihanId)
-    {
-        $data['page'] = 'proses-user';
-        $data['title'] = "Proses Data Tagihan";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-    public function prosesPro($tagihanId)
-    {
-        $data['page'] = 'proses-pro';
-        $data['title'] = "Proses Data Tagihan";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-    public function proses2Pro($tagihanId)
-    {
-        $data['page'] = 'proses2-pro';
-        $data['title'] = "Proses Data Tagihan Tahap 2";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-
-    public function detail($tagihanId)
-    {
-        $data['page'] = 'detail';
-        $data['title'] = "Detail Data Tagihan";
-        $data['key'] = $tagihanId;
-        return view('mods.tagihan.index', compact('data'));
-    }
-
     public function file($tagihanId, Request $request)
     {
 
@@ -128,20 +39,71 @@ class TagihanController extends Controller
         $dt['dt_tagihan'] = $dt['tagihan']['json']['dt_tagihan'];
         $dt['dt_sp'] = $dt['tagihan']['json']['dt_sp'];
 
-        $dt['aman_khs'] = KhsAmandemen::where('khs_induk_id', $dt['dt_sp']['khs_induk_id'])
-            ->get()
+        $dt['aman_khs'] = (KhsAmandemen::where('khs_induk_id', $dt['dt_sp']['khs_induk_id'])
+            ->get())
+            ->map(function ($item) {
+                    $item['json'] = json_decode($item['json'],true);
+                    unset(
+                        $item['created_at'],
+                        $item['updated_at'],
+                        $item['deleted_at'],
+                    );
+
+                    return $item;
+                }
+            )
             ->toArray();
-        if(count($dt['aman_khs']) > 0){
-            $dt['aman_khs']['json'] = json_decode($dt['aman_khs']['json'], true);
+
+        $dt['aman_sp'] = (SpAmandemen::where('sp_induk_id', $dt['dt_sp']['id'])
+            ->get())
+            ->map(function ($item) {
+                    $item['json'] = json_decode($item['json'],true);
+                    unset(
+                        $item['created_at'],
+                        $item['updated_at'],
+                        $item['deleted_at'],
+                    );
+
+                    return $item;
+                }
+            )
+            ->toArray();
+        
+        $allDesigs = [];
+        foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $i => $v) {
+            foreach ($v['desig_items'] as $i2 => $v2) {
+                $allDesigs[] = $v2;
+            }
         }
 
-        $dt['aman_sp'] = SpAmandemen::where('sp_induk_id', $dt['dt_sp']['id'])
-            ->get()
-            ->toArray();
-        if(count($dt['aman_sp']) > 0){
-            $dt['aman_sp']['json'] = json_decode($dt['aman_sp']['json'], true);
-        }
-        // dd($dt);
+        $grouped = collect($allDesigs)->groupBy(function($item) {
+            return $item['nama_material'] . '|' . $item['nama_jasa'] . '|' . $item['nama_designator'];
+        });
+
+        $result = $grouped->map(function($items) {
+            return [
+                "nama_material" => $items->first()['nama_material'],
+                "nama_jasa" => $items->first()['nama_jasa'],
+                "nama_designator" => $items->first()['nama_designator'],
+                "uraian" => $items->first()['uraian'],
+                "satuan" => $items->first()['satuan'],
+                "hrg_material" => $items->first()['material'],
+                "hrg_jasa" => $items->first()['jasa'],
+                "vol_sp" => $items->sum('vol'),
+                "vol_rekon" => $items->sum('volume_rekon'),
+                "vol_tambah" => $items->sum('volume_tambah'),
+                "vol_kurang" => $items->sum('volume_kurang'),
+                "total_material_sp" => $items->sum('total_material'),
+                "total_jasa_sp" => $items->sum('total_jasa'),
+                "total_material_rekon" => $items->sum('total_material_rekon'),
+                "total_jasa_rekon" => $items->sum('total_jasa_rekon'),
+                "total_material_tambah" => $items->sum('total_material_tambah'),
+                "total_jasa_tambah" => $items->sum('total_jasa_tambah'),
+                "total_material_kurang" => $items->sum('total_material_kurang'),
+                "total_jasa_kurang" => $items->sum('total_jasa_kurang'),
+            ];
+        })->values();
+
         return view('mods.ba.index', compact('dt'));
     }
 
@@ -414,5 +376,92 @@ class TagihanController extends Controller
             
             ->rawColumns(['action','status_label'])
             ->toJson();
+    }
+
+    public function index()
+    {
+        $data['page'] = 'index';
+        $data['title'] = "Data Tagihan";
+        return view('mods.tagihan.index', compact('data'));
+    }
+
+    public function indexUser()
+    {
+        $data['page'] = 'index-user';
+        $data['title'] = "Data Tagihan";
+        return view('mods.tagihan.index', compact('data'));
+    }
+
+    public function indexPro()
+    {
+        $data['page'] = 'index-pro';
+        $data['title'] = "Data Tagihan";
+        return view('mods.tagihan.index', compact('data'));
+    }
+
+    public function create($spId)
+    {
+        $data['page'] = 'create';
+        $data['title'] = "Buat Tagihan Baru";
+        $data['key'] = $spId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+
+    public function edit($tagihanId)
+    {
+        $data['page'] = 'edit';
+        $data['title'] = "Edit Data Tagihan";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+    public function invoice($tagihanId)
+    {
+        $data['page'] = 'invoice';
+        $data['title'] = "Tagihan Tahap 2";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+    public function invoiceRevisi($tagihanId)
+    {
+        $data['page'] = 'invoice-revisi';
+        $data['title'] = "Revisi Tagihan Tahap 2";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+    public function revisi($tagihanId)
+    {
+        $data['page'] = 'revisi';
+        $data['title'] = "Revisi Data Tagihan";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+    public function prosesUser($tagihanId)
+    {
+        $data['page'] = 'proses-user';
+        $data['title'] = "Proses Data Tagihan";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+    public function prosesPro($tagihanId)
+    {
+        $data['page'] = 'proses-pro';
+        $data['title'] = "Proses Data Tagihan";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+    public function proses2Pro($tagihanId)
+    {
+        $data['page'] = 'proses2-pro';
+        $data['title'] = "Proses Data Tagihan Tahap 2";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
+    }
+
+    public function detail($tagihanId)
+    {
+        $data['page'] = 'detail';
+        $data['title'] = "Detail Data Tagihan";
+        $data['key'] = $tagihanId;
+        return view('mods.tagihan.index', compact('data'));
     }
 }

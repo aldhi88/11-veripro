@@ -36,10 +36,10 @@
         <p style="text-align: justify">
             Dengan Hormat, 
             <br><br>
-            Sehubungan dengan Pekerjaan {{ $dt['dt_sp']['json']['nama_pekerjaan'] }} antara PT. Telkom Akses dan {{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }} dengan Surat Pesanan Nomor : {{ $dt['dt_sp']['no_sp'] }} Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }} bahwa pekerjaan untuk lokasi :
+            Sehubungan dengan Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }} antara PT. Telkom Akses dan {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} dengan Surat Pesanan Nomor : {{ $dt['dt_sp']['no_sp'] }} Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }} bahwa pekerjaan untuk lokasi :
     
             <ol>
-                @foreach ($dt['dt_tagihan']['dt_lokasi'] as $item)
+                @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $item)
                     <li>{{ $item['nama_lokasi'] }}</li>
                 @endforeach
             </ol>
@@ -57,9 +57,9 @@
         <p>Demikianlah surat permohonan ini kami sampaikan, atas perhatian dan kerjasamanya, kami ucapkan terima kasih.</p>
         <div style="height: 30px;"></div>
         <span style="text-transform: uppercase">
-            <strong>{{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }}</strong>
+            <strong>{{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }}</strong>
             <div style="height: 100px"></div>
-            <strong>{{ $dt['dt_sp']['mitras']['master_users']['detail']['direktur'] }}</strong>
+            <strong>{{ $dt['dt_sp']['khs_induks']['json']['direktur'] }}</strong>
             <br>
             DIREKTUR
         </span>

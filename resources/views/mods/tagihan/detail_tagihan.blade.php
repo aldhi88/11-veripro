@@ -212,7 +212,9 @@
                                                     <thead>
                                                         <tr class="bg-light">
                                                             <th rowspan="2" width="40" class="text-center">No</th>
-                                                            <th rowspan="2" class="text-center">Designator</th>
+                                                            <th rowspan="2" class="text-center">Nama <br> Material</th>
+                                                            <th rowspan="2" class="text-center">Nama <br>Jasa</th>
+                                                            <th rowspan="2" class="text-center">Nama <br>Designator</th>
                                                             <th rowspan="2" class="text-center">Uraian</th>
                                                             <th rowspan="2" class="text-center">Satuan</th>
                                                             <th rowspan="2" class="bg-light text-center">Material</th>
@@ -237,17 +239,9 @@
                                                         @foreach ($iJson['desig_items'] as $i=>$val)
                                                             <tr>
                                                                 <td>{{$i+1}}</td>
-                                                                <td>
-                                                                    @php
-                                                                        if($item['json']['dt_sp']['master_units']['nama']=='OSP-FO'){
-                                                                            echo $val['nama_designator'];
-                                                                        }else if($val['jasa']==0){
-                                                                            echo $val['nama_material'];
-                                                                        }else{  
-                                                                            echo $val['nama_jasa'];
-                                                                        }
-                                                                    @endphp
-                                                                </td>
+                                                                <td>{{$val['nama_material']}}</td>
+                                                                <td>{{$val['nama_jasa']}}</td>
+                                                                <td>{{$val['nama_designator']}}</td>
                                                                 <td>
                                                                     <span title="{{$val['uraian']}}">
                                                                         {{ Str::limit($val['uraian'], 35, '...') }}

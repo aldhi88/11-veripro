@@ -4,11 +4,11 @@
     
             <strong>
             BERITA ACARA PENGGUNAAN MATERIAL <br>
-            PEKERJAAN {{$dt['dt_sp']['json']['nama_pekerjaan']}} <br>
-            NO.KHS {{$dt['dt_sp']['khs_induks']['no_kontrak']}}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_kontrak'])->isoFormat('DD MMMM Y') }}
+            PEKERJAAN {{$dt['dt_sp']['nama_pekerjaan']}} <br>
+            NO.KHS {{$dt['dt_sp']['khs_induks']['no']}}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}
             @if (count($dt['aman_khs'])>0)
                 @foreach ($dt['aman_khs'] as $i=>$item)
-                NO AMANDEMEN {{$i+1}} KHS {{ $item['no_aman'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('DD MMMM Y') }}
+                NO AMANDEMEN {{$i+1}} KHS {{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}
                 @endforeach
             @endif
             <br>
@@ -33,7 +33,7 @@
             <td rowspan="2">TANGGAL RFC</td>
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
             <td>
-                <div class="verticalTableHeader">{{$vDes['nama']}}</div>
+                <div class="verticalTableHeader">{{$vDes['nama_material']}}</div>
             </td>
             @endforeach
             
@@ -72,7 +72,7 @@
             <td rowspan="2" widtd="130">ID PROJECT</td>
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
             <td>
-                <div class="verticalTableHeader">{{$vDes['nama']}}</div>
+                <div class="verticalTableHeader">{{$vDes['nama_material']}}</div>
             </td>
             @endforeach
         </tr>
@@ -83,11 +83,11 @@
         </tr>
 
         <tbody style="text-align: center">
-            @foreach ($dt['dt_tagihan']['dt_lokasi'] as $iLok=>$vLok)
+            @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok=>$vLok)
                 <tr class="text-center">
                     <td>{{$iLok+1}}</td>
                     <td style="text-align: left">{{$vLok['nama_lokasi']}}</td>
-                    <td>{{$dt['dt_sp']['json']['id_project']}}</td>
+                    <td>{{$vLok['id_project']}}</td>
                     @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDesMat=>$vDesMat)
                     <td>{{$dt['dt_tagihan']['dt_gudang']['pakai']['data'][$iLok][$iDesMat]}}</td>
                     @endforeach
@@ -113,7 +113,7 @@
                 <td rowspan="2">ID PENGEMBALIAN</td>
                 <td rowspan="2" widtd="130">TANGGAL RFR</td>
                 @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-                <td><div class="verticalTableHeader">{{$vDes['nama']}}</div></td>
+                <td><div class="verticalTableHeader">{{$vDes['nama_material']}}</div></td>
                 @endforeach
                 
             </tr>
@@ -178,9 +178,9 @@
             </td></tr>
             <tr>
                 <td style="width: 33%; text-transform: uppercase">
-                    {{ $dt['dt_sp']['mitras']['master_users']['detail']['perusahaan'] }}
+                    {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }}
                     <div style="height: 100px"></div>
-                    <u>{{ $dt['dt_sp']['mitras']['master_users']['detail']['direktur'] }}</u>
+                    <u>{{ $dt['dt_sp']['khs_induks']['json']['direktur'] }}</u>
                     <br>
                     DIREKTUR
                 </td>
@@ -191,18 +191,14 @@
                             <td style="width: 50%">
                                 WASPANG
                                 <div style="height: 100px"></div>
-                                <u>{{ $dt['dt_tagihan']['dt_ttd']['wapang'] }}</u><br>
-                                @if ($dt['dt_sp']['json']['master_unit_id'] == 2)
-                                    Project Supervisor
-                                @else
-                                    TL. Corrective Maintenance & QE
-                                @endif
+                                <u>{{ $dt['dt_tagihan']['dt_ttd']['waspang_pejabat'] }}</u><br>
+                                {{$dt['dt_tagihan']['dt_ttd']['waspang_jabatan']}}
                             </td>
                             <td>
                                 PETUGAS GUDANG
                                 <div style="height: 100px"></div>
-                                <u>{{ $dt['dt_tagihan']['dt_ttd']['wapang'] }}</u><br>
-                                TIM LEADER INVENTORY & ASSET MANAGEMENT
+                                <u>{{ $dt['dt_tagihan']['dt_ttd']['gudang_pejabat'] }}</u><br>
+                                {{$dt['dt_tagihan']['dt_ttd']['gudang_jabatan']}}
                             </td>
                         </tr>
                     </table>
@@ -220,21 +216,15 @@
                         <tr>
                             <td style="width: 50%">
                                 <div style="height: 120px"></div>
-                                <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit']}}</u>
+                                <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit_pejabat']}}</u>
                                 <br>
-                                <span>
-                                    @if ($dt['dt_sp']['json']['master_unit_id'] == 2)
-                                        Mgr. Konstruksi Medan
-                                    @else
-                                        Mgr. Assurance & Maintenance Medan
-                                    @endif  
-                                </span>
+                                <span>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit_jabatan']}}</span>
                             </td>
                             <td>
                                 <div style="height: 120px"></div>
-                                <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_shared']}}</u>
+                                <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_shared_pejabat']}}</u>
                                 <br>
-                                <span>MGR SHARED SERVICE MEDAN</span>
+                                <span>{{$dt['dt_tagihan']['dt_ttd']['mgr_shared_jabatan']}}</span>
                             </td>
                         </tr>
                     </table>

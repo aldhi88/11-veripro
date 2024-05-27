@@ -1,9 +1,9 @@
 @section('style')
-    <link rel="stylesheet" href="{{asset('assets/libs/trix/cdnjs.cloudflare.com_ajax_libs_trix_1.3.1_trix.min.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css" />
 @endsection
 
 @section('script')
-    <script src="{{asset('assets/libs/trix/cdnjs.cloudflare.com_ajax_libs_trix_1.3.1_trix.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
     <script>
         var trixEditor = document.getElementById("{{ $trixId }}")
 

@@ -71,6 +71,7 @@ class LokasiRekonImport implements ToCollection, WithHeadingRow
                 $total_lokasi=0;
 
                 $lokCek = collect($this->lokasiSp['lokasi'][$iLok]['desig_items']);
+
                 foreach ($row as $iRow => $vRow) {
                     if($vRow[0]=='ZZ'){ break; }
     
@@ -78,6 +79,15 @@ class LokasiRekonImport implements ToCollection, WithHeadingRow
                         if(!is_null($vRow[$i])){
                             
                             $result = $lokCek->first(function ($value, $key) use($vRow) {
+                                if($vRow['nama_material']==''||$vRow['nama_material']=='-'){
+                                    $vRow['nama_material'] = null;
+                                }
+                                if($vRow['nama_jasa']==''||$vRow['nama_jasa']=='-'){
+                                    $vRow['nama_jasa'] = null;
+                                }
+                                if($vRow['nama_designator']==''||$vRow['nama_designator']=='-'){
+                                    $vRow['nama_designator'] = null;
+                                }
                                 return $value['nama_material'] === $vRow['nama_material'] && 
                                     $value['nama_jasa'] === $vRow['nama_jasa'] && 
                                     $value['nama_designator'] === $vRow['nama_designator'];

@@ -103,11 +103,11 @@ class CreateTagihan extends Component
         $this->setPejabat();
         $this->setDtEdit($data['key']);
         $this->setGudang();
-        // dd($this->all());
     }
 
     public function uploadLokasi()
     {
+        
         $this->validate([
             "formUpload.jumlah" => "required",
             "formUpload.file" => "required|mimes:xls,xlsx|max:2048",
@@ -125,6 +125,7 @@ class CreateTagihan extends Component
                 session()->flash('msg-upload-ok','Upload Success');
             }
         };
+        
         $import = new LokasiRekonImport($callback, $this->formUpload['jumlah'], $this->dt['dt_tagihan']['dt_lokasi']);
         Excel::import($import, $this->formUpload['file']);
         $this->setGudang();
@@ -233,7 +234,6 @@ class CreateTagihan extends Component
         $dt['status'] = 2;
         $dt['json'] = json_encode($dtJson);
 
-        // dd($dt);
         $tagihan = Tagihan::where('sp_induk_id', $this->editId)->get();
         if(count($tagihan) == 0){
             $q = Tagihan::create($dt);
