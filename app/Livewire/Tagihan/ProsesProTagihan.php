@@ -10,7 +10,7 @@ use Livewire\Attributes\On;
 
 class ProsesProTagihan extends Component
 {
-    public $tab = 0;
+    public $tab = -2;
     public $dtTagih;
     public $dt;
     public $doc;
@@ -18,6 +18,7 @@ class ProsesProTagihan extends Component
     public $trixId;
     public $isAmanPenutup = false;
     public $revisi;
+    public $status;
 
 
     public function rules()
@@ -52,16 +53,13 @@ class ProsesProTagihan extends Component
         }
         $this->validate($validate);
 
-        $dt = $this->dtTagih;
+        // $dt = $this->dtTagih;
         $dt['status'] = 8;
         $dt['json'] = json_encode($this->dt);
-
         Tagihan::find($this->dtTagih['id'])->update($dt);
-        TagihanHistory::create([
-            'tagihan_id' => $this->dtTagih['id'],
-            'status' => 8,
-            'json' => $dt['json']
-        ]);
+        
+        $dt['tagihan_id'] = $this->dtTagih['id'];
+        TagihanHistory::create($dt);
 
         session()->flash('message', 'Data Tagihan sudah berhasil di disetujui.');
         return redirect()->to('/tagihan/pro/index');
@@ -90,7 +88,7 @@ class ProsesProTagihan extends Component
         $this->doc = Tagihan::dtDokTurnkey();
         $this->dtTagih = Tagihan::whereId($data['key'])->first()->toArray();
         $this->dtTagih['json'] = json_decode($this->dtTagih['json'], true);
-        $this->dtTagih['revisi'] = "";
+        
         unset(
             $this->dtTagih['created_at'],
             $this->dtTagih['updated_at'],
@@ -102,6 +100,10 @@ class ProsesProTagihan extends Component
         $this->setPejabat();
         if($this->dt['dt_tagihan']['dt_lokasi']['grand_total'] != $this->dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']){
             $this->isAmanPenutup = true;
+        }
+        $this->status = $this->dtTagih['status'];
+        if($this->status<=5){
+            $this->dtTagih['revisi'] = "";
         }
     }
 

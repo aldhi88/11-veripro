@@ -16,6 +16,7 @@ class ProsesUserTagihan extends Component
     public $doc;
     public $pejabat;
     public $trixId;
+    public $status;
 
 
     public function rules()
@@ -35,6 +36,7 @@ class ProsesUserTagihan extends Component
     public function submit()
     {
         $this->validate();
+
         $dt = $this->dtTagih;
         $dt['status'] = 5;
         $dt['json'] = json_encode($this->dt);
@@ -52,16 +54,14 @@ class ProsesUserTagihan extends Component
     #[On('prosesusertagihan-revisi')] 
     public function revisi()
     {
-        $dt['json'] = json_encode($this->dtTagih['json']);
-        $dt['revisi'] = $this->dtTagih['revisi'];
-        $dt['tagihan_id'] = $this->dtTagih['id'];
         $dt['status'] = 3;
+        $dt['revisi'] = $this->dtTagih['revisi'];
+        $dt['json'] = json_encode($this->dtTagih['json']);
+        Tagihan::find($this->dtTagih['id'])->update($dt);
 
-        $dtRevis['status'] = 3;
-        $dtRevis['revisi'] = $dt['revisi'];
-        $dtRevis['json'] = $dt['json'];
+        $dt['tagihan_id'] = $this->dtTagih['id'];
         TagihanHistory::create($dt);
-        Tagihan::find($this->dtTagih['id'])->update($dtRevis);
+
         session()->flash('message', 'Revisi data tagihan sudah berhasil dikirimkan.');
         return redirect()->to('/tagihan/user/index');
     }
@@ -75,7 +75,6 @@ class ProsesUserTagihan extends Component
         $this->dtTagih['json'] = json_decode($this->dtTagih['json'], true);
         $this->dtTagih['json']['dt_tagihan']['no_nodin'] = "";
         $this->dtTagih['json']['dt_tagihan']['tgl_nodin'] = "";
-        $this->dtTagih['revisi'] = "";
         unset(
             $this->dtTagih['created_at'],
             $this->dtTagih['updated_at'],
@@ -85,7 +84,8 @@ class ProsesUserTagihan extends Component
         );
         $this->dt = $this->dtTagih['json'];
         $this->setPejabat();
-        // dd($this->all());
+        $this->status = $this->dtTagih['status'];
+
     }
 
     public function setPejabat()

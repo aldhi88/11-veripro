@@ -26,102 +26,30 @@
 
                     <form wire:submit="submit">
 
-                        <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
-                            <li class="nav-item" wire:click="changeTab(6)"  style="cursor: pointer">
-                                <a class="nav-link {{ $tab==6?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Revisi</span> 
-                                </a>
-                            </li>
-                            @if ($dtEdit['status']>=5)
-                            <li class="nav-item" wire:click="changeTab(7)"  style="cursor: pointer">
-                                <a class="nav-link {{ $tab==7?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Nota Dinas</span> 
-                                </a>
-                            </li>
-                            @endif
-                            <li class="nav-item" wire:click="changeTab(1)"  style="cursor: pointer">
-                                <a class="nav-link {{ $tab==1?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Data Tagihan</span> 
-                                </a>
-                            </li>
-                            <li class="nav-item" wire:click="changeTab(2)" style="cursor: pointer">
-                                <a class="nav-link {{ $tab==2?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                    <span class="d-none d-sm-block">Designator</span>   
-                                </a>
-                            </li>
-                            <li class="nav-item" wire:click="changeTab(4)"  style="cursor: pointer">
-                                <a class="nav-link {{ $tab==4?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Turnkey</span> 
-                                </a>
-                            </li>
-                            <li class="nav-item" wire:click="changeTab(5)"  style="cursor: pointer">
-                                <a class="nav-link {{ $tab==5?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Pejabat</span> 
-                                </a>
-                            </li>
-                            <li class="nav-item" wire:click="changeTab(3)"  style="cursor: pointer">
-                                <a class="nav-link {{ $tab==3?'active':null }}">
-                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Gudang</span> 
-                                </a>
-                            </li>
-                        </ul>
+                        @include('mods.tagihan.tagihan_nav')
                         
                         <div class="tab-content text-muted pt-4">
 
-                            {{-- data revisi --}}
-                            <div class="tab-pane {{ $tab==6?'active':null }}" id="tab1" role="tabpanel">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="card border border-danger">
-                                            <div class="card-header bg-transparent border-danger">
-                                                <h5 class="my-0 text-{{$revisiClass}}"><i class="mdi mdi-block-helper mr-3"></i>Revisi</h5>
-                                            </div>
-                                            <div class="card-body mt-0 pt-0">
-                                                {!! $dtEdit['revisi'] !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{-- revisi --}}
+                            @include('mods.tagihan.tagihan_revisi')
 
-                            {{-- data nodin --}}
-                            <div class="tab-pane {{ $tab==7?'active':null }}" id="tab7" role="tabpanel">
-                                @include('mods.tagihan.inc_nodin')
-                            </div>
+                            {{-- nodin --}}
+                            @include('mods.tagihan.tagihan_nodin_readonly')
                             
-                            {{-- data tagihan --}}
-                            <div class="tab-pane {{ $tab==1?'active':null }}" id="tab1" role="tabpanel">
-                                @include('mods.tagihan.create_tagihan_data')
-                            </div>
+                            {{-- data --}}
+                            @include('mods.tagihan.tagihan_data')
 
-                            {{-- designator Rekon --}}
-                            <div class="tab-pane {{ $tab==2?'active':null }}" id="tab2" role="tabpanel">
-                                @include('mods.tagihan.edit_tagihan_lokasi')
-                            </div>
+                            {{-- lokasi --}}
+                            @include('mods.tagihan.tagihan_lokasi')
 
                             {{-- turnkey --}}
-                            <div class="tab-pane {{ $tab==4?'active':null }}" id="tab4" role="tabpanel">
-                                @include('mods.tagihan.create_tagihan_turnkey')
-                            </div>
-
+                            @include('mods.tagihan.tagihan_turnkey')
 
                             {{-- pejabat --}}
-                            <div class="tab-pane {{ $tab==5?'active':null }}" id="tab5" role="tabpanel">
-                                @include('mods.tagihan.create_tagihan_pejabat')
-                            </div>
-
+                            @include('mods.tagihan.tagihan_pejabat')
                             
                             {{-- gudang --}}
-                            <div class="tab-pane {{ $tab==3?'active':null }}" id="tab3" role="tabpanel">
-                                @include('mods.tagihan.create_tagihan_gudang')
-                            </div>
+                            @include('mods.tagihan.tagihan_gudang')
                             
                         </div>
     

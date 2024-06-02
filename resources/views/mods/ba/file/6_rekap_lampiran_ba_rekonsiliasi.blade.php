@@ -319,31 +319,32 @@
 
 
 
-        @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok=>$vLok)
+        @foreach ($dtDesig as $iDtDesig=>$vDtDesig)
             <tr>
-                <td style="text-align: center">{{$iLok+1}}</td>
-                <td>{{ $vLok['nama_lokasi'] }}</td>
-                <td style="text-align: center">{{ $vLok['id_project'] }}</td>
+                <td style="text-align: center">{{$iDtDesig+1}}</td>
+                <td style="text-align: left">
+                    {{ !is_null($vDtDesig['nama_material'])?$vDtDesig['nama_material']:null }} 
+                    {{ !is_null($vDtDesig['nama_jasa'])?", ".$vDtDesig['nama_jasa']:null }} 
+                    {{ !is_null($vDtDesig['nama_designator'])?", ".$vDtDesig['nama_designator']:null }} 
+                </td>
+                <td>{{ $vDtDesig['uraian'] }}</td>
 
-                <td style="text-align: right">{{number_format($vLok['total_material_lokasi'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_jasa_lokasi'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_lokasi'],0,',','.')}}</td>
-
-                <td style="text-align: right">{{number_format($vLok['total_material_lokasi_rekon'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_jasa_lokasi_rekon'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_lokasi_rekon'],0,',','.')}}</td>
-
-                <td style="text-align: right">{{number_format($vLok['total_material_lokasi_tambah'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_jasa_lokasi_tambah'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_lokasi_tambah'],0,',','.')}}</td>
-
-                <td style="text-align: right">{{number_format($vLok['total_material_lokasi_kurang'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_jasa_lokasi_kurang'],0,',','.')}}</td>
-                <td style="text-align: right">{{number_format($vLok['total_lokasi_kurang'],0,',','.')}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         @endforeach
 
-        <tr style="text-align: right">
+        {{-- <tr style="text-align: right">
             <td colspan="3" style="text-align: left">MATERIAL</td>
             <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material'],0,',','.')}}</td>
             <td></td>
@@ -420,7 +421,7 @@
             <td>Rp <div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</div></td>
             <td>Rp <div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</div></td>
             <td>Rp <div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
-        </tr>
+        </tr> --}}
         
     </table>
     <br>

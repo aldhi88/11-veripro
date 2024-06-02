@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 
 class Proses2ProTagihan extends Component
 {
-    public $tab = 7;
+    public $tab = 0;
     public $dtTagih;
     public $dt;
     public $doc;
@@ -19,36 +19,41 @@ class Proses2ProTagihan extends Component
     public $trixId;
     public $isAmanPenutup = false;
     public $revisi;
+    public $status;
 
 
     public function rules()
     {
         return [
-            "dt.dt_tagihan.no_bayar" => "required",
-            "dt.dt_tagihan.tgl_bayar" => "required",
-            "dt.dt_tagihan.no_invoice" => "required",
-            "dt.dt_tagihan.tgl_invoice" => "required",
-            "dt.dt_tagihan.no_kwitansi" => "required",
-            "dt.dt_tagihan.tgl_kwitansi" => "required",
+            "dt.dt_tagihan.no_laut" => "required",
+            "dt.dt_tagihan.no_bast" => "required",
+            "dt.dt_tagihan.tgl_bast" => "required",
+            "dt.dt_tagihan.no_baut" => "required",
+            "dt.dt_tagihan.no_ba_rekon" => "required",
+            "dt.dt_tagihan.no_ba_gambar" => "required",
         ];
     }
 
     protected $validationAttributes = [
-        "dt.dt_tagihan.no_bayar" => "No.Bayar",
-        "dt.dt_tagihan.tgl_bayar" => "Tgl.Bayar",
-        "dt.dt_tagihan.no_invoice" => "No.Invoice",
-        "dt.dt_tagihan.tgl_invoice" => "Tgl.Invoice",
-        "dt.dt_tagihan.no_kwitansi" => "No.Kwitansi",
-        "dt.dt_tagihan.tgl_kwitansi" => "Tgl.Kwitansi",
+        "dt.dt_tagihan.no_laut" => "No.LAUT",
+        "dt.dt_tagihan.no_bast" => "No.BAST",
+        "dt.dt_tagihan.tgl_bast" => "Tgl.BAST",
+        "dt.dt_tagihan.no_baut" => "No.BAUT",
+        "dt.dt_tagihan.no_ba_rekon" => "No.BA Rekon",
+        "dt.dt_tagihan.no_ba_gambar" => "No.BA Gambar",
+        'dt.dt_tagihan.aman_penutup' => 'No.Amandemen Penutup',
 
     ];
 
-    #[On('prosesprotagihan-submit')] 
+    #[On('prosesprotagihan-submit')]
     public function submit()
     {
-        $this->validate();
+        $validate = $this->rules();
+        if($this->isAmanPenutup){
+            $validate['dt.dt_tagihan.aman_penutup'] = 'required';
+        }
+        $this->validate($validate);
 
-        $dt = $this->dtTagih;
         $dt['status'] = 12;
         $dt['json'] = json_encode($this->dt);
 
@@ -60,14 +65,15 @@ class Proses2ProTagihan extends Component
         ]);
         SpInduk::find($this->dtTagih['sp_induk_id'])->update(['status'=>3]);
 
-        session()->flash('message', 'Data Tagihan Tahap 2 sudah berhasil di kirim.');
+        session()->flash('message', 'Data Tagihan sudah disetujui dan selesai.');
         return redirect()->to('/tagihan/pro/index');
     }
 
     #[On('prosesprotagihan-revisi')] 
     public function revisi()
     {
-        $dt['json'] = json_encode($this->dtTagih['json']);
+        // $this->dtTagih['json'] = $this->dt;
+        $dt['json'] = json_encode($this->dt);
         $dt['revisi'] = $this->dtTagih['revisi'];
         $dt['tagihan_id'] = $this->dtTagih['id'];
         $dt['status'] = 10;
@@ -87,7 +93,6 @@ class Proses2ProTagihan extends Component
         $this->doc = Tagihan::dtDokTurnkey();
         $this->dtTagih = Tagihan::whereId($data['key'])->first()->toArray();
         $this->dtTagih['json'] = json_decode($this->dtTagih['json'], true);
-        $this->dtTagih['revisi'] = "";
         unset(
             $this->dtTagih['created_at'],
             $this->dtTagih['updated_at'],
@@ -97,26 +102,26 @@ class Proses2ProTagihan extends Component
         );
         $this->dt = $this->dtTagih['json'];
         $this->setPejabat();
-        if($this->dt['dt_tagihan']['grand_total_all'] != $this->dt['dt_tagihan']['grand_total_all_rekon']){
+        if($this->dt['dt_tagihan']['dt_lokasi']['grand_total'] != $this->dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']){
             $this->isAmanPenutup = true;
+        }
+        $this->status = $this->dtTagih['status'];
+        if($this->status==9){
+            $this->dtTagih['revisi'] = "";
         }
     }
 
     public function setPejabat()
     {
         $lov = Lov::select('key', 'value')->get()->toArray();
-        foreach ($lov as $key => $value) {
-            $lov[$key]['value'] = json_decode($value['value']);
-            unset($lov[$key]['status_label']); 
-        }
 
         $this->pejabat['gm_ta'] = array_values((collect($lov))->where('key', 'gm_ta')->toArray())[0];
-        $this->pejabat['mgr_konstruksi'] = array_values((collect($lov))->where('key', 'mgr_konstruksi')->toArray())[0];
-        $this->pejabat['sm_konstruksi'] = array_values((collect($lov))->where('key', 'sm_konstruksi')->toArray())[0];
-        $this->pejabat['mgr_maintenance'] = array_values((collect($lov))->where('key', 'mgr_maintenance')->toArray())[0];
-        $this->pejabat['sm_maintenance'] = array_values((collect($lov))->where('key', 'sm_maintenance')->toArray())[0];
+        $this->pejabat['mgr_osp-fo'] = array_values((collect($lov))->where('key', 'mgr_osp-fo')->toArray())[0];
+        $this->pejabat['sm_osp-fo'] = array_values((collect($lov))->where('key', 'sm_osp-fo')->toArray())[0];
+        $this->pejabat['mgr_qe'] = array_values((collect($lov))->where('key', 'mgr_qe')->toArray())[0];
+        $this->pejabat['sm_qe'] = array_values((collect($lov))->where('key', 'sm_qe')->toArray())[0];
         $this->pejabat['mgr_shared'] = array_values((collect($lov))->where('key', 'mgr_shared')->toArray())[0];
-        $this->pejabat['wapang'] = array_values((collect($lov))->where('key', 'wapang')->toArray())[0];
+        $this->pejabat['waspang'] = array_values((collect($lov))->where('key', 'waspang')->toArray())[0];
         $this->pejabat['gudang'] = array_values((collect($lov))->where('key', 'gudang')->toArray())[0];
     }
     

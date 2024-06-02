@@ -4,7 +4,6 @@ namespace App\Livewire\Tagihan;
 
 use App\Imports\LokasiRekonImport;
 use App\Models\Lov;
-use App\Models\SpInduk;
 use App\Models\Tagihan;
 use App\Models\TagihanHistory;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +16,7 @@ class RevisiTagihan extends Component
 
     use WithFileUploads;
 
-    public $tab = 6;
+    public $tab = 0;
     public $editId;
     public $desigs = [];
     public $doc;
@@ -32,6 +31,7 @@ class RevisiTagihan extends Component
     public $dtError = [];
     public $dtEdit = [];
     public $revisiClass = 'danger';
+    public $status;
 
 
 
@@ -111,6 +111,7 @@ class RevisiTagihan extends Component
         if($this->dtEdit['status'] == 5){
             $this->revisiClass = 'success';
         }
+        $this->status = $this->dtEdit['status'];
     }
 
     public function uploadLokasi()

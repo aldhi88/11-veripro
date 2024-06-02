@@ -80,7 +80,7 @@ class TagihanController extends Controller
             return $item['nama_material'] . '|' . $item['nama_jasa'] . '|' . $item['nama_designator'];
         });
 
-        $result = $grouped->map(function($items) {
+        $dtDesig = $grouped->map(function($items) {
             return [
                 "nama_material" => $items->first()['nama_material'],
                 "nama_jasa" => $items->first()['nama_jasa'],
@@ -102,9 +102,9 @@ class TagihanController extends Controller
                 "total_material_kurang" => $items->sum('total_material_kurang'),
                 "total_jasa_kurang" => $items->sum('total_jasa_kurang'),
             ];
-        })->values();
+        })->values()->toArray();
 
-        return view('mods.ba.index', compact('dt'));
+        return view('mods.ba.index', compact('dt','dtDesig'));
     }
 
     public function dtMitra()

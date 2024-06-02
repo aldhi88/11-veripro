@@ -31,6 +31,8 @@ class CreateTagihan extends Component
     public $dtLok = [];
     public $dtError = [];
 
+    public $status = 99;
+
     public function rules()
     {
         return [
