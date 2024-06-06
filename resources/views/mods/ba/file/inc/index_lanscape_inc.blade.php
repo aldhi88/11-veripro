@@ -4,7 +4,7 @@
         padding: 0;
         font-family: 'Calibri', sans-serif;
         font-size: 10px;
-        background-color: #e6e6e6;
+        /* background-color: #e6e6e6; */
         line-height: 1.5;
     }
 

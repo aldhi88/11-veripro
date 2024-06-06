@@ -31,14 +31,17 @@
                                             @foreach ($dtFileBa as $i => $item)
                                                 <tr>
                                                     <td>
-                                                        @if ($i==6)
-                                                        {{-- @dd($tagihanId) --}}
-                                                        @if (!is_null($tagihanId))
-                                                        <a href="{{route('ba.file', $tagihanId)}}?file=6" class="btn btn-sm btn-danger close-btn" target="_blank"><i class="fas fa-print  fa-fw"></i> Cetak</a>
-                                                        @endif
-                                                        @else
+                                                        @if ($i==6 || $i==5)
 
-                                                        <input wire:click="makeUrl" type="checkbox" wire:model.defer="file" value="{{$i}}" @if(in_array($i, $file)) checked @endif>
+                                                            @if (!is_null($tagihanId) && $i==6)
+                                                                <a href="{{route('ba.file', $tagihanId)}}?file=6" class="btn btn-sm btn-danger close-btn" target="_blank"><i class="fas fa-print  fa-fw"></i> Cetak</a>
+                                                            @endif
+                                                            @if (!is_null($tagihanId) && $i==5)
+                                                                <a href="{{route('ba.file', $tagihanId)}}?file=5" class="btn btn-sm btn-danger close-btn" target="_blank"><i class="fas fa-print  fa-fw"></i> Cetak</a>
+                                                            @endif
+
+                                                        @else
+                                                            <input wire:click="makeUrl" type="checkbox" wire:model.defer="file" value="{{$i}}" @if(in_array($i, $file)) checked @endif>
                                                         @endif
                                                     </td>
                                                     <td>{{$i+1}}</td>

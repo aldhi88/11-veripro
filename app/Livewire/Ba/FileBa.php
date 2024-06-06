@@ -62,7 +62,7 @@ class FileBa extends Component
         if(is_null($this->isChecked)){
             $this->isChecked = 'checked';
             foreach ($this->dtFileBa as $key => $value) {
-                if($key!=6){
+                if($key!=6 || $key!=5){
                     $this->file[] = $key;
                 }
             }
