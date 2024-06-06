@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
     <center>
 
         <strong>
@@ -27,7 +28,7 @@
             <td>:</td>
             <td>{{ $tagihan['sp_induks']['khs_induks']['no_kontrak']  }}, TANGGAL: {{ Carbon\Carbon::parse($tagihan['sp_induks']['khs_induks']['tgl_kontrak'])->isoFormat('D MMMM Y') }}</td>
         </tr>
-        
+
         @if (count($amanKhs)>0)
 
             @foreach ($amanKhs as $i=>$item)
@@ -41,9 +42,9 @@
                     <td>:</td>
                     <td>{{ $item['no_aman'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('D MMMM Y') }}</td>
                 </tr>
-                
+
             @endforeach
-        
+
         @endif
 
         <tr style="font-weight: bold">
@@ -66,7 +67,7 @@
                 </tr>
 
             @endforeach
-        
+
         @endif
 
         <tr style="font-weight: bold">
@@ -97,7 +98,7 @@
 <div style="height: 15px;"></div>
 
 <div style="text-align: justify;">
-    Pada hari ini, {{ Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('dddd') }}, tanggal {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('D')))}}, bulan {{ Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('MMMM') }}, tahun {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('Y')))}} ({{ Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('D/MM/Y') }}), bertempat di Kantor Telkom Akses Area Medan, telah dilakukan perhitungan nilai akhir (rekonsiliasi) pelaksanaan pekerjaan dengan rincian adalah sebagai berikut: 
+    Pada hari ini, {{ Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('dddd') }}, tanggal {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('D')))}}, bulan {{ Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('MMMM') }}, tahun {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('Y')))}} ({{ Carbon\Carbon::parse($tagihan['json']['tgl_baut'])->isoFormat('D/MM/Y') }}), bertempat di Kantor Telkom Akses Area Medan, telah dilakukan perhitungan nilai akhir (rekonsiliasi) pelaksanaan pekerjaan dengan rincian adalah sebagai berikut:
 </div>
 
 <div style="height: 10px;"></div>
@@ -112,7 +113,7 @@
             <td style="vertical-align: middle">Ada</td>
             <td style="vertical-align: middle">Tdk Ada</td>
         </tr>
-        
+
         <tr>
             <td rowspan="2">1</td>
             <td>Sertifikat Quality Assurance (QA)</td>
@@ -158,7 +159,7 @@
             <td style="text-align: center">{!! $tagihan['json']['rincian'][7]==1?"&#10003;":null !!}</td>
             <td style="text-align: center">{!! $tagihan['json']['rincian'][7]==0?"&#10003;":null !!}</td>
         </tr>
-        
+
 </table>
 
 <div style="height: 10px;"></div>
@@ -190,4 +191,4 @@
         </tr>
 
     </table>
-</div>
+</div> --}}

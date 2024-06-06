@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
     Jakarta, {{ Carbon\Carbon::parse($tagihan['json']['tgl_bayar'])->isoFormat('D MMMM Y') }}
     <div style="height: 20px"></div>
     <table class="table-box">
@@ -36,7 +37,7 @@
 <div style="height: 20px"></div>
 
 <div>
-    
+
     <p style="text-align: justify">
         Dengan Hormat, <br><br>
         Menunjuk : <br> <br>
@@ -46,8 +47,8 @@
                 Perjanjian Kerja Sama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan/atau Pemasangan Outside Plant Fiber Optik (OSP-FO) antara PT. Telkom Akses dengan {{ $tagihan['mitras']['master_users']['detail']['perusahaan'] }}, Nomor: {{ $tagihan['sp_induks']['khs_induks']['no_kontrak'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['sp_induks']['khs_induks']['tgl_kontrak'])->isoFormat('D MMMM Y') }}
             </li>
             <li>
-                Surat Pesanan {{ $tagihan['sp_induks']['json']['nama_pekerjaan'] }}, Nomor: {{ $tagihan['sp_induks']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['sp_induks']['tgl_sp'])->isoFormat('D MMMM Y') }}    
-            </li> 
+                Surat Pesanan {{ $tagihan['sp_induks']['json']['nama_pekerjaan'] }}, Nomor: {{ $tagihan['sp_induks']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['sp_induks']['tgl_sp'])->isoFormat('D MMMM Y') }}
+            </li>
             <li>
                 Amandemen Penutup nomor {{ $tagihan['json']['aman_penutup'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['json']['tgl_ba_rekon'])->isoFormat('D MMMM Y') }}
             </li>
@@ -107,4 +108,4 @@
     <strong><u>{{ Str::upper($tagihan['mitras']['master_users']['detail']['direktur']) }}</u></strong>
     <br>
     DIREKTUR
-</div>
+</div> --}}

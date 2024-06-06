@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
     <center>
 
         <strong>
@@ -29,7 +30,7 @@
             <td>:</td>
             <td>{{ $tagihan['sp_induks']['khs_induks']['no_kontrak'] }}, TANGGAL: {{ Carbon\Carbon::parse($tagihan['sp_induks']['khs_induks']['tgl_kontrak'])->isoFormat('D MMMM Y') }}</td>
         </tr>
-        
+
         @if (count($amanKhs)>0)
 
             @foreach ($amanKhs as $i=>$item)
@@ -43,9 +44,9 @@
                     <td>:</td>
                     <td>{{ $item['no_aman'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('D MMMM Y') }}</td>
                 </tr>
-                
+
             @endforeach
-        
+
         @endif
 
         <tr style="font-weight: bold">
@@ -68,7 +69,7 @@
                 </tr>
 
             @endforeach
-        
+
         @endif
 
         <tr style="font-weight: bold">
@@ -127,13 +128,12 @@
         </tr>
         <tr>
             <td colspan="3">Dalam hal ini mewakili {{ Str::upper($tagihan['mitras']['master_users']['detail']['perusahaan']) }} yang selanjutnya disebut MITRA.</td>
-            {{-- <td></td> --}}
         </tr>
-        
+
     </table>
     <div style="height: 15px;"></div>
     <table class="table-collapse">
-        
+
         <tr>
             <td rowspan="3">2</td>
             <td style="width: 100px">Nama</td>
@@ -147,16 +147,15 @@
         </tr>
         <tr>
             <td colspan="3">Dalam hal ini mewakili PT. TELKOM AKSES yang selanjutnya disebut TELKOM AKSES.</td>
-            {{-- <td></td> --}}
         </tr>
-        
+
     </table>
 </div>
 
 <div style="height: 15px;"></div>
 
 <div>
-    
+
     Pada hari ini, {{ Carbon\Carbon::parse(now())->isoFormat('dddd') }}, tanggal {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(Carbon\Carbon::parse(now())->isoFormat('D')))}}, bulan {{ Carbon\Carbon::parse(now())->isoFormat('MMMM') }}, tahun {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(Carbon\Carbon::parse(now())->isoFormat('Y')))}}, MITRA
 </div>
 
@@ -166,7 +165,7 @@
 <div style="height: 15px;"></div>
 
 <div style="text-align: justify;">
-    Kepada TELKOM AKSES hasil pelaksanaan Pekerjaan {{ $tagihan['sp_induks']['json']['nama_pekerjaan'] }} dengan nilai sebesar Rp. {{number_format($tagihan['json']['total_rekon'],0,',','.')}},00 ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($tagihan['json']['total_rekon']))}} Rupiah) belum termasuk PPN {{$data['json_sp']['json']['ppn']}}% atau sebesar Rp. {{number_format($data['total_rekon_ppn'],0,',','.')}},- ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah) sudah termasuk PPN {{$data['json_sp']['json']['ppn']}}% (rincian terlampir), sesuai dengan ketentuan Perjanjian Kerja Sama Kontrak Harga Satuan (KHS)  Pekerjaan Pengadaan dan/atau Pemasangan Outside Plant Fiber Optik (OSP-FO) dan Surat Pesanan yang dilaksanakan oleh MITRA dan TELKOM AKSES menyatakan: 
+    Kepada TELKOM AKSES hasil pelaksanaan Pekerjaan {{ $tagihan['sp_induks']['json']['nama_pekerjaan'] }} dengan nilai sebesar Rp. {{number_format($tagihan['json']['total_rekon'],0,',','.')}},00 ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($tagihan['json']['total_rekon']))}} Rupiah) belum termasuk PPN {{$data['json_sp']['json']['ppn']}}% atau sebesar Rp. {{number_format($data['total_rekon_ppn'],0,',','.')}},- ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah) sudah termasuk PPN {{$data['json_sp']['json']['ppn']}}% (rincian terlampir), sesuai dengan ketentuan Perjanjian Kerja Sama Kontrak Harga Satuan (KHS)  Pekerjaan Pengadaan dan/atau Pemasangan Outside Plant Fiber Optik (OSP-FO) dan Surat Pesanan yang dilaksanakan oleh MITRA dan TELKOM AKSES menyatakan:
 </div>
 
 <div style="height: 15px;"></div>
@@ -225,4 +224,4 @@ Penyerahan Hasil Pekerjaan tersebut di atas dengan baik dengan ketentuan sebagai
         </tr>
 
     </table>
-</div>
+</div> --}}

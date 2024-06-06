@@ -76,7 +76,7 @@ class Tagihan extends Model
             return '<h5 class="mb-0"><span class="w-100 badge badge-success">Selesai</span></h5>';
         }
     }
-    
+
     static function dtStatus()
     {
         return [
@@ -128,15 +128,42 @@ class Tagihan extends Model
             "5_ba_penggunaan_material",
             "6_rekap_lampiran_ba_rekonsiliasi",
             "7_ba_rekonsiliasi_pekerjaan",
-            // "8_ba_rekon_penggunaan_material",
-            // "9_surat_pernyataan_material_turnkey",
-            // "10_ba_legalitas",
-            // "11_ba_gambar",
-            // "12_amandemen_penutup",
-            // "13_berita_acara_serah_terima",
-            // "14_surat_permohonan_bayar",
-            // "15_invoice",
-            // "16_kwitansi"
+            "8_ba_rekon_penggunaan_material",
+            "9_surat_pernyataan_material_turnkey",
+            "10_ba_legalitas",
+            "11_ba_gambar",
+            "12_amandemen_penutup",
+            "13_berita_acara_serah_terima",
+            "14_surat_permohonan_bayar",
+            "15_invoice",
+            "16_kwitansi"
+        ];
+
+        if(is_null($index)){
+            return $fileName;
+        }
+        return $fileName[$index];
+    }
+    public static function dtTitleBa($index=null)
+    {
+        $fileName = [
+            "Surat Permohonan Uji Terima",
+            "Nota Dinas",
+            "Berita Acara Uji Terima",
+            "Lampiran Acara Uji Terima",
+            "Permohonan Rekon",
+            "BA Penggunaan Material",
+            "Rekap Lampiran BA Rekonsilisasi",
+            "BA Rekonsiliasi Pekerjaan",
+            "BA Rekon Penggunaan Material",
+            "Surat Pernyataan Material Turnkey",
+            "BA Legalitas",
+            "BA Gambar",
+            "Amandemen Penutup",
+            "Berita Acara Serah Terima",
+            "Surat Permohonan Bayar",
+            "Invoice",
+            "Kwitansi"
         ];
 
         if(is_null($index)){

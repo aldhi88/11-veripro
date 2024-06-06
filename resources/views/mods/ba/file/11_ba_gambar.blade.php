@@ -1,3 +1,4 @@
+{{-- error
 <div>
     <center>
 
@@ -28,7 +29,7 @@
             <td>:</td>
             <td>{{ $tagihan['sp_induks']['khs_induks']['no_kontrak']  }}, TANGGAL: {{ Carbon\Carbon::parse($tagihan['sp_induks']['khs_induks']['tgl_kontrak'])->isoFormat('D MMMM Y') }}</td>
         </tr>
-        
+
         @if (count($amanKhs)>0)
 
             @foreach ($amanKhs as $i=>$item)
@@ -42,9 +43,9 @@
                     <td>:</td>
                     <td>{{ $item['no_aman'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('D MMMM Y') }}</td>
                 </tr>
-                
+
             @endforeach
-        
+
         @endif
 
         <tr style="font-weight: bold">
@@ -67,7 +68,7 @@
                 </tr>
 
             @endforeach
-        
+
         @endif
 
         <tr style="font-weight: bold">
@@ -115,15 +116,14 @@
         </tr>
         <tr>
             <td colspan="3">Dalam hal ini mewakili {{ $tagihan['mitras']['master_users']['detail']['perusahaan'] }} yang selanjutnya disebut MITRA.</td>
-            {{-- <td></td> --}}
         </tr>
-        
+
     </table>
 
     <div style="height: 15px;"></div>
 
     <table class="table-collapse">
-        
+
         <tr>
             <td rowspan="3">2</td>
             <td style="width: 100px">Nama</td>
@@ -137,9 +137,8 @@
         </tr>
         <tr>
             <td colspan="3">Dalam hal ini mewakili PT. TELKOM AKSES yang selanjutnya disebut TELKOM AKSES.</td>
-            {{-- <td></td> --}}
         </tr>
-        
+
     </table>
 </div>
 
@@ -159,9 +158,9 @@
                 <td width="50">No</td>
                 <td>Lokasi</td>
                 <td>STO</td>
-                
+
             </tr>
-    
+
             @foreach ($tagihan['json']['lokasi'] as $i=>$item)
                 <tr style="text-align: center">
                     <td>{{$i+1}}</td>
@@ -169,7 +168,7 @@
                     <td>{{$item['sto']}}</td>
                 </tr>
             @endforeach
-            
+
         </table>
     </div>
 </span>
@@ -177,7 +176,7 @@
 
 <span style="text-align: justify">
     Gambar akhir pelaksanaan Pekerjaan (as built drawing), antara lain:Gambar akhir pelaksanaan Pekerjaan (as built drawing), antara lain:
-    
+
     <ol style="padding-left: 1.2em">
         <li>Koordinat atau rute object hasil pekerjaan yang sesuai dengan kondisi di lapangan.</li>
         <li>Penamaan (Label) yang sesuai dengan standar penamaan Integrated Optical Distribution Network (I-ODN) dan sama dengan yang terpasang secara fisik di lapangan.</li>
@@ -216,4 +215,4 @@
         </tr>
 
     </table>
-</div>
+</div> --}}

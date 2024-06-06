@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KhsAmandemen;
 use App\Models\SpAmandemen;
 use App\Models\Tagihan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
@@ -68,7 +69,7 @@ class TagihanController extends Controller
                 }
             )
             ->toArray();
-        
+
         $allDesigs = [];
         foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $i => $v) {
             foreach ($v['desig_items'] as $i2 => $v2) {
@@ -76,33 +77,92 @@ class TagihanController extends Controller
             }
         }
 
+        // dd($allDesigs);
+
         $grouped = collect($allDesigs)->groupBy(function($item) {
             return $item['nama_material'] . '|' . $item['nama_jasa'] . '|' . $item['nama_designator'];
         });
 
         $dtDesig = $grouped->map(function($items) {
+
+            // logic agar hrg yg 0 jadi -
+            $hrg_material = $items->first()['material'];
+            $hrg_jasa = $items->first()['jasa'];
+
+            // if($items->first()['material']==0){
+            //     $hrg_material = "-";
+            // }
+            // if($items->first()['jasa']==0){
+            //     $hrg_jasa = "-";
+            // }
+
+            // logic utk vol tambah dan kuran yg desig di banyak lokasi
+            // if(count($items)>1){
+            //     dump($items->toArray());
+            // }
+
+            $vol_tambah = $items->sum('volume_tambah');
+            $vol_kurang = $items->sum('volume_kurang');
+            if($vol_tambah>0 && $vol_kurang>0){
+                $selisih = $vol_tambah - $vol_kurang;
+                $vol_tambah = $selisih;
+                $vol_kurang = 0;
+                if($selisih < 0){
+                    $vol_tambah = 0;
+                    $vol_kurang = ($selisih*(-1));
+                }
+            }
+
+            $total_material_tambah = $items->sum('total_material_tambah');
+            $total_material_kurang = $items->sum('total_material_kurang');
+            if($total_material_tambah>0 && $total_material_kurang>0){
+                $selisih = $total_material_tambah - $total_material_kurang;
+                $total_material_tambah = $selisih;
+                $total_material_kurang = 0;
+                if($selisih < 0){
+                    $total_material_tambah = 0;
+                    $total_material_kurang = ($selisih*(-1));
+                }
+            }
+
+            $total_jasa_tambah = $items->sum('total_jasa_tambah');
+            $total_jasa_kurang = $items->sum('total_jasa_kurang');
+            if($total_jasa_tambah>0 && $total_jasa_kurang>0){
+                $selisih = $total_jasa_tambah - $total_jasa_kurang;
+                $total_jasa_tambah = $selisih;
+                $total_jasa_kurang = 0;
+                if($selisih < 0){
+                    $total_jasa_tambah = 0;
+                    $total_jasa_kurang = ($selisih*(-1));
+                }
+            }
+
+
             return [
                 "nama_material" => $items->first()['nama_material'],
                 "nama_jasa" => $items->first()['nama_jasa'],
                 "nama_designator" => $items->first()['nama_designator'],
                 "uraian" => $items->first()['uraian'],
                 "satuan" => $items->first()['satuan'],
-                "hrg_material" => $items->first()['material'],
-                "hrg_jasa" => $items->first()['jasa'],
+                "hrg_material" => $hrg_material,
+                "hrg_jasa" => $hrg_jasa,
                 "vol_sp" => $items->sum('vol'),
                 "vol_rekon" => $items->sum('volume_rekon'),
-                "vol_tambah" => $items->sum('volume_tambah'),
-                "vol_kurang" => $items->sum('volume_kurang'),
+                "vol_tambah" => $vol_tambah,
+                "vol_kurang" => $vol_kurang,
                 "total_material_sp" => $items->sum('total_material'),
                 "total_jasa_sp" => $items->sum('total_jasa'),
                 "total_material_rekon" => $items->sum('total_material_rekon'),
                 "total_jasa_rekon" => $items->sum('total_jasa_rekon'),
-                "total_material_tambah" => $items->sum('total_material_tambah'),
-                "total_jasa_tambah" => $items->sum('total_jasa_tambah'),
-                "total_material_kurang" => $items->sum('total_material_kurang'),
-                "total_jasa_kurang" => $items->sum('total_jasa_kurang'),
+                "total_material_tambah" => $total_material_tambah,
+                "total_jasa_tambah" => $total_jasa_tambah,
+                "total_material_kurang" => $total_material_kurang,
+                "total_jasa_kurang" => $total_jasa_kurang,
             ];
         })->values()->toArray();
+
+        // dd($dt, $dtDesig);
+        Carbon::setLocale('id');
 
         return view('mods.ba.index', compact('dt','dtDesig'));
     }
@@ -121,7 +181,7 @@ class TagihanController extends Controller
                 'sp_induks.khs_induks',
                 'mitras.master_users'
             ])
-            
+
         ;
 
         // dd($data->get()->toArray());
@@ -199,7 +259,7 @@ class TagihanController extends Controller
                         <a class="dropdown-item" href="'.route('tagihan.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>
                     ';
                 }
-                
+
                 $return .='
                     </div>
                 </div>
@@ -213,7 +273,7 @@ class TagihanController extends Controller
             })
             ->rawColumns(['action','status_label'])
             ->toJson();
-    } 
+    }
 
     public function dtUser()
     {
@@ -230,7 +290,7 @@ class TagihanController extends Controller
             ->with([
                 'sp_induks.khs_induks'
             ])
-            
+
         ;
 
         return DataTables::of($data)
@@ -248,7 +308,7 @@ class TagihanController extends Controller
                     if(
                         $data->status == 2 ||
                         $data->status == 3 ||
-                        $data->status == 4 
+                        $data->status == 4
                     ){
                         $return .= '
                             <a class="dropdown-item" href="'.route('tagihan.prosesUser', $data->id).'"><i class="fas fa-pen-alt fa-fw"></i> Proses</a>
@@ -271,7 +331,7 @@ class TagihanController extends Controller
                         <a class="dropdown-item" href="'.route('tagihan.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>
                     ';
                 }
-                
+
 
 
                 $return .='
@@ -303,7 +363,7 @@ class TagihanController extends Controller
                 'sp_induks.khs_induks',
                 'mitras.master_users'
             ])
-            
+
         ;
 
         return DataTables::of($data)
@@ -327,7 +387,7 @@ class TagihanController extends Controller
                     if(
                         $data->status == 9 ||
                         $data->status == 10 ||
-                        $data->status == 11 
+                        $data->status == 11
                     ){
                         $return .= '
                             <a class="dropdown-item" href="'.route('tagihan.proses2Pro', $data->id).'"><i class="fas fa-pen-alt fa-fw"></i> Proses</a>
@@ -336,7 +396,7 @@ class TagihanController extends Controller
                     if(
                         $data->status == 5 ||
                         $data->status == 6 ||
-                        $data->status == 7 
+                        $data->status == 7
                     ){
                         $return .= '
                             <a class="dropdown-item" href="'.route('tagihan.prosesPro', $data->id).'"><i class="fas fa-pen-alt fa-fw"></i> Proses</a>
@@ -359,7 +419,7 @@ class TagihanController extends Controller
                         <a class="dropdown-item" href="'.route('tagihan.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>
                     ';
                 }
-                
+
 
 
                 $return .='
@@ -373,7 +433,7 @@ class TagihanController extends Controller
                 $detail = json_decode($data->json, true);
                 return $detail;
             })
-            
+
             ->rawColumns(['action','status_label'])
             ->toJson();
     }

@@ -9,6 +9,7 @@ use Livewire\Component;
 class FileBa extends Component
 {
     public $dtFileBa;
+    public $dtTitleBa;
     public $file = [];
     public $isChecked = null;
     public $url = null;
@@ -22,9 +23,10 @@ class FileBa extends Component
     public function mount($data)
     {
         $this->dtFileBa = Tagihan::dtFileBa();
+        $this->dtTitleBa = Tagihan::dtTitleBa();
     }
 
-    #[On('fileba-setup')] 
+    #[On('fileba-setup')]
     public function setup($data)
     {
         $this->tagihanId = $data;
@@ -33,7 +35,7 @@ class FileBa extends Component
         if($this->statusTagihan == 8){
             $ary = [];
             foreach ($this->dtFileBa as $key => $value) {
-                
+
                 if($key <= 13){
                     $ary[$key] = $value;
                 }
@@ -52,7 +54,7 @@ class FileBa extends Component
                 $this->url .= ',';
             }
             $this->url .= $value;
-        }    
+        }
     }
 
     public function checkUncheck()
@@ -60,7 +62,9 @@ class FileBa extends Component
         if(is_null($this->isChecked)){
             $this->isChecked = 'checked';
             foreach ($this->dtFileBa as $key => $value) {
-                $this->file[] = $key;
+                if($key!=6){
+                    $this->file[] = $key;
+                }
             }
         }else{
             $this->isChecked = null;

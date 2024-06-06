@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
 
     <div style="height: 10px"></div>
     <strong style="font-size: 20px;">
@@ -21,7 +22,7 @@
 
     <div style="height: 35px"></div>
 
-    
+
     <style>
         td {
             vertical-align: top;
@@ -33,35 +34,35 @@
             <td width="30%">Sudah Terima dari</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                PT. TELKOM AKSES    
+                PT. TELKOM AKSES
             </td>
         </tr>
         <tr>
             <td width="30%">Uang Sebanyak</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah    
+                {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah
             </td>
         </tr>
         <tr>
             <td width="30%">Untuk Keperluan</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                Pekerjaan {{$tagihan['sp_induks']['json']['nama_pekerjaan']}}    
+                Pekerjaan {{$tagihan['sp_induks']['json']['nama_pekerjaan']}}
             </td>
         </tr>
         <tr>
             <td width="30%">Surat Pesanan</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                {{ $tagihan['sp_induks']['no_sp'] }}    
+                {{ $tagihan['sp_induks']['no_sp'] }}
             </td>
         </tr>
         <tr>
             <td width="30%">Amandemen Penutup</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                {{ $tagihan['json']['aman_penutup'] }}    
+                {{ $tagihan['json']['aman_penutup'] }}
             </td>
         </tr>
         <tr>
@@ -71,7 +72,7 @@
             <td width="30%">Jumlah</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                
+
                 <div style="
                     border: solid 1px black;
                     display: inline;
@@ -79,16 +80,16 @@
                 ">
                     Rp. {{number_format($data['total_rekon_ppn'],0,',','.')}},-
                 </div>
-                    
+
             </td>
         </tr>
-        
-    
-        
+
+
+
     </table>
-    
-    
-    
+
+
+
     <div style="height: 60px"></div>
     <div>
         <table style="width: 100%" class="">
@@ -100,11 +101,11 @@
                     <u>{{$tagihan['mitras']['master_users']['detail']['direktur']}}</u> <br>
                     Direktur
                 </td>
-    
+
                 <td style="text-align: center; padding-right: 0px" width="250">
-                    
+
                 </td>
             </tr>
         </table>
     </div>
-    </div>
+    </div> --}}

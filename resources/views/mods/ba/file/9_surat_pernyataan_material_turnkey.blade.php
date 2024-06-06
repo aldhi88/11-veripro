@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
     Yang bertanda tangan di bawah ini :
     <div style="height: 15px;"></div>
 
@@ -29,7 +30,7 @@
 <div style="height: 20px"></div>
 
 <div>
-    
+
     <p style="text-align: justify">
         Menyatakan bahwa untuk pekerjaan {{ $tagihan['sp_induks']['json']['nama_pekerjaan'] }} dengan nomor Surat Pesanan : {{ $tagihan['sp_induks']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['sp_induks']['tgl_sp'])->isoFormat('D MMMM Y') }} ada pemakaian Material dari mitra sehingga dalam pekerjaan tersebut tidak memerlukan BA QC dikarenakan tidak ada lampiran terlampir dalam TA QMS. Adapun rincian pemakaian material Mitra yang tidak bisa dibuatkan QC adalah sebagai berikut :
     </p>
@@ -92,4 +93,4 @@ Demikian surat pernyataan ini dibuat dengan sesungguhnya dan sebenarnya untuk da
         </tr>
 
     </table>
-</div>
+</div> --}}

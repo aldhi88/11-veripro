@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
     <center>
 
         <strong>
@@ -7,7 +8,7 @@
             PEKERJAAN PENGADAAN DAN/ATAU PEMASANGAN <br>
             OUTSIDE PLANT FIBER OPTIK (OSP-FO)
         </strong>
-       
+
 
     </center>
 </div>
@@ -40,7 +41,7 @@
             <td>:</td>
             <td>{{ $tagihan['json']['json_sp']['json']['id_project'] }}</td>
         </tr>
-        
+
     </table>
 
 </div>
@@ -106,9 +107,9 @@
                         @foreach ($amanKhs as $i=>$item)
 
                             <li>Amandemen {{$i+1}} Perjanjian Kerja Sama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outside Plant Fiber Optik (OSP-FO) Nomor : {{ $item['no_aman'] }} Tanggal {{ Carbon\Carbon::parse($item['tgl_aman'])->isoFormat('D MMMM Y') }}</li>
-                            
+
                         @endforeach
-                    
+
                     @endif
 
                     <li>
@@ -122,7 +123,7 @@
                             <li>Amandemen {{$i+1}} Surat Pesanan Nomor : {{ $item['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('D MMMM Y') }}</li>
 
                         @endforeach
-                    
+
                     @endif
 
                     <li>
@@ -152,15 +153,15 @@
         <tr>
             <td>
                 Harga Borongan <br>
-                TELKOM AKSES dan MITRA sepakat merubah harga borongan yang tertuang dalam Surat Pesanan Nomor : {{ $tagihan['sp_induks']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['sp_induks']['tgl_sp'])->isoFormat('D MMMM Y') }} dan 
+                TELKOM AKSES dan MITRA sepakat merubah harga borongan yang tertuang dalam Surat Pesanan Nomor : {{ $tagihan['sp_induks']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($tagihan['sp_induks']['tgl_sp'])->isoFormat('D MMMM Y') }} dan
                 @if (count($tagihan['sp_induks']['sp_amandemens'])>0)
 
                     @foreach ($tagihan['sp_induks']['sp_amandemens'] as $i=>$item)
                         Amandemen {{$i+1}} surat pesanan nomor: {{ $item['no_sp'] }}, {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('D MMMM Y') }}
                     @endforeach
-                
+
                 @endif
-                 
+
                 adalah sebesar Rp. {{number_format($data['total_sp_ppn'],0,',','.')}},- ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_sp_ppn']))}} Rupiah) sudah termasuk PPN {{$data['json_sp']['json']['ppn']}}%. Berdasarkan Berita Acara Rekonsiliasi Tahap Akhir tanggal 02 Desember 2022 maka terjadi perubahan Harga Borongan Pekerjaan menjadi Rp. {{number_format($data['total_rekon_ppn'],0,',','.')}},- ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah) sudah termasuk PPN {{$data['json_sp']['json']['ppn']}}%.
 
             </td>
@@ -195,12 +196,12 @@
                             <span>GM TA MEDAN</span>
                         </td>
                     </tr>
-            
+
                 </table>
             </td>
         </tr>
 
-        
+
     </table>
 </div>
-
+ --}}

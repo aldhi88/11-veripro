@@ -1,4 +1,5 @@
-<div>
+error
+{{-- <div>
 
 <strong style="font-size: 20px"><center>INVOICE</center></strong>
 <div style="height: 15px"></div>
@@ -24,12 +25,12 @@
             PT. TELKOM AKSES <br>
             Unit Finance <br>
             Jl, S Parman Kav 8 <br>
-            Jakarta Barat 11440 
+            Jakarta Barat 11440
 
         </td>
     </tr>
 
-    
+
 </table>
 
 <div style="height: 20px"></div>
@@ -124,7 +125,7 @@
     <tr>
         <td colspan="3">
             <strong>
-                Terbilang | 
+                Terbilang |
                 # {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah #
             </strong>
         </td>
@@ -154,4 +155,4 @@
         </tr>
     </table>
 </div>
-</div>
+</div> --}}
