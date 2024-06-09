@@ -22,7 +22,8 @@
                 padding: 0px 5px;
             }
         </style>
-        <table style="width: 100%; vertical-align: top;" class="table-border">
+        <hr>
+        <table style="width: 100%; vertical-align: top;">
             <tr style="font-weight: bold">
                 <td>NOMOR PERJANJIAN KERJASAMA</td>
                 <td>:</td>
@@ -49,7 +50,7 @@
 
             <tr style="font-weight: bold">
                 <td>NOMOR SURAT PESANAN</td>
-                <td>:</td>
+                <td>:</td>8
                 <td>{{ $dt['dt_sp']['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
             @if (count($dt['aman_sp'])>0)
@@ -110,6 +111,7 @@
             </tr>
 
         </table>
+        <hr>
 
     </div>
 

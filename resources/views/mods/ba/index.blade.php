@@ -13,7 +13,7 @@
 
 <body>
     @foreach ($dt['file'] as $i => $item)
-        @if ($i==6)
+        @if ($item=='6_rekap_lampiran_ba_rekonsiliasi')
             @include('mods.ba.file.inc.index_lanscape_inc')
             <div class="a4">
                 @include('mods.ba.file.' . $item)

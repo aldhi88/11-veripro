@@ -1,5 +1,4 @@
-error
-{{-- <div>
+<div class="margin" style="text-align: justify; page-break-after: always;">
 
     <div style="height: 10px"></div>
     <strong style="font-size: 20px;">
@@ -17,7 +16,7 @@ error
     <div style="height: 15px"></div>
 
     <div>
-        <center><strong>No</strong> {{$tagihan['json']['no_kwitansi']}}</center>
+        <center><strong>No</strong> {{$dt['dt_tagihan']['no_kwitansi']}}</center>
     </div>
 
     <div style="height: 35px"></div>
@@ -41,28 +40,31 @@ error
             <td width="30%">Uang Sebanyak</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($data['total_rekon_ppn']))}} Rupiah
+                @php
+                    $ppn = $dt['dt_sp']['ppn']/100;
+                @endphp
+                {{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make(($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']+$ppn)))}} Rupiah
             </td>
         </tr>
         <tr>
             <td width="30%">Untuk Keperluan</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                Pekerjaan {{$tagihan['sp_induks']['json']['nama_pekerjaan']}}
+                Pekerjaan {{$dt['dt_sp']['nama_pekerjaan']}}
             </td>
         </tr>
         <tr>
             <td width="30%">Surat Pesanan</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                {{ $tagihan['sp_induks']['no_sp'] }}
+                {{ $dt['dt_sp']['no_sp'] }}
             </td>
         </tr>
         <tr>
             <td width="30%">Amandemen Penutup</td>
             <td width="10">:</td>
             <td style="font-weight: bold">
-                {{ $tagihan['json']['aman_penutup'] }}
+                {{ $dt['dt_tagihan']['aman_penutup'] }}
             </td>
         </tr>
         <tr>
@@ -78,7 +80,7 @@ error
                     display: inline;
                     padding: 5px 15px;
                 ">
-                    Rp. {{number_format($data['total_rekon_ppn'],0,',','.')}},-
+                    Rp. {{number_format(($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']+$ppn),2,',','.')}},-
                 </div>
 
             </td>
@@ -95,17 +97,18 @@ error
         <table style="width: 100%" class="">
             <tr>
                 <td>
-                    Jakarta,  {{ Carbon\Carbon::parse($tagihan['json']['tgl_kwitansi'])->isoFormat('DD MMMM Y') }}<br>
-                    {{$tagihan['mitras']['master_users']['detail']['perusahaan']}} <br>
+                    Jakarta,  {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_kwitansi'])->isoFormat('DD MMMM Y') }}<br>
+                    {{$dt['dt_sp']['khs_induks']['json']['perusahaan']}} <br>
                     <div style="height: 70px"></div>
-                    <u>{{$tagihan['mitras']['master_users']['detail']['direktur']}}</u> <br>
+                    <u>{{$dt['dt_sp']['khs_induks']['json']['direktur']}}</u> <br>
                     Direktur
                 </td>
-
-                <td style="text-align: center; padding-right: 0px" width="250">
+                <td style="text-align: center; padding-right: 0px" width="60%">
 
                 </td>
+
             </tr>
         </table>
     </div>
-    </div> --}}
+
+</div>

@@ -51,6 +51,11 @@
         line-height: 2;
     }
 
+    thead
+    td{
+        vertical-align: middle;
+    }
+
     table,
     td {
         border-collapse: collapse;

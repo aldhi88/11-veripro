@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="row">
         <div class="col">
             <a href="{{ url()->previous() }}" class="btn btn-warning btn-sm"><i class="fas fa-angle-double-left"></i> Kembali</a>
@@ -16,12 +16,12 @@
                 <div class="card-body">
 
                     @include('mods.tagihan.tagihan_nav')
-                    
+
                     <div class="tab-content text-muted pt-4">
 
                         {{-- nodin --}}
                         @include('mods.tagihan.tagihan_nodin')
-                        
+
                         {{-- data --}}
                         @include('mods.tagihan.tagihan_data_readonly')
 
@@ -36,10 +36,10 @@
 
                         {{-- gudang --}}
                         @include('mods.tagihan.tagihan_gudang_readonly')
-                        
-                        
+
+
                     </div>
-    
+
                 </div>
 
             </div>

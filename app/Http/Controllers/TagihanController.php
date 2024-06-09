@@ -163,8 +163,9 @@ class TagihanController extends Controller
 
         // dd($dt, $dtDesig);
         Carbon::setLocale('id');
+        $doc = Tagihan::dtDokTurnkey();
 
-        return view('mods.ba.index', compact('dt','dtDesig'));
+        return view('mods.ba.index', compact('dt','dtDesig', 'doc'));
     }
 
     public function dtMitra()

@@ -10,7 +10,7 @@ use Livewire\Attributes\On;
 
 class ProsesUserTagihan extends Component
 {
-    public $tab = 1;
+    public $tab = -1;
     public $dtTagih;
     public $dt;
     public $doc;
@@ -32,7 +32,7 @@ class ProsesUserTagihan extends Component
         "dt.dt_tagihan.no_nodin" => "Tgl. Nota Dinas",
     ];
 
-    #[On('prosesusertagihan-submit')] 
+    #[On('prosesusertagihan-submit')]
     public function submit()
     {
         $this->validate();
@@ -51,7 +51,7 @@ class ProsesUserTagihan extends Component
         return redirect()->to('/tagihan/user/index');
     }
 
-    #[On('prosesusertagihan-revisi')] 
+    #[On('prosesusertagihan-revisi')]
     public function revisi()
     {
         $dt['status'] = 3;
@@ -68,7 +68,7 @@ class ProsesUserTagihan extends Component
 
     public function mount($data)
     {
-        
+
         $this->trixId = 'trix-' . uniqid();
         $this->doc = Tagihan::dtDokTurnkey();
         $this->dtTagih = Tagihan::whereId($data['key'])->first()->toArray();
@@ -85,6 +85,7 @@ class ProsesUserTagihan extends Component
         $this->dt = $this->dtTagih['json'];
         $this->setPejabat();
         $this->status = $this->dtTagih['status'];
+        // dd($this->all());
 
     }
 
@@ -101,7 +102,7 @@ class ProsesUserTagihan extends Component
         $this->pejabat['waspang'] = array_values((collect($lov))->where('key', 'waspang')->toArray())[0];
         $this->pejabat['gudang'] = array_values((collect($lov))->where('key', 'gudang')->toArray())[0];
     }
-    
+
     public function changeTab($i)
     {
         $this->tab = $i;

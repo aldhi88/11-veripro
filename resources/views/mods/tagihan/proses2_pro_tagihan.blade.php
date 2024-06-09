@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="row">
         <div class="col">
             <a href="{{ url()->previous() }}" class="btn btn-warning btn-sm"><i class="fas fa-angle-double-left"></i> Kembali</a>
@@ -16,13 +16,13 @@
                 <div class="card-body">
 
                     @include('mods.tagihan.tagihan_nav')
-                    
+
                     <div class="tab-content text-muted pt-4">
 
                         {{-- proses --}}
-                        <div class="tab-pane {{ $tab==0?'active':null }}">
+                        <div class="tab-pane {{ $tab==-4?'active':null }}">
                             <div class="row">
-                                
+
                                 <div class="col col-md-6">
                                     @php
                                         $dtJes1['msg'] = 'menyetujui data tagihan ini ';
@@ -33,7 +33,7 @@
                                     @endphp
                                     <button class="btn btn-success btn-lg" type="button" data-toggle="modal" data-emit="modalpassword-prepare" data-target="#modalPassword" data-json='{{$dtJes1}}'>Setujui Tagihan Akhir</button>
                                 </div>
-                                
+
 
                             </div>
 
@@ -43,10 +43,10 @@
                                 <div class="col-12">
                                     <h4 class="card-title">Pesan Revisi</h4>
                                     <p class="card-title-desc">Tulis pesan revisi anda disini.</p>
-    
+
                                     <input id="{{ $trixId }}" type="hidden" name="content" value="{{ $dtTagih['revisi'] }}">
                                     <trix-editor style="height: 200px" input="{{ $trixId }}"></trix-editor>
-                                    
+
                                 </div> <!-- end col -->
                                 <div class="col-12 mt-2">
 
@@ -71,7 +71,7 @@
 
                         {{-- nodin --}}
                         @include('mods.tagihan.tagihan_nodin_readonly')
-                        
+
                         {{-- data --}}
                         @include('mods.tagihan.tagihan_data_readonly')
 
@@ -86,8 +86,8 @@
 
                         {{-- gudang --}}
                         @include('mods.tagihan.tagihan_gudang_readonly')
-                        
-                        
+
+
                     </div>
 
                     <hr>
@@ -108,11 +108,11 @@
                             <button type="button" class="btn btn-light">Reset Semua Form</button>
                         </div>
                         <div class="col text-right">
-                            
+
                             <button type="submit" class="btn btn-primary">Kirim Tagihan</button>
                         </div>
                     </div>
-    
+
                 </div>
 
             </div>

@@ -31,7 +31,7 @@ class CreateTagihan extends Component
     public $dtLok = [];
     public $dtError = [];
 
-    public $status = 99;
+    public $status = -1;
 
     public function rules()
     {
@@ -105,11 +105,12 @@ class CreateTagihan extends Component
         $this->setPejabat();
         $this->setDtEdit($data['key']);
         $this->setGudang();
+        // dd($this->all());
     }
 
     public function uploadLokasi()
     {
-        
+
         $this->validate([
             "formUpload.jumlah" => "required",
             "formUpload.file" => "required|mimes:xls,xlsx|max:2048",
@@ -127,7 +128,7 @@ class CreateTagihan extends Component
                 session()->flash('msg-upload-ok','Upload Success');
             }
         };
-        
+
         $import = new LokasiRekonImport($callback, $this->formUpload['jumlah'], $this->dt['dt_tagihan']['dt_lokasi']);
         Excel::import($import, $this->formUpload['file']);
         $this->setGudang();
@@ -159,12 +160,12 @@ class CreateTagihan extends Component
                     }
                 )
             ->first()
-            ->toArray(); 
+            ->toArray();
         $this->formUpload['jumlah'] = count($this->dt['dt_sp']['json']['dtLokasi']['lokasi']);
         for ($i = 0; $i < 8; $i++) {
             $this->dt['dt_tagihan']['dt_turnkey']['rincian'][$i] = 0;
-        }        
-        
+        }
+
         $this->dt['dt_tagihan']['dt_turnkey']['tgl_turnkey'] = null;
         $this->dt['dt_tagihan']['dt_lokasi'] = $this->dt['dt_sp']['json']['dtLokasi'];
         $this->dt['dt_tagihan']['dt_gudang'] = [];
@@ -219,7 +220,7 @@ class CreateTagihan extends Component
         }
 
         // $this->genDesigList();
-        
+
     }
 
     public function submit()
@@ -229,7 +230,7 @@ class CreateTagihan extends Component
         $this->validate();
         $dtJson['dt_sp'] = $this->dt['dt_sp'] ;
         $dtJson['dt_tagihan'] = $this->dt['dt_tagihan'] ;
-        
+
         $dt['auth_login_id'] = $this->dt['dt_sp']['auth_login_id'];
         $dt['mitra_id'] = Auth::user()->id;
         $dt['sp_induk_id'] = $this->editId;
@@ -247,7 +248,7 @@ class CreateTagihan extends Component
             Tagihan::find($tagihanId)->update($dt);
             session()->flash('message', 'Data Tagihan berhasil buat ulang.');
         }
-        
+
         $dtHis['tagihan_id'] = $tagihanId;
         $dtHis['status'] = 2;
         $dtHis['json'] = $dt['json'];
@@ -259,7 +260,9 @@ class CreateTagihan extends Component
     public function setGudang()
     {
         $this->allDesigs = [];
+        $this->dt['dt_tagihan']['dt_gudang']['all_desig'] = [];
         $iAllDesig = 0;
+        // dump($this->dt['dt_tagihan']['dt_lokasi']['lokasi']);
         foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
             foreach ($vLok['desig_items'] as $iRow => $vRow) {
                 if(
@@ -280,21 +283,25 @@ class CreateTagihan extends Component
                     }
                 }
             }
+            // dump($this->allDesigs);
+            // dump($this->dt['dt_tagihan']['dt_gudang']['all_desig']);
         }
+
+        // dd($this->allDesigs, $this->dt);
 
         if(count($this->allDesigs)>0){
 
             $this->dt['dt_tagihan']['dt_gudang']['pakai'] = [];
             foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
                 foreach ($this->allDesigs as $iDesMat => $vDesMat) {
-    
+
                     $this->dt['dt_tagihan']['dt_gudang']['pakai']['data'][$iLok][$iDesMat] = 0;
                     $count = (collect($vLok['desig_items']))
                         ->where('nama_designator', $vDesMat['nama_designator'])
                         ->where('nama_material', $vDesMat['nama_material'])
                         ->where('nama_jasa', $vDesMat['nama_jasa'])
                         ->count();
-    
+
                     if($count > 0){
                         $sum = (collect($vLok['desig_items']))
                             ->where('nama_designator', $vDesMat['nama_designator'])
@@ -306,14 +313,14 @@ class CreateTagihan extends Component
                 }
             }
             // dd($this->dt);
-            
-    
+
+
             $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'] = [];
             $this->dt['dt_tagihan']['dt_gudang']['ambil']['total'] = [];
             $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'] = [];
             $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'] = [];
             $this->dt['dt_tagihan']['dt_gudang']['kembali']['ket'] = [];
-    
+
             $this->reTotalPakai(1);
             $this->reTotalAmbil(1);
             $this->reTotalKembali(1);
@@ -324,7 +331,7 @@ class CreateTagihan extends Component
             $this->dt['dt_tagihan']['dt_gudang']['rekon'] = [];
             foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
                 foreach ($vLok['desig_items'] as $iDd => $vDd) {
-                    
+
                     if(
                         (collect($tempDesig))
                             ->where('nama_designator', $vDd['nama_designator'])
@@ -333,35 +340,35 @@ class CreateTagihan extends Component
                             ->count() < 1
                     ){
                         $dtIndex = (collect($this->allDesigs))->search(function ($item) use($vDd) {
-                            return $item['nama_designator'] == $vDd['nama_designator'] && 
-                                $item['nama_material'] == $vDd['nama_material'] && 
+                            return $item['nama_designator'] == $vDd['nama_designator'] &&
+                                $item['nama_material'] == $vDd['nama_material'] &&
                                 $item['nama_jasa'] == $vDd['nama_jasa'];
                         });
                         $tempDesig[] = $vDd;
                         if($vDd['material']!=0){
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator']; 
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material']; 
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator']; 
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_jasa'] = $vDd['nama_jasa']; 
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['gudang'] = 'Medan'; 
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['satuan'] = $vDd['satuan']; 
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['sum_rekon'] = 
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material'];
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_jasa'] = $vDd['nama_jasa'];
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['gudang'] = 'Medan';
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['satuan'] = $vDd['satuan'];
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['sum_rekon'] =
                                 $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$dtIndex];
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['v_ta'] = 
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['v_ta'] =
                                 $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$dtIndex];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['v_mitra'] = 0;
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['v_back'] = 
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['v_back'] =
                                 $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$dtIndex];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['ket'] = '';
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['ket_matlok'] = '';
-                            
+
                             $iDesigMaterial++;
                         }
                     }
                 }
-                
+
             }
-            
+
         }
 
     }
@@ -369,10 +376,10 @@ class CreateTagihan extends Component
     public function rePemakaian($index, $vType)
     {
         if($vType=='v_mitra'){
-            if($this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'] > 
+            if($this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'] >
                 $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index]
             ){
-                $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'] = 
+                $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'] =
                     $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index];
             }
             if($this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'] < 0){
@@ -380,20 +387,20 @@ class CreateTagihan extends Component
             }
 
             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] =
-                $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index] - 
+                $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index] -
                 $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'];
         }else{
-            if($this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] > 
+            if($this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] >
                 $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index]
             ){
-                $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] = 
+                $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] =
                     $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index];
             }
             if($this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] < 0){
                 $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'] = 0;
             }
             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_mitra'] =
-                $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index] - 
+                $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$index] -
                 $this->dt['dt_tagihan']['dt_gudang']['rekon'][$index]['v_ta'];
         }
     }
@@ -402,9 +409,9 @@ class CreateTagihan extends Component
     {
         $this->dt['dt_tagihan']['dt_gudang']['grand_total'] = [];
         foreach ($this->dt['dt_tagihan']['dt_gudang']['ambil']['total'] as $i1 => $v1) {
-            $this->dt['dt_tagihan']['dt_gudang']['grand_total'][$i1] = 
+            $this->dt['dt_tagihan']['dt_gudang']['grand_total'][$i1] =
                 $this->dt['dt_tagihan']['dt_gudang']['ambil']['total'][$i1] -
-                $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$i1] - 
+                $this->dt['dt_tagihan']['dt_gudang']['pakai']['total'][$i1] -
                 $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$i1];
         }
     }
@@ -418,14 +425,14 @@ class CreateTagihan extends Component
                     $total[$key2][] = $value2;
                 }
             }
-    
+
             foreach ($data['total'] as $key => $value) {
-                $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$key] = array_sum($total[$key]); 
+                $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$key] = array_sum($total[$key]);
                 $this->dt['dt_tagihan']['dt_gudang']['rekon'][$key]['v_back'] = array_sum($total[$key]);
             }
         }else{
             foreach ($this->allDesigs as $key => $value) {
-                $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$key] = 0; 
+                $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$key] = 0;
             }
         }
 
@@ -445,10 +452,10 @@ class CreateTagihan extends Component
     }
     public function addKembali($i)
     {
-        $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'][$i]['id_kembali'] = null; 
-        $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'][$i]['tgl_rfr'] = null; 
+        $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'][$i]['id_kembali'] = null;
+        $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'][$i]['tgl_rfr'] = null;
         foreach ($this->allDesigs as $key => $value) {
-            $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'][$i]['nilai'][$key] = 0; 
+            $this->dt['dt_tagihan']['dt_gudang']['kembali']['data'][$i]['nilai'][$key] = 0;
         }
         $this->reTotalKembali();
     }
@@ -484,13 +491,13 @@ class CreateTagihan extends Component
                     $total[$key2][] = $value2;
                 }
             }
-    
+
             foreach ($data['total'] as $key => $value) {
-                $this->dt['dt_tagihan']['dt_gudang']['ambil']['total'][$key] = array_sum($total[$key]); 
+                $this->dt['dt_tagihan']['dt_gudang']['ambil']['total'][$key] = array_sum($total[$key]);
             }
         }else{
             foreach ($this->allDesigs as $key => $value) {
-                $this->dt['dt_tagihan']['dt_gudang']['ambil']['total'][$key] = 0; 
+                $this->dt['dt_tagihan']['dt_gudang']['ambil']['total'][$key] = 0;
             }
         }
         if(is_null($first)){
@@ -499,10 +506,10 @@ class CreateTagihan extends Component
     }
     public function addAmbil($i)
     {
-        $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'][$i]['no_rfc'] = null; 
-        $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'][$i]['tgl_rfc'] = null; 
+        $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'][$i]['no_rfc'] = null;
+        $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'][$i]['tgl_rfc'] = null;
         foreach ($this->allDesigs as $key => $value) {
-            $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'][$i]['nilai'][$key] = 0; 
+            $this->dt['dt_tagihan']['dt_gudang']['ambil']['data'][$i]['nilai'][$key] = 0;
         }
         $this->reTotalAmbil();
     }

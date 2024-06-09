@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 
 class Proses2ProTagihan extends Component
 {
-    public $tab = 0;
+    public $tab = -4;
     public $dtTagih;
     public $dt;
     public $doc;
@@ -69,7 +69,7 @@ class Proses2ProTagihan extends Component
         return redirect()->to('/tagihan/pro/index');
     }
 
-    #[On('prosesprotagihan-revisi')] 
+    #[On('prosesprotagihan-revisi')]
     public function revisi()
     {
         // $this->dtTagih['json'] = $this->dt;
@@ -124,7 +124,7 @@ class Proses2ProTagihan extends Component
         $this->pejabat['waspang'] = array_values((collect($lov))->where('key', 'waspang')->toArray())[0];
         $this->pejabat['gudang'] = array_values((collect($lov))->where('key', 'gudang')->toArray())[0];
     }
-    
+
     public function changeTab($i)
     {
         $this->tab = $i;
