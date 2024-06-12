@@ -87,6 +87,16 @@ class FileBa extends Component
             }
             $this->dtFileBa = $ary;
         }
+
+        if(count($this->dtTagihan['json']['dt_tagihan']['dt_gudang']['all_desig'])==0){
+            $ary = [];
+            foreach ($this->dtFileBa as $key => $value) {
+                if($value != '5_ba_penggunaan_material'){
+                    $ary[$key] = $value;
+                }
+            }
+            $this->dtFileBa = $ary;
+        }
         // dd($this->dtFileBa);
     }
 

@@ -273,7 +273,11 @@ class CreateTagihan extends Component
                         ->count() < 1
                 ){
                     // dump($vRow);
-                    if($vRow['material']!=0){
+                    if(
+                        $vRow['nama_material']!='' &&
+                        !is_null($vRow['nama_material']) &&
+                        $vRow['nama_material']!='-'
+                    ){
                         $this->allDesigs[$iAllDesig] = $vRow;
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_designator'] = $vRow['nama_designator'];
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_material'] = $vRow['nama_material'];

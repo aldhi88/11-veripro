@@ -27,10 +27,10 @@
                 @enderror
             </div>
         </div>
-        
+
         <div class="col-12 col-md-4">
             <div class="form-group">
-                <label>Tgl. Lamp Acara Uji Terima</label>
+                <label>Tgl. Laporan Acara Uji Terima</label>
                 <input disabled type="date" wire:model="dt.dt_tagihan.tgl_laut" class="bg-light form-control @error('tgl_laut') is-invalid @enderror">
                 @error('tgl_laut')
                     <div class="invalid-feedback">{{ $message }}</div>

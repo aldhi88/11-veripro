@@ -25,9 +25,9 @@ class DetailTagihan extends Component
                 return $item;
             })
             ->toArray();
-        
+
         $this->status = TagihanHistory::dtStatus();
         // dd($this->all());
-    
+
     }
 }

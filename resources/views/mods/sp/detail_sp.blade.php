@@ -1,6 +1,6 @@
 <div>
     <div class="loading-50" wire:loading><div class="loader"></div></div>
-    
+
     <div class="row">
         <div class="col">
             <div class="card">
@@ -11,19 +11,19 @@
                         <li class="nav-item">
                             <a wire:click="changeTab('induk','')" class="nav-link {{ $activeTab=="induk"?'active':null }}" data-toggle="tab" href="#content" role="tab">
                                 <span class="d-block d-sm-none"><i class="fas fa-file-archive"></i></span>
-                                <span class="d-none d-sm-block">SP Induk</span>    
+                                <span class="d-none d-sm-block">SP Induk</span>
                             </a>
                         </li>
-                        
+
                         @foreach ($dtAman as $i => $item)
                         <li class="nav-item">
                             <a wire:click="changeTab('aman',{{$item['id']}})" class="nav-link {{ $activeTab=="aman".$item['id']?'active':null }}" data-toggle="tab" href="#content" role="tab">
                                 <span class="d-block d-sm-none"><i class="fas fa-file-alt"></i></span>
-                                <span class="d-none d-sm-block">Amandemen {{ $i+1 }}</span>    
+                                <span class="d-none d-sm-block">Amandemen {{ $i+1 }}</span>
                             </a>
                         </li>
                         @endforeach
-                        
+
                     </ul>
 
                     <!-- Tab panes -->
@@ -42,10 +42,10 @@
                                         $dtJson['id'] = $dtSp['id'];
                                         $dtJson['callback'] = "detailsp-delete";
                                         $dtJson = json_encode($dtJson);
-                                    @endphp     
+                                    @endphp
                                     <a class="btn btn-danger btn-sm mb-2" data-emit="modalconfirm-prepare" data-toggle="modal" data-target="#modalConfirm" href="javascript:void(0);" data-json="{{$dtJson}}"><i class="fas fa-trash-alt fa-fw"></i> Hapus</a>
                                 @endif
-                                
+
                             @endif
                             <div>
                                 <h6 class="bg-light p-1 text-center">
@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="form-group mb-0 col-12 col-md-4">
                                         <h6>Tujuan Mitra</h6>
-                                        <p>{{ $dtSp['khs_induks']['auth_logins']['master_users']['nama'] }}</p>
+                                        <p>{{ $dtSp['khs_induks']['json']['perusahaan'] }}</p>
                                     </div>
 
                                     <div class="form-group mb-0 col-12 col-md-6">
@@ -127,7 +127,7 @@
                                 </div>
                                 <br>
                                 @foreach ($dtSp['json']['dtLokasi']['lokasi'] as $iLok => $vLok)
-            
+
                                     <div class="table-responsive mb-2">
                                         <table class="w-100">
                                             <tr class="text-center bg-warning">
@@ -207,12 +207,12 @@
                                     </div>
 
                                 @endforeach
-                                
+
                             </div>
-                            
+
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

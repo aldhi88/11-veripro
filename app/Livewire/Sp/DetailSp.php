@@ -21,7 +21,7 @@ class DetailSp extends Component
     {
         $this->param = $param;
         $spIndukId = $param['key'];
-        
+
         $this->dtInduk = SpInduk::where('id',$spIndukId)
             ->with([
                 'khs_induks.auth_logins.master_users',
@@ -40,12 +40,15 @@ class DetailSp extends Component
             ->get()
             ->toArray();
         $this->changeTab('induk','');
+
+        $this->dtSp['khs_induks']['json'] = json_decode($this->dtSp['khs_induks']['json'], true);
+        // dd($this->all());
     }
 
     public function changeTab($tab, $id)
     {
         $this->activeTab = $tab.$id;
-        
+
 
         if($this->activeTab=='induk'){
             $this->dtSp = $this->dtInduk;
@@ -61,7 +64,7 @@ class DetailSp extends Component
         $this->dtSp['json'] = json_decode($this->dtSp['json'],true);
     }
 
-    #[On('detailsp-delete')] 
+    #[On('detailsp-delete')]
     public function delete($data)
     {
         $q = SpAmandemen::where('id', $data['id'])->first();

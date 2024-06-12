@@ -25,7 +25,7 @@
         <hr>
         <table style="width: 100%; vertical-align: top;">
             <tr style="font-weight: bold">
-                <td>NOMOR PERJANJIAN KERJASAMA</td>
+                <td style="width: 230px">NOMOR PERJANJIAN KERJASAMA</td>
                 <td>:</td>
                 <td>{{ $dt['dt_sp']['khs_induks']['no']  }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
@@ -50,7 +50,7 @@
 
             <tr style="font-weight: bold">
                 <td>NOMOR SURAT PESANAN</td>
-                <td>:</td>8
+                <td>:</td>
                 <td>{{ $dt['dt_sp']['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
             @if (count($dt['aman_sp'])>0)

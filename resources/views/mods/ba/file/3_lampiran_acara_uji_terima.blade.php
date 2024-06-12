@@ -1,19 +1,19 @@
 <div class="margin" style="text-align: justify; page-break-after: always;">
     <div>
         <center>
-    
+
             <strong>
                 LAPORAN <br>
                 UJI TERIMA KESATU (UT-I)
             </strong>
             <br>
             Nomor : {{ $dt['dt_tagihan']['no_laut'] }}
-    
+
         </center>
     </div>
-    
+
     <div style="height: 20px"></div>
-    
+
     <hr>
     <div>
         <style>
@@ -24,15 +24,15 @@
         </style>
         <table style="width: 100%; vertical-align: top;">
             <tr style="font-weight: bold">
-                <td>NOMOR PERJANJIAN KERJASAMA</td>
+                <td style="width: 230px">NOMOR PERJANJIAN KERJASAMA</td>
                 <td>:</td>
                 <td>{{ $dt['dt_sp']['khs_induks']['no']  }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
-            
+
             @if (count($dt['aman_khs'])>0)
-    
+
                 @foreach ($dt['aman_khs'] as $i=>$item)
-    
+
                     <tr style="font-weight: bold;">
                         <td>
                             <ol style="margin: 0; padding-left: 25px;">
@@ -42,20 +42,20 @@
                         <td>:</td>
                         <td>{{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
                     </tr>
-                    
+
                 @endforeach
-            
+
             @endif
-    
+
             <tr style="font-weight: bold">
                 <td>NOMOR SURAT PESANAN</td>
                 <td>:</td>
                 <td>{{ $dt['dt_sp']['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
             @if (count($dt['aman_sp'])>0)
-    
+
                 @foreach ($dt['aman_sp'] as $i=>$item)
-    
+
                     <tr style="font-weight: bold;">
                         <td>
                             <ol style="margin: 0; padding-left: 25px;">
@@ -65,11 +65,11 @@
                         <td>:</td>
                         <td>{{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
                     </tr>
-    
+
                 @endforeach
-            
+
             @endif
-    
+
             <tr style="font-weight: bold">
                 <td>PEKERJAAN</td>
                 <td>:</td>
@@ -102,20 +102,20 @@
                                     echo ', ';
                                 }
                                 echo $value['id_project'];
-                                array_push($aryProject, $value['id_project']); 
+                                array_push($aryProject, $value['id_project']);
                             }
                         }
                     @endphp
                 </td>
             </tr>
-            
+
         </table>
-    
+
     </div>
     <hr>
-    
+
     <div style="height: 20px"></div>
-    
+
     <style>
         .satu > li{
             margin-top: 20px;
@@ -124,57 +124,57 @@
     <div style="line-height: 19px">
         <ol class="satu" type="I" style="padding-left: 25px">
             <li style="font-weight: bold;"><u>Dasar pelaksanaan Uji Terima I :</u>
-    
+
                 <ol style="font-weight: normal;text-align: justify">
                     <li>Perjanjian Kerjasama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outsite Plant Fiber Optik (OSP-FO) Nomor : {{ $dt['dt_sp']['khs_induks']['no']  }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</li>
-    
+
                     @if (count($dt['aman_khs'])>0)
-    
+
                         @foreach ($dt['aman_khs'] as $i=>$item)
-    
+
                             <li>Amandemen {{$i+1}} Perjanjian Kerjasama Kontrak Harga Satuan (KHS) Pekerjaan Pengadaan dan Pemasangan Outsite Plant Fiber Optik (OSP-FO) Nomor : {{ $item['no'] }}, Tanggal {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</li>
-                            
+
                         @endforeach
-                    
+
                     @endif
-    
+
                     <li>Surat Pesanan Nomor : {{ $dt['dt_sp']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</li>
                     @if (count($dt['aman_sp'])>0)
-    
+
                         @foreach ($dt['aman_sp'] as $i=>$item)
-    
+
                             <li>Amandemen {{$i+1}} Surat Pesanan Nomor : {{ $item['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}</li>
-    
+
                         @endforeach
-                    
+
                     @endif
                     <li>Surat permohonan Uji Terima I dari {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor {{ $dt['dt_tagihan']['no_ut'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ut'])->isoFormat('DD MMMM Y') }}, perihal Permohonan Uji Terima Pertama</li>
                     <li>Nota Dinas Pelaksanaan Uji Terima I  Nomor : {{ $dt['dt_tagihan']['no_nodin'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_nodin'])->isoFormat('DD MMMM Y') }}</li>
                 </ol>
-    
+
             </li>
-    
+
             <li style="font-weight: bold;"><u>Waktu pelaksanaan Uji Terima I</u>
                 <p style="font-weight: normal">Uji Terima dilaksanakan tanggal  {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</p>
             </li>
-    
+
             <li style="font-weight: bold;"><u>Tim Uji Terima I :</u>
                 <ol style="font-weight: normal">
                     <li>
                         Berdasarkan Nota Dinas Penunjukan Tim Uji Terima dan Nota Dinas Pelaksanaan Uji Terima I maka Uji Terima dilaksanakan Oleh :
                         <br>
                         <span>
-                            {{$dt['dt_tagihan']['dt_ttd']['sm_unit_pejabat']}} 
-                            / 
+                            {{$dt['dt_tagihan']['dt_ttd']['sm_unit_pejabat']}}
+                            /
                             {{$dt['dt_tagihan']['dt_ttd']['sm_unit_jabatan']}}
-                           
+
                             <br>
                             {{$dt['dt_sp']['khs_induks']['json']['direktur']}} / DIREKTUR
                         </span>
                     </li>
                 </ol>
             </li>
-    
+
             <li style="font-weight: bold;"><u>Lingkup & Program Yang di Uji Terima :</u>
                 <ol type="a" style="font-weight: normal">
                     <li>Visual Check
@@ -187,7 +187,7 @@
                     <li>Test Fungsi / Elektrik</li>
                 </ol>
             </li>
-    
+
             <li style="font-weight: bold;"><u>Hasil pengujian :</u>
                 <ol type="a" style="font-weight: normal">
                     <li>Visual Check
@@ -200,11 +200,11 @@
                     <li>Test Fungsi / Elektrik: <strong>Baik / <del>tidak baik</del></strong></li>
                 </ol>
             </li>
-    
+
             <li style="font-weight: bold;"><u>Penilaian</u>
                 <p style="font-weight: normal">Hasil pengujian Visual check dan Test fungsi seperti tersebut diatas telah dilaksanakan sesuai persyaratan pengetesan yang berlaku di PT. Telkom Akses</p>
             </li>
-    
+
             <li style="font-weight: bold;"><u>Kesimpulan :</u>
                 <ol style="font-weight: normal" type="a">
                     <li>
@@ -225,12 +225,12 @@
                     </li>
                 </ol>
             </li>
-    
-    
+
+
         </ul>
-    
+
     </div>
-    
+
     <div style="page-break-inside: avoid; width: 100%">
         <p>Demikian Laporan Uji Terima ini dibuat sesuai keadaan sebenarnya dan dipergunakan semestinya.</p>
         <table style="width: 100%; vertical-align: top; text-align:center; font-weight: bold; text-transform: uppercase">
@@ -255,18 +255,18 @@
                     {{$dt['dt_tagihan']['dt_ttd']['sm_unit_jabatan']}}
                 </td>
             </tr>
-    
+
             <tr>
                 <td colspan="2" style="padding: 20px; text-transform: capitalize">Mengetahui/Menyetujui</td>
             </tr>
-    
+
             <tr>
                 <td>
                     PT. TELKOM AKSES
                     <div style="height: 100px"></div>
                     <u>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit_pejabat']}}</u>
                     <br>
-                    {{$dt['dt_tagihan']['dt_ttd']['mgr_unit_jabatan']}} 
+                    {{$dt['dt_tagihan']['dt_ttd']['mgr_unit_jabatan']}}
                 </td>
                 <td>
                     PT. TELKOM AKSES

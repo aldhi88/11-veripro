@@ -12,6 +12,8 @@ use Livewire\Attributes\Rule;
 class FormLogin extends Component
 {
     public $roles = [];
+    public $eyeIcon = 'eye-close-fill';
+    public $seePass = 'password';
 
     #[Rule('', as:'Login Sebagai')]
     public $auth_role_id;
@@ -25,6 +27,20 @@ class FormLogin extends Component
     public function render()
     {
         return view('mods.auth.form_login');
+    }
+
+    public function changeSeePass($icon)
+    {
+        if($icon=='eye-close-fill'){
+            $this->eyeIcon = 'eye-fill';
+            $this->seePass = "text";
+        }else{
+            $this->eyeIcon = 'eye-close-fill';
+            $this->seePass = "password";
+        }
+
+        // dd($this->all());
+
     }
 
     public function mount()
@@ -43,7 +59,7 @@ class FormLogin extends Component
                 $q->where('auth_role_id', $data['auth_role_id']);
             })
             ->get();
-            
+
         if($q->count() == 1){
             if(Hash::check($data['password'], $q[0]['password'])){
                 Auth::loginUsingId($q[0]['id']);
