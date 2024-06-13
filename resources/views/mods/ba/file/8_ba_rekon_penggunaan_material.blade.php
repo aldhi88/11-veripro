@@ -19,12 +19,6 @@
     <div style="height: 15px;"></div>
 
     <div>
-        <style>
-            td {
-                vertical-align: top;
-                padding: 0px 5px;
-            }
-        </style>
         <table style="width: 100%; vertical-align: top;" class="table-border">
             <tr style="font-weight: bold">
                 <td width="200">Pekerjaan</td>

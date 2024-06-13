@@ -5,12 +5,6 @@
     </strong>
     <div style="height: 15px"></div>
 
-    <style>
-        td {
-            vertical-align: top;
-            padding: 5px 5px;
-        }
-    </style>
     <table style="vertical-align: top;" class="table-border">
         <tr>
             <td width="200">No. Invoice</td>

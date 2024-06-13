@@ -91,7 +91,9 @@ class FileBa extends Component
         if(count($this->dtTagihan['json']['dt_tagihan']['dt_gudang']['all_desig'])==0){
             $ary = [];
             foreach ($this->dtFileBa as $key => $value) {
-                if($value != '5_ba_penggunaan_material'){
+                if(
+                    $value != '5_ba_penggunaan_material'
+                ){
                     $ary[$key] = $value;
                 }
             }
@@ -117,14 +119,18 @@ class FileBa extends Component
         if(is_null($this->isChecked)){
             $this->isChecked = 'checked';
             foreach ($this->dtFileBa as $key => $value) {
-                if($key!=6 || $key!=5){
+                if($key!=6){
                     $this->file[] = $key;
                 }
             }
+
+
         }else{
             $this->isChecked = null;
             $this->file = [];
         }
+
+
 
         $this->makeUrl();
         // dd($this->all());

@@ -1,5 +1,5 @@
 {{-- per desig --}}
-<div class="margin" style="text-align: justify; page-break-after: always;">
+<div class="margin" style="page-break-after: always;">
     <table style="vertical-align: top;">
 
         <tr style="font-weight: bold">
@@ -58,7 +58,7 @@
     </table>
     <br>
 
-    <table style="width: 100%; vertical-align: top; border-collapse: collapse" class="table-border table-padding">
+    <table id="content" style="width: 100%; vertical-align: top; border-collapse: collapse;" class="table-border table-padding">
         <tr style="font-weight: bold; text-align: center">
             <td rowspan="2" width="30">NO</td>
             <td rowspan="2">DESIGNATOR</td>

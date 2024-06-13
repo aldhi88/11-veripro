@@ -31,7 +31,7 @@
                                             @foreach ($dtFileBa as $i => $item)
                                                 <tr>
                                                     <td>
-                                                        @if ($i==6 || $i==5)
+                                                        @if ($i==6)
 
                                                             @if (!is_null($tagihanId) && $i==6)
                                                                 <a href="{{route('ba.file', $tagihanId)}}?file=6" class="btn btn-sm btn-danger close-btn" target="_blank"><i class="fas fa-print  fa-fw"></i> Cetak</a>

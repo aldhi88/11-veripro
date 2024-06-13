@@ -16,12 +16,7 @@
 
     <hr>
     <div>
-        <style>
-            td {
-                vertical-align: top;
-                padding: 0px 5px;
-            }
-        </style>
+
         <table style="width: 100%; vertical-align: top;">
             <tr style="font-weight: bold">
                 <td style="width: 230px">NOMOR PERJANJIAN KERJASAMA</td>

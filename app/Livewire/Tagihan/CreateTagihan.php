@@ -105,7 +105,6 @@ class CreateTagihan extends Component
         $this->setPejabat();
         $this->setDtEdit($data['key']);
         $this->setGudang();
-        // dd($this->all());
     }
 
     public function uploadLokasi()
@@ -349,7 +348,11 @@ class CreateTagihan extends Component
                                 $item['nama_jasa'] == $vDd['nama_jasa'];
                         });
                         $tempDesig[] = $vDd;
-                        if($vDd['material']!=0){
+                        if(
+                            $vDd['nama_material']!='' &&
+                            !is_null($vDd['nama_material']) &&
+                            $vDd['nama_material']!='-'
+                        ){
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];

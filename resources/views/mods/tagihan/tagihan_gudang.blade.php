@@ -99,58 +99,55 @@
             <div class="row">
                 <div class="col">
                     <h6>MATERIAL YANG DIPAKAI</h6>
-                    <table class="lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
-                        <thead class="bg-light text-center">
-                            <tr>
-                                <th rowspan="2" width="50">No</th>
-                                <th rowspan="2">Nama Lokasi</th>
-                                <th rowspan="2" width="130">ID Project</th>
-                                @foreach ($allDesigs as $item)
-                                <th>
-                                    <div class="verticalTableHeader">
-                                        @php
-                                        echo $item['nama_material'];
-                                        // if($item['nama_designator']=='' || is_null($item['nama_designator'])){
-                                        //     echo $item['nama_jasa'];
-                                        // }else{
-                                        //     echo $item['nama_designator'];
-                                        // }
-                                        @endphp
-                                    </div>
-                                </th>
-                                @endforeach
-                            </tr>
-                            <tr>
-                                @foreach ($allDesigs as $item)
-                                <th width="60">{{$item['satuan']}}</th>
-                                @endforeach
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok=>$vLok)
-                                <tr class="text-center">
-                                    <td>{{$iLok+1}}</td>
-                                    <td>{{$vLok['nama_lokasi']}}</td>
-                                    <td>{{$vLok['id_project']}}</td>
-                                    @foreach ($allDesigs as $iDesMat=>$vDesMat)
-                                    <td>
-                                        <input wire:change="reTotalPakai()" style="width: 60px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.pakai.data.{{$iLok}}.{{$iDesMat}}">
-                                    </td>
+                    <div class="table-responsive">
+                        <table class="table-bordered lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
+                            <thead class="bg-light text-center">
+                                <tr>
+                                    <th rowspan="2" width="50">No</th>
+                                    <th rowspan="2" style="min-width: 300px">Nama Lokasi</th>
+                                    <th rowspan="2" width="130">ID Project</th>
+                                    @foreach ($allDesigs as $item)
+                                    <th>
+                                        <div class="verticalTableHeader">
+                                            @php
+                                            echo $item['nama_material'];
+                                            @endphp
+                                        </div>
+                                    </th>
                                     @endforeach
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <tr><td colspan="{{ count($allDesigs)+3 }}"><hr class="m-0 p-0"></td></tr>
-                        <tfoot class="bg-light">
-                            <tr class="text-dark">
-                                <th colspan="3">TOTAL MATERIAL</th>
-                                @foreach ($allDesigs as $iDesMat=>$vDesMat)
-                                <th class="text-center">{{$dt['dt_tagihan']['dt_gudang']['pakai']['total'][$iDesMat]}}</th>
+                                <tr>
+                                    @foreach ($allDesigs as $item)
+                                    <th width="60">{{$item['satuan']}}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok=>$vLok)
+                                    <tr class="text-center">
+                                        <td>{{$iLok+1}}</td>
+                                        <td>{{$vLok['nama_lokasi']}}</td>
+                                        <td>{{$vLok['id_project']}}</td>
+                                        @foreach ($allDesigs as $iDesMat=>$vDesMat)
+                                        <td>
+                                            <input wire:change="reTotalPakai()" style="width: 60px" type="number" min="0" wire:model="dt.dt_tagihan.dt_gudang.pakai.data.{{$iLok}}.{{$iDesMat}}">
+                                        </td>
+                                        @endforeach
+                                    </tr>
                                 @endforeach
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+                            <tr><td colspan="{{ count($allDesigs)+3 }}"><hr class="m-0 p-0"></td></tr>
+                            <tfoot class="bg-light">
+                                <tr class="text-dark">
+                                    <th colspan="3">TOTAL MATERIAL</th>
+                                    @foreach ($allDesigs as $iDesMat=>$vDesMat)
+                                    <th class="text-center">{{$dt['dt_tagihan']['dt_gudang']['pakai']['total'][$iDesMat]}}</th>
+                                    @endforeach
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -159,79 +156,81 @@
             <div class="row">
                 <div class="col">
                     <h6>PENGEMBALIAN MATERIAL</h6>
-                    <table class="table-bordered lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
-                        <thead class="bg-light text-center">
-                            <tr>
-                                <th rowspan="2" width="50">
-                                    <a wire:click="addKembali({{count($dt['dt_tagihan']['dt_gudang']['kembali']['data'])}})" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
-                                </th>
-                                <th rowspan="2">No</th>
-                                <th rowspan="2">ID Pengembalian</th>
-                                <th rowspan="2" width="130">Tgl. RFR</th>
-                                @foreach ($allDesigs as $item)
-                                <th>
-                                    <div class="verticalTableHeader">
-                                        @php
-                                        echo $item['nama_material'];
-                                        // if($item['nama_designator']=='' || is_null($item['nama_designator'])){
-                                        //     echo $item['nama_jasa'];
-                                        // }else{
-                                        //     echo $item['nama_designator'];
-                                        // }
-                                        @endphp
-                                    </div>
-                                </th>
-                                @endforeach
-
-                            </tr>
-                            <tr>
-                                @foreach ($allDesigs as $item)
-                                <th width="60">{{$item['satuan']}}</th>
-                                @endforeach
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr><td></td></tr>
-                            @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['data'] as $iRowKembali=>$vRowKembali)
-                                <tr class="text-center">
-                                    <td>
-                                        <a wire:click="delKembali({{$iRowKembali}})" href="javascript:void(0)" class="btn btn-sm btn-danger"><i class="fas fa-times fa-fw"></i></a>
-                                    </td>
-                                    <td>{{$iRowKembali+1}}</td>
-                                    <td>
-                                        <input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.id_kembali">
-                                    </td>
-                                    <td>
-                                        <input class="w-100" type="date" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.tgl_rfr">
-                                    </td>
-                                    @foreach ($vRowKembali['nilai'] as $iNilaiKembali=>$vNilaiKembali)
-                                    <td>
-                                        <input id="{{rand()}}" wire:change="reTotalKembali()" min="0" style="width: 60px" class="w-100" type="number" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.nilai.{{$iNilaiKembali}}">
-                                    </td>
+                    <div class="table-responsive">
+                        <table class="table-bordered lh-80 small table table-sm m-0 table-bordered table-striped nowrap middle-text">
+                            <thead class="bg-light text-center">
+                                <tr>
+                                    <th rowspan="2" width="50">
+                                        <a wire:click="addKembali({{count($dt['dt_tagihan']['dt_gudang']['kembali']['data'])}})" href="javascript:void(0)" class="btn btn-sm btn-success"><i class="fas fa-plus fa-fw"></i></a>
+                                    </th>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">ID Pengembalian</th>
+                                    <th rowspan="2" width="130">Tgl. RFR</th>
+                                    @foreach ($allDesigs as $item)
+                                    <th>
+                                        <div class="verticalTableHeader">
+                                            @php
+                                            echo $item['nama_material'];
+                                            // if($item['nama_designator']=='' || is_null($item['nama_designator'])){
+                                            //     echo $item['nama_jasa'];
+                                            // }else{
+                                            //     echo $item['nama_designator'];
+                                            // }
+                                            @endphp
+                                        </div>
+                                    </th>
                                     @endforeach
 
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="m-0 p-0"></td></tr>
-                        <tfoot class="bg-light">
-                            <tr class="text-dark">
-                                <th colspan="4">TOTAL PENGEMBALIAN MATERIAL</th>
-                                @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['total'] as $iNilaiKembali=>$vNilaiKembali)
-                                <th class="text-center">{{$vNilaiKembali}}</th>
-                                @endforeach
-                            </tr>
-                            <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="mb-0 bg-warning"></td></tr>
-                            <tr class="text-dark bg-soft-warning">
-                                <th colspan="4" class="border border-warning">GRAND TOTAL SISA MATERIAL</th>
-                                @foreach ($dt['dt_tagihan']['dt_gudang']['grand_total'] as $iGt=>$vGt)
-                                <th class="border border-warning text-center">{{$vGt}}</th>
-                                @endforeach
-                            </tr>
-                        </tfoot>
+                                <tr>
+                                    @foreach ($allDesigs as $item)
+                                    <th width="60">{{$item['satuan']}}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
 
-                    </table>
+                            <tbody>
+                                <tr><td></td></tr>
+                                @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['data'] as $iRowKembali=>$vRowKembali)
+                                    <tr class="text-center">
+                                        <td>
+                                            <a wire:click="delKembali({{$iRowKembali}})" href="javascript:void(0)" class="btn btn-sm btn-danger"><i class="fas fa-times fa-fw"></i></a>
+                                        </td>
+                                        <td>{{$iRowKembali+1}}</td>
+                                        <td>
+                                            <input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.id_kembali">
+                                        </td>
+                                        <td>
+                                            <input class="w-100" type="date" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.tgl_rfr">
+                                        </td>
+                                        @foreach ($vRowKembali['nilai'] as $iNilaiKembali=>$vNilaiKembali)
+                                        <td>
+                                            <input id="{{rand()}}" wire:change="reTotalKembali()" min="0" style="width: 60px" class="w-100" type="number" wire:model="dt.dt_tagihan.dt_gudang.kembali.data.{{$iRowKembali}}.nilai.{{$iNilaiKembali}}">
+                                        </td>
+                                        @endforeach
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="m-0 p-0"></td></tr>
+                            <tfoot class="bg-light">
+                                <tr class="text-dark">
+                                    <th colspan="4">TOTAL PENGEMBALIAN MATERIAL</th>
+                                    @foreach ($dt['dt_tagihan']['dt_gudang']['kembali']['total'] as $iNilaiKembali=>$vNilaiKembali)
+                                    <th class="text-center">{{$vNilaiKembali}}</th>
+                                    @endforeach
+                                </tr>
+                                <tr><td colspan="{{ count($allDesigs)+4 }}"><hr class="mb-0 bg-warning"></td></tr>
+                                <tr class="text-dark bg-soft-warning">
+                                    <th colspan="4" class="border border-warning">GRAND TOTAL SISA MATERIAL</th>
+                                    @foreach ($dt['dt_tagihan']['dt_gudang']['grand_total'] as $iGt=>$vGt)
+                                    <th class="border border-warning text-center">{{$vGt}}</th>
+                                    @endforeach
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="row mt-1">

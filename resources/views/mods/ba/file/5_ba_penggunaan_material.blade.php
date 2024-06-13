@@ -1,7 +1,8 @@
+
 <div class="margin" style="text-align: justify; page-break-after: always;">
     <div>
         <center>
-    
+
             <strong>
             BERITA ACARA PENGGUNAAN MATERIAL <br>
             PEKERJAAN {{$dt['dt_sp']['nama_pekerjaan']}} <br>
@@ -19,28 +20,26 @@
                 @endforeach
             @endif
             </strong>
-    
+
         </center>
     </div>
-    
+
     <div style="height: 30px;"></div>
-    
+
     <div>A. MATERIAL YANG DIAMBIL</div>
     <table class="table-border-bold" style="width: 100%">
         <tr style="text-align: center">
             <td rowspan="2">NO</td>
             <td rowspan="2">NO. RFC</td>
-            <td rowspan="2">TANGGAL RFC</td>
+            <td rowspan="2">TANGGAL <br> RFC</td>
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-            <td>
-                <div class="verticalTableHeader">{{$vDes['nama_material']}}</div>
-            </td>
+            <td class="verticalTableHeader" id="ambil{{$iDes}}">{{$vDes['nama_material']}}</td>
             @endforeach
-            
+
         </tr>
         <tr style="text-align: center">
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-            <td widtd="60">{{$vDes['satuan']}}</td>
+            <td>{{$vDes['satuan']}}</td>
             @endforeach
         </tr>
 
@@ -63,6 +62,18 @@
             </tr>
         </tbody>
     </table>
+
+    <script>
+        var count = "{{count($dt['dt_tagihan']['dt_gudang']['all_desig'])}}";
+        for (var i = 0; i < count; i++) {
+            var tdWidth = document.getElementById("ambil"+i).offsetWidth;
+            if(!isChromium){
+                document.getElementById("ambil"+i).style.right=((tdWidth-23)/2)+"px";
+            }
+        }
+    </script>
+
+
     <br>
     <div>B. MATERIAL YANG DIPAKAI</div>
     <table class="table-border-bold" style="width: 100%;">
@@ -71,9 +82,7 @@
             <td rowspan="2">NAMA LOKASI</td>
             <td rowspan="2" widtd="130">ID PROJECT</td>
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-            <td>
-                <div class="verticalTableHeader">{{$vDes['nama_material']}}</div>
-            </td>
+            <td class="verticalTableHeader" id="pakai{{$iDes}}">{{$vDes['nama_material']}}</td>
             @endforeach
         </tr>
         <tr style="text-align: center">
@@ -104,6 +113,16 @@
         </tfoot>
     </table>
 
+    <script>
+        var count = "{{count($dt['dt_tagihan']['dt_gudang']['all_desig'])}}";
+        for (var i = 0; i < count; i++) {
+            var tdWidth = document.getElementById("pakai"+i).offsetWidth;
+            if(!isChromium){
+                document.getElementById("pakai"+i).style.right=((tdWidth-23)/2)+"px";
+            }
+        }
+    </script>
+
     <br>
     <div>C. PENGEMBALIAN MATERIAL</div>
     <table class="table-border-bold" style="width: 100%;">
@@ -113,9 +132,9 @@
                 <td rowspan="2">ID PENGEMBALIAN</td>
                 <td rowspan="2" widtd="130">TANGGAL RFR</td>
                 @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-                <td><div class="verticalTableHeader">{{$vDes['nama_material']}}</div></td>
+                <td class="verticalTableHeader" id="kembali{{$iDes}}">{{$vDes['nama_material']}}</td>
                 @endforeach
-                
+
             </tr>
             <tr style="text-align: center">
                 @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
@@ -133,7 +152,7 @@
                     @foreach ($vRowKembali['nilai'] as $iNilaiKembali=>$vNilaiKembali)
                     <td>{{$vNilaiKembali}}</td>
                     @endforeach
-                    
+
                 </tr>
             @endforeach
         </tbody>
@@ -159,6 +178,16 @@
         </tfoot>
     </table>
 
+    <script>
+        var count = "{{count($dt['dt_tagihan']['dt_gudang']['all_desig'])}}";
+        for (var i = 0; i < count; i++) {
+            var tdWidth = document.getElementById("kembali"+i).offsetWidth;
+            if(!isChromium){
+                document.getElementById("kembali"+i).style.right=((tdWidth-23)/2)+"px";
+            }
+        }
+    </script>
+
     <table>
         <tr>
             <td style="width: 30px">Ket : </td>
@@ -170,7 +199,7 @@
         </tr>
     </table>
     <br>
-    
+
     <div style="page-break-inside: avoid; width: 100%;">
         <table style="width: 100%; vertical-align: top; text-align:center; font-weight: bold;">
             <tr><td colspan="3" style="text-align: center; height: 30px;">
@@ -203,13 +232,13 @@
                         </tr>
                     </table>
                 </td>
-                
+
             </tr>
-    
+
             <tr>
                 <td colspan="3" style="padding: 5px;">Mengetahui/Menyetujui</td>
             </tr>
-    
+
             <tr style="text-transform: uppercase">
                 <td colspan="2">
                     <table style="width: 100%">
@@ -233,3 +262,5 @@
         </table>
     </div>
 </div>
+
+

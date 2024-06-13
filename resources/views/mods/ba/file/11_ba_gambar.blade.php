@@ -22,12 +22,6 @@
         <div style="height: 15px;"></div>
 
         <div>
-            <style>
-                td {
-                    vertical-align: top;
-                    padding: 0px 5px;
-                }
-            </style>
             <hr>
             <table style="width: 100%; vertical-align: top;">
                 <tr style="font-weight: bold">

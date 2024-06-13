@@ -89,18 +89,6 @@ class TagihanController extends Controller
             $hrg_material = $items->first()['material'];
             $hrg_jasa = $items->first()['jasa'];
 
-            // if($items->first()['material']==0){
-            //     $hrg_material = "-";
-            // }
-            // if($items->first()['jasa']==0){
-            //     $hrg_jasa = "-";
-            // }
-
-            // logic utk vol tambah dan kuran yg desig di banyak lokasi
-            // if(count($items)>1){
-            //     dump($items->toArray());
-            // }
-
             $vol_tambah = $items->sum('volume_tambah');
             $vol_kurang = $items->sum('volume_kurang');
             if($vol_tambah>0 && $vol_kurang>0){

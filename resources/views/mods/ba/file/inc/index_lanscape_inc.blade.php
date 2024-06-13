@@ -1,26 +1,42 @@
 <style>
     body {
+        font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        font-family: 'Calibri', sans-serif;
-        font-size: 10px;
-        /* background-color: #e6e6e6; */
+        background-color: #f0f0f0;
+        font-size: 12px;
         line-height: 1.5;
     }
 
     .a4 {
         width: 297mm;
-        /* Mengganti lebar menjadi 297mm untuk mode landscape */
+        margin: 0cm auto; /* Tengah halaman dengan margin atas dan bawah */
+        padding: 0cm;  /* Padding dalam dokumen */
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        overflow: auto;
+        /* border: 1px solid #ccc; */
+        /* box-sizing: border-box; */
     }
 
     .margin {
-        padding: 1.7cm;
-        background-color: white;
+        padding: 1cm;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .justify{
+        text-align: justify;
     }
 
     @media print {
-        hr {
-            display: none;
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            /* width: 100%;
+            transform-origin: top left; */
         }
 
         .margin {
@@ -29,17 +45,32 @@
 
         @page {
             size: A4 landscape;
-            /* Mengatur halaman ke mode landscape */
-            /* margin: 1.7cm; */
+            margin: 1cm;
         }
 
-        body {
-            font-family: 'Calibri', sans-serif;
-            font-size: 12px;
-            line-height: 1.5;
+        .a4 {
+            box-shadow: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: auto;
+            height: auto;
+            overflow: auto;
         }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+            /* table-layout: fixed; */
+        }
+
+
+        /* th, td {
+            word-wrap: break-word;
+        } */
+
     }
-
 
 
     /* =============== */
@@ -51,9 +82,14 @@
         line-height: 2;
     }
 
+    thead
+    td{
+        vertical-align: middle;
+    }
+
     table,
     td {
-        margin: 0;
+        border-collapse: collapse;
     }
 
     .table-border,
@@ -63,25 +99,7 @@
 
     .table-border-bold,
     .table-border-bold td {
-        border: 2px #000000 solid;
-    }
-
-    /* vertical */
-    .verticalTableHeader {
-        white-space: nowrap;
-        transform-origin: 50% 50%;
-        transform: rotate(-90deg);
-    }
-
-    .verticalTableHeader:before {
-        content: '';
-        padding-top: 100%;
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .table-padding td{
-        padding: 3px;
+        border: 1px #000000 solid;
     }
 
 </style>

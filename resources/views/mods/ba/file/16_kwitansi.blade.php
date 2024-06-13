@@ -21,13 +21,6 @@
 
     <div style="height: 35px"></div>
 
-
-    <style>
-        td {
-            vertical-align: top;
-            padding: 5px 5px;
-        }
-    </style>
     <table style="vertical-align: top;width:100%" class="">
         <tr>
             <td width="30%">Sudah Terima dari</td>

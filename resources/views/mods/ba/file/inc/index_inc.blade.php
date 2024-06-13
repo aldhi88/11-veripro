@@ -1,27 +1,39 @@
 <style>
     body {
+        font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        font-family: 'Calibri', sans-serif;
+        background-color: #f0f0f0;
         font-size: 12px;
-        /* background-color: #e6e6e6; */
         line-height: 1.5;
     }
 
     .a4 {
         width: 210mm;
+        margin: 0cm auto; /* Tengah halaman dengan margin atas dan bawah */
+        padding: 0cm;  /* Padding dalam dokumen */
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        /* border: 1px solid #ccc; */
+        /* box-sizing: border-box; */
     }
 
     .margin {
         padding: 2.5cm;
-        background-color: white;
+        margin-bottom: 20px;
+        position: relative;
     }
 
-
+    .justify{
+        text-align: justify;
+    }
 
     @media print {
-        hr {
-            display: none;
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
         }
 
         .margin {
@@ -33,11 +45,21 @@
             margin: 2.5cm;
         }
 
-        body {
-            font-family: 'Calibri', sans-serif;
-            font-size: 12px;
-            line-height: 1.5;
+        .a4 {
+            box-shadow: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: auto;
+            height: auto;
         }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
     }
 
 
@@ -68,20 +90,25 @@
 
     .table-border-bold,
     .table-border-bold td {
-        border: 2px #000000 solid;
+        border: 1px #000000 solid;
     }
 
     /* vertical */
     .verticalTableHeader {
-        white-space: nowrap;
+        /* white-space: nowrap;
         transform-origin: 50% 50%;
-        transform: rotate(-90deg);
+        transform: rotate(-90deg); */
+        writing-mode: vertical-lr; /* Untuk dukungan browser modern */
+        white-space: nowrap; /* Untuk memastikan teks tidak patah menjadi beberapa baris */
+        transform: rotate(180deg);
+        position: relative;
+        /* right: 10px; */
     }
 
     .verticalTableHeader:before {
-        content: '';
+        /* content: '';
         padding-top: 100%;
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: middle; */
     }
 </style>
