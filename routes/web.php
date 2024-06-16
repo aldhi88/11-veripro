@@ -82,10 +82,10 @@ Route::middleware('auth:web')->group(function(){
     Route::prefix('dashboard')->group(function () {
         Route::name('dashboard.')->group(function () {
             Route::controller(DashboardController::class)->group(function () {
-    
+
                 Route::get('/index', 'index')->name('index');
                 Route::get('/index/dt', 'dt')->name('index.dt');
-    
+
             });
         });
     });
@@ -93,9 +93,9 @@ Route::middleware('auth:web')->group(function(){
     Route::prefix('tagihan')->group(function () {
         Route::name('tagihan.')->group(function () {
             Route::controller(TagihanController::class)->group(function () {
-    
+
                 Route::get('/file', 'file')->name('file');
-    
+
             });
         });
     });
@@ -146,7 +146,7 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('account')->group(function () {
             Route::name('account.')->group(function () {
                 Route::controller(AccountController::class)->group(function () {
-                    
+
                     Route::get('/mitra', 'mitra')->name('mitra');
                     Route::get('/mitra/dt', 'mitraDt')->name('mitra.dt');
                     Route::get('/mitra/{key}/edit', 'changePassMitra')->name('changePassMitra');
@@ -161,7 +161,7 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('khs')->group(function () {
             Route::name('khs.')->group(function () {
                 Route::controller(KhsController::class)->group(function () {
-                    
+
                     Route::get('/index', 'index')->name('index');
                     Route::get('/index/dt', 'dt')->name('index.dt');
                     Route::get('/create', 'create')->name('create');
@@ -181,7 +181,7 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('sp')->group(function () {
             Route::name('sp.')->group(function () {
                 Route::controller(SpController::class)->group(function () {
-            
+
                     Route::get('/index', 'index')->name('index');
                     Route::get('/index/dt', 'dt')->name('index.dt');
                     Route::get('/create', 'create')->name('create');
@@ -197,22 +197,26 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('tagihan')->group(function () {
             Route::name('tagihan.')->group(function () {
                 Route::controller(TagihanController::class)->group(function () {
-                    
+
                     Route::get('/pro/index', 'indexPro')->name('indexPro');
                     Route::get('/pro/index/dt', 'dtPro')->name('indexPro.dt');
                     Route::get('/{tagihanId}/pro/proses', 'prosesPro')->name('prosesPro');
                     Route::get('/{tagihanId}/pro/proses2', 'proses2Pro')->name('proses2Pro');
-                    
+
                 });
             });
         });
 
+        // lov
+
         Route::prefix('lov')->group(function () {
             Route::name('lov.')->group(function () {
                 Route::controller(LovController::class)->group(function () {
-                    
-                    Route::get('/index', 'index')->name('index');
-                    Route::get('/index/dt', 'dtIndex')->name('dtIndex');
+
+                    Route::get('/pejabat/index', 'indexPejabat')->name('indexPejabat');
+                    Route::get('/pejabat/dt', 'dtPejabat')->name('dtPejabat');
+                    Route::get('/setting/index', 'indexSetting')->name('indexSetting');
+                    Route::get('/setting/dt', 'dtSetting')->name('dtSetting');
 
                 });
             });
@@ -244,7 +248,7 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('khs')->group(function () {
             Route::name('khs.')->group(function () {
                 Route::controller(KhsController::class)->group(function () {
-                    
+
                     Route::get('/index', 'index')->name('index');
                     Route::get('/index/dt', 'dt')->name('index.dt');
                     Route::get('/create', 'create')->name('create');
@@ -261,7 +265,7 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('sp')->group(function () {
             Route::name('sp.')->group(function () {
                 Route::controller(SpController::class)->group(function () {
-                    
+
                     Route::get('/mitra/index', 'indexMitra')->name('indexMitra');
                     Route::get('/mitra/index/dt', 'dtMitra')->name('indexMitra.dt');
                     Route::get('/{spId}/detail', 'detail')->name('detail');
@@ -274,7 +278,7 @@ Route::middleware('auth:web')->group(function(){
         Route::prefix('tagihan')->group(function () {
             Route::name('tagihan.')->group(function () {
                 Route::controller(TagihanController::class)->group(function () {
-                    
+
                     Route::get('/mitra/index', 'index')->name('index');
                     Route::get('/mitra/{spId}/create', 'create')->name('create');
                     Route::get('/mitra/index/dt', 'dtMitra')->name('indexMitra.dt');
@@ -297,7 +301,7 @@ Route::middleware('auth:web')->group(function(){
 
 
 
-    
+
 
 });
 

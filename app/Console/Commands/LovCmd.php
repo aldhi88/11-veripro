@@ -109,6 +109,14 @@ class LovCmd extends Command
                 'Petugas Gudang',
             ]
         ];
+        $setting = [
+            [
+                'key' => 'toc',
+                'value' => 7,
+                'desc' => 'Pengaturan masa reminder tagihan yang terlambat berdasarkan tanggal TOC, nilai value dalam satuan hari.'
+            ]
+        ];
+
         $data = [
             ['key'=>'gm_ta','value'=>json_encode($gmTa)],
             ['key'=>'mgr_osp-fo','value'=>json_encode($mgrKonstruksi)],
@@ -118,7 +126,8 @@ class LovCmd extends Command
             ['key'=>'mgr_shared','value'=>json_encode($mgrShared)],
             ['key'=>'waspang','value'=>json_encode($waspang)],
             ['key'=>'gudang','value'=>json_encode($gudang)],
-            
+            ['key'=>'setting','value'=>json_encode($setting)],
+
         ];
         foreach ($data as $key => $value) {
             $value['id'] = $key+1;

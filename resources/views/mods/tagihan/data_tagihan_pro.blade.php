@@ -18,6 +18,7 @@
                             <thead>
                             <tr>
                                 <th class="text-center" width="10"></th>
+                                <th class="text-center">Tanggal <br> ToC</th>
                                 <th class="text-center">Mitra</th>
                                 <th class="text-center">SP</th>
                                 <th class="text-center">KHS</th>
@@ -28,28 +29,25 @@
 
                             </tr>
                             </thead>
-                
+
                             <thead id="header-filter">
                                 <tr>
                                     <th class="text-center"></th>
-                                    <th class="text-cetern">
+                                    <th class="text-center"></th>
+                                    <th class="text-center">
                                         <input type="text" class="form-control text-center search-col-dt">
                                     </th>
                                     <th class="text-center">
-                                        <select class="select2-dt form-control text-center search-col-dt mt-1" style="width: 100%">
-                                            <option value="">Semua</option>
-                                            @foreach ($dtSp as $key => $item)
-                                                <option value="{{$item['no_sp']}}">{{$item['no_sp']}}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control text-center search-col-dt">
                                     </th>
                                     <th class="text-center">
-                                        <select class="select2-dt form-control text-center search-col-dt mt-1" style="width: 100%">
+                                        <input type="text" class="form-control text-center search-col-dt">
+                                        {{-- <select class="select2-dt form-control text-center search-col-dt mt-1" style="width: 100%">
                                             <option value="">Semua</option>
                                             @foreach ($dtKhs as $key => $item)
                                                 <option value="{{$item['no_kontrak']}}">{{$item['no_kontrak']}}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </th>
                                     <th class="text-center"><input type="hidden" class="form-control text-center search-col-dt"></th>
                                     <th class="text-center"></th>
@@ -64,19 +62,17 @@
                                     </th>
                                 </tr>
                             </thead>
-                    
-                    
-                            <tbody>
-                            
-                            </tbody>
+
+
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 
     @include('mods.tagihan.atc.data_tagihan_pro_atc')
-    
+
 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KhsAmandemen;
+use App\Models\Lov;
 use App\Models\SpAmandemen;
 use App\Models\Tagihan;
 use Carbon\Carbon;
@@ -344,9 +345,8 @@ class TagihanController extends Controller
             "tagihans.*",
             DB::raw("DATE_FORMAT(tagihans.created_at, '%d/%m/%Y') as created_at_format"),
             DB::raw("DATE_FORMAT(tagihans.updated_at, '%d/%m/%Y') as updated_at_format"),
-
             )
-            ->orderBy('tagihans.created_at', 'desc')
+            // ->orderBy('tagihans.created_at', 'desc')
             ->where('tagihans.auth_login_id', Auth::id())
             ->with([
                 'sp_induks.khs_induks',
@@ -422,8 +422,13 @@ class TagihanController extends Controller
                 $detail = json_decode($data->json, true);
                 return $detail;
             })
-
-            ->rawColumns(['action','status_label'])
+            ->addColumn('toc_format', function($data){
+                $tocStatus = Lov::checkToc($data->sp_induks);
+                return '<h5 style="cursor: pointer" title="'.$tocStatus['status'].'" class="mb-0">
+                    <span class="badge w-100 badge-'.$tocStatus['class'].'">'.Carbon::parse($data->sp_induks->tgl_toc)->format('d/m/Y').'</span>
+                </h5>';
+            })
+            ->rawColumns(['action','status_label','toc_format'])
             ->toJson();
     }
 

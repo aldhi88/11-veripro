@@ -7,17 +7,17 @@ use DataTables;
 
 class LovController extends Controller
 {
-    public function index()
+    public function indexPejabat()
     {
         $data['page'] = 'index';
         $data['title'] = "Data Statik";
         return view('mods.lov.index', compact('data'));
     }
 
-    public function dtIndex(){
+    public function dtPejabat(){
         $data = Lov::select(
             'id',"key",'value'
-        );
+        )->where('key', '!=','setting');
         return DataTables::of($data)
             ->addColumn('action', function($data){
                 return '
@@ -49,10 +49,45 @@ class LovController extends Controller
                         $jabatan .= "</br>";
                     }
                 }
-                
+
                 return $jabatan;
             })
             ->rawColumns(['action','value_format_pejabat','value_format_jabatan'])
+            ->toJson();
+
+    }
+
+    public function indexSetting()
+    {
+        $data['page'] = 'index';
+        $data['title'] = "Data Statik";
+        return view('mods.lov.index_setting', compact('data'));
+    }
+
+    public function dtSetting(){
+        $q = Lov::select(
+            'id',"key",'value'
+        )->where('key', '=','setting')
+        ->first()->toArray();
+
+        $data = collect($q['value']);
+        // dd($data);
+
+        return DataTables::of($data)
+            ->addColumn('action', function($data){
+                return '
+                    <div class="btn-group">
+                        <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                            <i class="mdi mdi-dots-vertical"></i>
+                        </a>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item" data-id="'.$data['key'].'" href="javascript:void(0);" data-toggle="modal" data-target="#editModal"><i class="far fa-edit"></i> Edit</a>
+                        </div>
+                    </div>
+                ';
+            })
+
+            ->rawColumns(['action'])
             ->toJson();
 
     }

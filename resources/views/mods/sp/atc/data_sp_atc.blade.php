@@ -9,7 +9,7 @@
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
-    
+
     <script>
     $('.select2').select2();
 
@@ -27,7 +27,7 @@
             { data: 'khs_induks.no', name: 'khs_induks.no', orderable: true, searchable:true },
             { data: 'no_sp', name: 'no_sp', orderable: true, searchable:true },
             { data: 'tgl_sp_format', name: 'tgl_sp', orderable: true, searchable:true },
-            { data: 'tgl_toc_format', name: 'tgl_toc', orderable: true, searchable:true },
+            { data: 'toc_format', name: 'tgl_toc', orderable: true, searchable:true },
             { data: 'ppn', name: 'ppn', orderable: true, searchable:true },
             { data: 'nama_pekerjaan', name: 'nama_pekerjaan', orderable: true, searchable:true },
             { data: 'sp_amandemens_count', name: 'sp_amandemens_count', orderable: false, searchable:false },
@@ -38,7 +38,7 @@
         }
     });
 
-    
+
 
     </script>
 

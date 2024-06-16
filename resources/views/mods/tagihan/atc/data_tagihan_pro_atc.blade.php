@@ -7,7 +7,8 @@
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-        
+    <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
+
     <script>
 
         $('.select2-dt').select2();
@@ -32,6 +33,7 @@
             ajax: '{{ route("tagihan.indexPro.dt") }}',
             columns: [
                 { data: 'action', name: 'created_at', orderable: true, searchable:false},
+                { data: 'toc_format', name: 'created_at', orderable: true, searchable:false},
                 { data: 'sp_induks.khs_induks.json', name: 'sp_induks.khs_induks.json', orderable: false, searchable:true ,render: function (data, type, row) {
                     const decodedJsonString = data.replace(/&quot;/g, '"');
                     const jsonObject = JSON.parse(decodedJsonString);
@@ -60,7 +62,7 @@
             }
         });
 
-    
+
 
     </script>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lov;
 use App\Models\SpAmandemen;
 use App\Models\SpInduk;
 use Illuminate\Http\Request;
@@ -96,7 +97,7 @@ class SpController extends Controller
                     <div class="dropdown-menu">
                 ';
 
-                
+
                 $return .= '
                     <a class="dropdown-item" href="'.route('sp.detail', $data->id).'"><i class="fas fa-align-justify fa-fw"></i> Detail</a>
                 ';
@@ -106,7 +107,7 @@ class SpController extends Controller
                     <a class="dropdown-item" href="'.asset($data->file_sp).'" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> Lihat File SP Induk</a>
                 ';
 
-                
+
                 if(SpInduk::allowCreateAman($data->id)){
                     $return .= '
                         <a class="dropdown-item" href="'.route('sp.amanCreate', $data->id).'"><i class="fas fa-file-signature fa-fw"></i> Buat Amandemen '.($data->sp_amandemens_count + 1).'</a>
@@ -143,9 +144,13 @@ class SpController extends Controller
                 $detail = json_decode($data->original_json, true);
                 return $detail;
             })
-            ->rawColumns(['action','status_label'])
+            ->addColumn('toc_format', function($data){
+                $tocStatus = Lov::checkToc($data);
+                return '<h5 style="cursor: pointer" title="'.$tocStatus['status'].'" class="mb-0"><span class="badge w-100 badge-'.$tocStatus['class'].'">'.$data->tgl_toc_format.'</span></h5>';
+            })
+            ->rawColumns(['action','status_label','toc_format'])
             ->toJson();
-    } 
+    }
 
     public function dtMitra()
     {
@@ -187,11 +192,6 @@ class SpController extends Controller
                     ';
                 }
 
-                
-                // $return .= '
-                //     <a class="dropdown-item" href="'.asset($data->file_sp).'" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> Lihat File SP</a>
-                // ';
-
                 $return .='
                     </div>
                 </div>
@@ -203,7 +203,11 @@ class SpController extends Controller
                 $detail = json_decode($data->original_json, true);
                 return $detail;
             })
-            ->rawColumns(['action','status_label'])
+            ->addColumn('toc_format', function($data){
+                $tocStatus = Lov::checkToc($data);
+                return '<h5 style="cursor: pointer" title="'.$tocStatus['status'].'" class="mb-0"><span class="badge w-100 badge-'.$tocStatus['class'].'">'.$data->tgl_toc_format.'</span></h5>';
+            })
+            ->rawColumns(['action','status_label','toc_format'])
             ->toJson();
-    } 
+    }
 }

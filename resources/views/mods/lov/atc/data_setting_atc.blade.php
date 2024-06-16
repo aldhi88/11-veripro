@@ -17,14 +17,14 @@
         processing: true,serverSide: true,pageLength: 25,
         order: [[0, 'asc']],
         columnDefs: [
-            { className: 'text-center', targets: [0,1] },
+            { className: 'text-center', targets: [0,1,2] },
         ],
-        ajax: '{{ route("lov.dtPejabat") }}',
+        ajax: '{{ route("lov.dtSetting") }}',
         columns: [
             { data: 'action', name: 'created_at', orderable: true, searchable:false },
             { data: 'key', name: 'key', orderable: true, searchable:true },
-            { data: 'value_format_pejabat', name: 'value', orderable: true, searchable:true },
-            { data: 'value_format_jabatan', name: 'value', orderable: true, searchable:true },
+            { data: 'value', name: 'value', orderable: true, searchable:true },
+            { data: 'desc', name: 'desc', orderable: true, searchable:true },
         ],
         initComplete: function(settings){
             table = settings.oInstance.api();

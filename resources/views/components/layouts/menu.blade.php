@@ -37,6 +37,8 @@
             <a href="{{ route('tagihan.indexPro') }}" class="waves-effect">
                 <i class="ri-todo-line"></i>
                 <span>Dashboard</span>
+
+                <span class="badge badge-pill badge-danger float-right py-1">{{$dtToc}}</span>
             </a>
             {{-- <a href="{{ route('dashboard.index') }}" class="waves-effect">
                 <i class="ri-dashboard-line"></i>
@@ -44,11 +46,28 @@
             </a> --}}
         </li>
         <li>
-            <a href="{{ route('lov.index') }}" class="waves-effect">
-                <i class="ri-archive-line"></i>
-                <span>Data Statik</span>
+            <a href="{{ route('lov.indexPejabat') }}" class="waves-effect">
+                <i class="ri-user-2-line"></i>
+                <span>Data Pejabat</span>
             </a>
         </li>
+        <li>
+            <a href="{{ route('lov.indexSetting') }}" class="waves-effect">
+                <i class="ri-settings-2-line"></i>
+                <span>Pengaturan</span>
+            </a>
+        </li>
+
+        {{-- <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="ri-settings-2-line"></i>
+                <span>Pengaturan</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="{{ route('lov.indexPejabat') }}">Notifkasi TOC</a></li>
+            </ul>
+        </li> --}}
+
         <li>
             <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="ri-team-line"></i>
@@ -57,7 +76,7 @@
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{{ route('account.mitra') }}">Semua Data</a></li>
                 <li>
-                    <a href="{{ route('account.mitraPending') }}">Persetujuan 
+                    <a href="{{ route('account.mitraPending') }}">Persetujuan
                     @if ($newMitra > 0)
                         <span class="badge badge-pill badge-success float-right">{{$newMitra}}</span>
                     @endif
@@ -140,6 +159,6 @@
         </li> --}}
     @endif
 
-   
+
 
 </ul>

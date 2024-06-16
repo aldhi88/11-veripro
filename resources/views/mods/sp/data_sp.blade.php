@@ -39,10 +39,10 @@
                                 <th class="text-center">Nama <br> Pekerjaan</th>
                                 <th class="text-center">Aman <br> demen</th>
 
-                               
+
                             </tr>
                             </thead>
-                
+
                             <thead id="header-filter">
                                 <tr>
                                     <th class="text-center"></th>
@@ -71,10 +71,10 @@
                                     <th class="text-center"></th>
                                 </tr>
                             </thead>
-                    
-                    
+
+
                             <tbody>
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -82,8 +82,8 @@
             </div>
         </div>
     </div>
-    
+
 
     @include('mods.sp.atc.data_sp_atc')
-    
+
 </div>

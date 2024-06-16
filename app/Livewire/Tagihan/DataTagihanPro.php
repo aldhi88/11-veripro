@@ -24,10 +24,11 @@ class DataTagihanPro extends Component
         $q = Tagihan::select('sp_induk_id')->get()->toArray();
         $arySpId = array_column($q,'sp_induk_id');
         $this->dtSp = SpInduk::whereIn('id', $arySpId)->get();
-        
+
 
         $q = ($this->dtSp)->toArray();
         $aryKhsId = array_column($q,'khs_induk_id');
         $this->dtKhs = KhsInduk::where('id', $aryKhsId)->get();
+        // dd($this->all());
     }
 }
