@@ -58,7 +58,7 @@
     </table>
     <br>
 
-    <table id="content" style="width: 100%; vertical-align: top; border-collapse: collapse;" class="table-border table-padding">
+    <table id="myTable2" style="width: 100%; vertical-align: top; border-collapse: collapse;" class="table-border table-padding">
         <tr style="font-weight: bold; text-align: center">
             <td rowspan="2" width="30">NO</td>
             <td rowspan="2">DESIGNATOR</td>

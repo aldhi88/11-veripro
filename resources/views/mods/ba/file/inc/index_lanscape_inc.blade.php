@@ -74,8 +74,8 @@
 
 
     /* =============== */
-    .table-no-padding td {
-        padding: 0;
+    .table-padding td {
+        padding: 3px;
     }
 
     ol li {

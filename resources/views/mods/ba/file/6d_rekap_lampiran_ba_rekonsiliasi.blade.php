@@ -2,7 +2,7 @@
 
 
 
-@foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $item)
+@foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $key=>$item)
 
     <div class="margin" style="text-align: justify; page-break-after: always;">
 
@@ -36,7 +36,7 @@
         </table>
         <br>
 
-        <table style="width: 100%; vertical-align: top; border-collapse: collapse" class="table-border table-padding">
+        <table id="loopTable{{$key}}" style="width: 100%; vertical-align: top; border-collapse: collapse" class="table-border table-padding">
             <tr style="font-weight: bold; text-align: center">
                 <td rowspan="2" width="30">NO</td>
                 <td rowspan="2">DESIGNATOR</td>
@@ -240,5 +240,23 @@
         </table>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const table = document.getElementById("loopTable{{$key}}");
+            const maxWidth = 1047; // Lebar maksimum yang diizinkan dalam piksel
+            const tableWidth = table.offsetWidth;
+
+            if (tableWidth > maxWidth) {
+                const scale = maxWidth / tableWidth;
+                table.style.transformOrigin = "top left";
+                table.style.transform = `scale(${scale})`;
+            }
+
+            console.log(`Loop Table {{$key}} width: ${tableWidth}px`);
+        });
+    </script>
+
+
 @endforeach
 
