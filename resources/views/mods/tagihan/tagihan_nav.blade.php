@@ -38,7 +38,15 @@
         </a>
     </li>
     @endif
-    @if ($status>=2)
+    @if ($status==2 && Auth::user()->master_users->auth_role_id == 3)
+    <li class="nav-item" wire:click="changeTab(-1)"  style="cursor: pointer">
+        <a class="nav-link {{ $tab==-1?'active':null }}">
+            <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+            <span class="d-none d-sm-block">Nodin</span>
+        </a>
+    </li>
+    @endif
+    @if ($status>2)
     <li class="nav-item" wire:click="changeTab(-1)"  style="cursor: pointer">
         <a class="nav-link {{ $tab==-1?'active':null }}">
             <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>

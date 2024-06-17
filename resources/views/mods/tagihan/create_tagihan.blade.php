@@ -1,5 +1,5 @@
 <div>
-    
+
     <div class="row">
         <div class="col">
             <a href="{{ url()->previous() }}" class="btn btn-warning btn-sm"><i class="fas fa-angle-double-left"></i> Kembali</a>
@@ -27,9 +27,9 @@
                     <form wire:submit="submit">
 
                         @include('mods.tagihan.tagihan_nav')
-                        
+
                         <div class="tab-content text-muted pt-4">
-                            
+
                             {{-- data --}}
                             @include('mods.tagihan.tagihan_data')
 
@@ -41,12 +41,12 @@
 
                             {{-- pejabat --}}
                             @include('mods.tagihan.tagihan_pejabat')
-                            
+
                             {{-- gudang --}}
                             @include('mods.tagihan.tagihan_gudang')
-                            
+
                         </div>
-    
+
                         <hr>
                         {{--  --}}
 
@@ -65,7 +65,7 @@
                                 <button type="button" class="btn btn-light">Reset Semua Form</button>
                             </div>
                             <div class="col text-right">
-                                
+
                                 <button type="submit" class="btn btn-primary">Kirim Tagihan</button>
                             </div>
                         </div>
