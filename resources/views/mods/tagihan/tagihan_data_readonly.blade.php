@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group">
-                <label>Tgl. Uji Terima</label>
+                <label>Tgl. Permohonan Uji Terima</label>
                 <input disabled type="date" wire:model="dt.dt_tagihan.tgl_ut" class="bg-light form-control @error('tgl_ut') is-invalid @enderror">
                 @error('tgl_ut')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -11,7 +11,7 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="form-group">
-                <label>No. Uji Terima</label>
+                <label>No. Permohonan Uji Terima</label>
                 <input disabled type="text" wire:model="dt.dt_tagihan.no_ut" class="bg-light form-control @error('no_ut') is-invalid @enderror">
                 @error('no_ut')
                     <div class="invalid-feedback">{{ $message }}</div>

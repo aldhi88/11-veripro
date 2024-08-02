@@ -135,7 +135,7 @@
                                             <tbody>
 
                                                 <tr>
-                                                    <th style="width: 200px">Tgl. Uji Terima</th>
+                                                    <th style="width: 200px">Tgl. Permohonan Uji Terima</th>
                                                     <td style="width: 10px">:</td>
                                                     <td>{{ Carbon\Carbon::parse($item['json']['dt_tagihan']['tgl_ut'])->format('d/m/Y') }}</td>
                                                 </tr>
@@ -161,6 +161,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th>No. Permohonan Rekon</th>
+                                                    <td>:</td>
+                                                    <td>{{ $item['json']['dt_tagihan']['no_mohon'] }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>No. Permohonan Uji Terima</th>
                                                     <td>:</td>
                                                     <td>{{ $item['json']['dt_tagihan']['no_mohon'] }}</td>
                                                 </tr>

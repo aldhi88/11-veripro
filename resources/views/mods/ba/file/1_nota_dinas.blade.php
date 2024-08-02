@@ -54,7 +54,7 @@
                         @endforeach
 
                     @endif
-                    <li>Surat Direktur {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor : {{ $dt['dt_sp']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}, Perihal : Permohonan Uji Terima Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }}</li>
+                    <li>Surat Direktur {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor : {{ $dt['dt_tagihan']['no_ut'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}, Perihal : Permohonan Uji Terima Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }}</li>
                 </ol>
             </li>
 
