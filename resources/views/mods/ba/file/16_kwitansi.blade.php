@@ -53,13 +53,16 @@
                 {{ $dt['dt_sp']['no_sp'] }}
             </td>
         </tr>
-        <tr>
-            <td width="30%">Amandemen Penutup</td>
-            <td width="10">:</td>
-            <td style="font-weight: bold">
-                {{ $dt['dt_tagihan']['aman_penutup'] }}
-            </td>
-        </tr>
+        @if (isset($dt['dt_tagihan']['aman_penutup']))
+            <tr>
+                <td width="30%">Amandemen Penutup</td>
+                <td width="10">:</td>
+                <td style="font-weight: bold">
+                    {{ $dt['dt_tagihan']['aman_penutup'] }}
+                </td>
+            </tr>
+        @endif
+
         <tr>
             <td colspan="3" style="height: 80px"></td>
         </tr>

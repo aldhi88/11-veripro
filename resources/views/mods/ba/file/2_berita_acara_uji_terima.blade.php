@@ -117,7 +117,31 @@
     <div>
         <ol>
             <li>
-                Berdasarkan hasil pemeriksaan yang dilaksanakan pada tanggal <span>{{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_baut'])->isoFormat('DD MMMM Y') }}</span>, oleh Tim Uji Terima terhadap Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }} yang dilaksanakan oleh {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} berdasarkan Perjanjian Kerjasama Pekerjaan Pengadaan dan Pemasangan Outside Plant Fiber Optik (OSP-FO), Nomor: {{ $dt['dt_sp']['khs_induks']['no']  }}, tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}, Surat Pesanan Nomor: {{ $dt['dt_sp']['no_sp'] }}, tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}
+                Berdasarkan hasil pemeriksaan yang dilaksanakan pada tanggal <span>{{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_baut'])->isoFormat('DD MMMM Y') }}</span>, oleh Tim Uji Terima terhadap Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }} yang dilaksanakan oleh {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} berdasarkan Perjanjian Kerjasama Pekerjaan Pengadaan dan Pemasangan Outside Plant Fiber Optik (OSP-FO), Nomor: {{ $dt['dt_sp']['khs_induks']['no']  }}, tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }},
+
+                @if (count($dt['aman_khs'])>0)
+
+                    @foreach ($dt['aman_khs'] as $i=>$item)
+                        Amandemen KHS ke-{{$i+1}} {{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }},
+                    @endforeach
+
+                @endif
+
+                Surat Pesanan Nomor: {{ $dt['dt_sp']['no_sp'] }}, tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}
+                @if (count($dt['aman_sp'])>0)
+                    ,
+                    @foreach ($dt['aman_sp'] as $i=>$item)
+                        Amandemen SP ke-{{$i+1}} {{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}
+                    @endforeach
+
+                @else
+                    .
+                @endif
+
+                @if (count($dt['aman_sp']) > $i+1)
+                    ,
+                @endif
+
             </li>
 
             <li>

@@ -336,7 +336,10 @@
             </tr>
         </table>
         <div style="height: 15px;"></div>
-        <table class="table-border" style="width: 100%">
+        <style>
+
+        </style>
+        <table class="table-border table-hrg" style="width: 100%;font-size:90%">
             <tr style="text-align: center; font-weight: bold">
                 <td width="50">NO</td>
                 <td>LOKASI</td>
@@ -352,9 +355,9 @@
                     <td><center>{{$i+1}}</center></td>
                     <td><center>{{$item['nama_lokasi']}}</center></td>
                     <td><center>{{$item['sto']}}</center></td>
-                    <td>{{number_format($item['total_material_lokasi_rekon'],0,',','.')}}</td>
-                    <td>{{number_format($item['total_jasa_lokasi_rekon'],0,',','.')}}</td>
-                    <td>{{number_format($item['total_lokasi_rekon'],0,',','.')}}</td>
+                    <td><span class="currency">Rp</span> <span>{{number_format($item['total_material_lokasi_rekon'],0,',','.')}}</span></td>
+                    <td><span class="currency">Rp</span> <span>{{number_format($item['total_jasa_lokasi_rekon'],0,',','.')}}</span></td>
+                    <td><span class="currency">Rp</span> <span>{{number_format($item['total_lokasi_rekon'],0,',','.')}}</span></td>
                 </tr>
             @endforeach
             <tr style="text-align: right; font-weight: bold">

@@ -146,9 +146,9 @@
                     <td colspan="3">Pemakaian Material</td>
                     <td rowspan="2">Keterangan</td>
                 </tr>
-                <tr>
+                <tr style="text-align: center">
                     <td>PT.Telkom <br> Akses</td>
-                    <td>{{"NAMA MITRA"}}</td>
+                    <td>{{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }}</td>
                     <td>Pengembalian <br> Material</td>
                 </tr>
             </thead>
@@ -158,12 +158,12 @@
                     <td>{{$i+1}}</td>
                     <td>{{$item['nama_barang_material']}}</td>
                     <td>{{$item['nama_barang_alista']}}</td>
-                    <td>{{$item['gudang']}}</td>
-                    <td>{{$item['satuan']}}</td>
-                    <td>{{$item['sum_rekon']}}</td>
-                    <td>{{$item['v_ta']}}</td>
-                    <td>{{$item['v_mitra']}}</td>
-                    <td>{{$item['v_back']}}</td>
+                    <td style="text-align: center">{{$item['gudang']}}</td>
+                    <td style="text-align: center">{{$item['satuan']}}</td>
+                    <td style="text-align: center">{{$item['sum_rekon']}}</td>
+                    <td style="text-align: center">{{$item['v_ta']}}</td>
+                    <td style="text-align: center">{{$item['v_mitra']}}</td>
+                    <td style="text-align: center">{{$item['v_back']}}</td>
                     <td>{{$item['ket']}}</td>
                 </tr>
             @endforeach

@@ -54,7 +54,12 @@
                 Pekerjaan : {{ $dt['dt_sp']['nama_pekerjaan'] }} <br>
                 Surat Pesanan : {{ $dt['dt_sp']['no_sp'] }}, Tanggal
                 {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }} <br>
-                Amandemen Penutup : {{ $dt['dt_tagihan']['aman_penutup'] }}, Tanggal
+
+
+                @if (isset($dt['dt_tagihan']['aman_penutup']))
+                    Amandemen Penutup : {{ $dt['dt_tagihan']['aman_penutup'] }}, Tanggal
+                @endif
+
                 {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ba_rekon'])->isoFormat('DD MMMM Y') }}
                 <br><br><br><br><br>
             </td>

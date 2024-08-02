@@ -57,7 +57,12 @@
 
     </table>
     <br>
-
+    <style>
+        /* Menebalkan teks pada 5 <tr> terakhir */
+        table#myTable2 tr:nth-last-child(-n+5) {
+            font-weight: bold;
+        }
+    </style>
     <table id="myTable2" style="width: 100%; vertical-align: top; border-collapse: collapse;" class="table-border table-padding">
         <tr style="font-weight: bold; text-align: center">
             <td rowspan="2" width="30">NO</td>

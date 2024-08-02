@@ -59,9 +59,13 @@
                 <li>
                     Surat Pesanan {{ $dt['dt_sp']['nama_pekerjaan'] }}, Nomor: {{ $dt['dt_sp']['no_sp'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('D MMMM Y') }}
                 </li>
-                <li>
-                    Amandemen Penutup nomor {{ $dt['dt_tagihan']['aman_penutup'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ba_rekon'])->isoFormat('D MMMM Y') }}
-                </li>
+
+                @if (isset($dt['dt_tagihan']['aman_penutup']))
+                    <li>
+                        Amandemen Penutup nomor {{ $dt['dt_tagihan']['aman_penutup'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ba_rekon'])->isoFormat('D MMMM Y') }}
+                    </li>
+                @endif
+
                 <li>
                     Berita Acara Rekonsiliasi, Nomor: {{ $dt['dt_tagihan']['no_ba_rekon'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ba_rekon'])->isoFormat('D MMMM Y') }}
                 </li>

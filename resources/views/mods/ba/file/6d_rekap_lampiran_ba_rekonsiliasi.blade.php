@@ -36,7 +36,14 @@
         </table>
         <br>
 
-        <table id="loopTable{{$key}}" style="width: 100%; vertical-align: top; border-collapse: collapse" class="table-border table-padding">
+        <style>
+        /* Menebalkan teks pada 5 <tr> terakhir */
+        table.table-loop tr:nth-last-child(-n+5) {
+                font-weight: bold;
+            }
+        </style>
+
+        <table id="loopTable{{$key}}" style="width: 100%; vertical-align: top; border-collapse: collapse" class="table-border table-padding table-loop">
             <tr style="font-weight: bold; text-align: center">
                 <td rowspan="2" width="30">NO</td>
                 <td rowspan="2">DESIGNATOR</td>

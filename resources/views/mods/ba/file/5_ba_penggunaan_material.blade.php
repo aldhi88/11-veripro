@@ -29,11 +29,11 @@
     <div>A. MATERIAL YANG DIAMBIL</div>
     <table class="table-border-bold" style="width: 100%">
         <tr style="text-align: center">
-            <td rowspan="2">NO</td>
+            <td rowspan="2" style="width: 35px">NO</td>
             <td rowspan="2">NO. RFC</td>
             <td rowspan="2">TANGGAL <br> RFC</td>
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-            <td class="verticalTableHeader" id="ambil{{$iDes}}">{{$vDes['nama_material']}}</td>
+            <td style="width: 45px" class="verticalTableHeader" id="ambil{{$iDes}}">{{$vDes['nama_material']}}</td>
             @endforeach
 
         </tr>
@@ -78,11 +78,11 @@
     <div>B. MATERIAL YANG DIPAKAI</div>
     <table class="table-border-bold" style="width: 100%;">
         <tr style="text-align: center">
-            <td rowspan="2" widtd="50">NO</td>
+            <td rowspan="2" style="width: 35px">NO</td>
             <td rowspan="2">NAMA LOKASI</td>
             <td rowspan="2" widtd="130">ID PROJECT</td>
             @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-            <td class="verticalTableHeader" id="pakai{{$iDes}}">{{$vDes['nama_material']}}</td>
+            <td style="width: 45px" class="verticalTableHeader" id="pakai{{$iDes}}">{{$vDes['nama_material']}}</td>
             @endforeach
         </tr>
         <tr style="text-align: center">
@@ -128,11 +128,11 @@
     <table class="table-border-bold" style="width: 100%;">
         <thead class="bg-light text-center" style="text-align: center">
             <tr>
-                <td rowspan="2">NO</td>
+                <td rowspan="2" style="width: 35px">NO</td>
                 <td rowspan="2">ID PENGEMBALIAN</td>
                 <td rowspan="2" widtd="130">TANGGAL RFR</td>
                 @foreach ($dt['dt_tagihan']['dt_gudang']['all_desig'] as $iDes=>$vDes)
-                <td class="verticalTableHeader" id="kembali{{$iDes}}">{{$vDes['nama_material']}}</td>
+                <td style="width: 45px" class="verticalTableHeader" id="kembali{{$iDes}}">{{$vDes['nama_material']}}</td>
                 @endforeach
 
             </tr>

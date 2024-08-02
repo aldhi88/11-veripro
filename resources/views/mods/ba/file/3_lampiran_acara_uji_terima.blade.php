@@ -19,8 +19,8 @@
 
         <table style="width: 100%; vertical-align: top;">
             <tr style="font-weight: bold">
-                <td style="width: 230px">NOMOR PERJANJIAN KERJASAMA</td>
-                <td>:</td>
+                <td style="width: 225px; vertical-align: top">NO.PERJANJIAN KERJASAMA</td>
+                <td style="vertical-align: top">:</td>
                 <td>{{ $dt['dt_sp']['khs_induks']['no']  }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
 
@@ -28,10 +28,10 @@
 
                 @foreach ($dt['aman_khs'] as $i=>$item)
 
-                    <tr style="font-weight: bold;">
-                        <td>
-                            <ol style="margin: 0; padding-left: 25px;">
-                                <li>NO AMANDEMEN {{$i+1}}</li>
+                    <tr style="font-weight: bold;vertical-align: top; padding: 0px">
+                        <td style="padding: 0">
+                            <ol style="margin: 0; padding-left: 20px; text-align: left; padding-top:0px;vertical-align: top">
+                                <li>NO.AMANDEMEN {{$i+1}} PERJANJIAN KERJASAMA</li>
                             </ol>
                         </td>
                         <td>:</td>
@@ -42,8 +42,8 @@
 
             @endif
 
-            <tr style="font-weight: bold">
-                <td>NOMOR SURAT PESANAN</td>
+            <tr style="font-weight: bold; vertical-align: top">
+                <td>NO.SURAT PESANAN</td>
                 <td>:</td>
                 <td>{{ $dt['dt_sp']['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
             </tr>
@@ -51,7 +51,7 @@
 
                 @foreach ($dt['aman_sp'] as $i=>$item)
 
-                    <tr style="font-weight: bold;">
+                    <tr style="font-weight: bold;; vertical-align: top">
                         <td>
                             <ol style="margin: 0; padding-left: 25px;">
                                 <li>NO AMANDEMEN {{$i+1}}</li>
@@ -65,27 +65,27 @@
 
             @endif
 
-            <tr style="font-weight: bold">
+            <tr style="font-weight: bold; vertical-align: top">
                 <td>PEKERJAAN</td>
                 <td>:</td>
                 <td>{{ $dt['dt_sp']['nama_pekerjaan'] }}</td>
             </tr>
-            <tr style="font-weight: bold">
+            <tr style="font-weight: bold; vertical-align: top">
                 <td>PELAKSANA PEKERJAAN</td>
                 <td>:</td>
                 <td>{{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} (selanjutnya disebut MITRA)</td>
             </tr>
-            <tr style="font-weight: bold">
+            <tr style="font-weight: bold; vertical-align: top">
                 <td>REGIONAL</td>
                 <td>:</td>
                 <td>SUMATERA</td>
             </tr>
-            <tr style="font-weight: bold">
+            <tr style="font-weight: bold; vertical-align: top">
                 <td>AREA</td>
                 <td>:</td>
                 <td>MEDAN</td>
             </tr>
-            <tr style="font-weight: bold">
+            <tr style="font-weight: bold; vertical-align: top">
                 <td>ID PROJECT</td>
                 <td>:</td>
                 <td>

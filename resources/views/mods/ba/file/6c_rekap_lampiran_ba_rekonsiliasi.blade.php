@@ -57,7 +57,12 @@
 
     </table>
     <br>
-
+    <style>
+        /* Menebalkan teks pada 5 <tr> terakhir */
+        table#myTable3 tr:nth-last-child(-n+5) {
+            font-weight: bold;
+        }
+    </style>
     <table id="myTable3" style="width: 100%; vertical-align: top; border-collapse: collapse" class="table-border table-padding">
         <tr style="font-weight: bold; text-align: center">
             <td rowspan="2" width="30">NO</td>
@@ -68,7 +73,7 @@
             @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $item)
             <td rowspan="2">{{ $item['nama_lokasi'] }}</td>
             @endforeach
-            <td rowspan="2">REKON</td>
+            <td rowspan="2">TOTAL <br> VOLUME</td>
             <td colspan="2">HARGA</td>
         </tr>
 

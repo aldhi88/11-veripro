@@ -21,7 +21,7 @@
                 <tr style="font-weight: bold;">
                     <td>
                         <ol style="margin: 0; padding-left: 25px;">
-                            <li>NO AMANDEMEN {{$i+1}} KHS</li>
+                            <li>NO.AMANDEMEN {{$i+1}} PERJANJIAN KERJASAMA</li>
                         </ol>
                     </td>
                     <td>:</td>
@@ -112,82 +112,82 @@
         @endforeach
 
         <tr style="text-align: right">
-            <td colspan="3" style="text-align: left">MATERIAL</td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material'],0,',','.')}}</td>
+            <td colspan="3" style="text-align: left;font-weight: bold">MATERIAL</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material'],0,',','.')}}</td>
             <td></td>
             <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon'],0,',','.')}}</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon'],0,',','.')}}</td>
             <td></td>
             <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah'],0,',','.')}}</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah'],0,',','.')}}</td>
             <td></td>
             <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</td>
             <td></td>
             <td></td>
         </tr>
         <tr style="text-align: right">
-            <td colspan="3" style="text-align: left">JASA</td>
+            <td colspan="3" style="text-align: left;font-weight: bold">JASA</td>
             <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa'],0,',','.')}}</td>
-            <td></td>
-            <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon'],0,',','.')}}</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa'],0,',','.')}}</td>
             <td></td>
             <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah'],0,',','.')}}</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon'],0,',','.')}}</td>
             <td></td>
             <td></td>
-            <td>{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah'],0,',','.')}}</td>
+            <td></td>
+            <td></td>
+            <td style="font-weight: bold">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</td>
             <td></td>
         </tr>
         <tr style="text-align: left">
-            <td colspan="3" style="text-align: left">TOTAL</td>
+            <td colspan="3" style="text-align: left;font-weight: bold">TOTAL</td>
             <td></td>
             <td></td>
-            <td><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}}</div></td>
             <td></td>
             <td></td>
-            <td><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}}</div></td>
             <td></td>
             <td></td>
-            <td><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_tambah'],0,',','.')}}</div></td>
             <td></td>
             <td></td>
-            <td><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
         </tr>
         <tr style="text-align: left">
-            <td colspan="3" style="text-align: left">PPN {{$dt['dt_sp']['ppn']}}%</td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_tambah'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
+            <td colspan="3" style="text-align: left;font-weight: bold">PPN {{$dt['dt_sp']['ppn']}}%</td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
         </tr>
 
         <tr style="text-align: left">
-            <td colspan="3" style="text-align: left">GRAND TOTAL</td>
+            <td colspan="3" style="text-align: left;font-weight: bold">GRAND TOTAL</td>
             <td><div style="float: right;display: block">
                 {{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material'],0,',','.')}}
             </div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total']+$dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']+$dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_tambah']+$dt['dt_tagihan']['dt_lokasi']['grand_total_tambah'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</div></td>
-            <td><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total']+$dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']+$dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_tambah']+$dt['dt_tagihan']['dt_lokasi']['grand_total_tambah'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_material_kurang'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_jasa_kurang'],0,',','.')}}</div></td>
+            <td style="font-weight: bold"><div style="float: right;display: block">{{number_format(($dt['dt_sp']['ppn']/100)*$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang']+$dt['dt_tagihan']['dt_lokasi']['grand_total_kurang'],0,',','.')}}</div></td>
         </tr>
 
     </table>
