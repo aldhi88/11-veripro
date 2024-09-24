@@ -30,13 +30,13 @@ class EditSp extends Component
     public $units = [];
     public $dt = [];
     public $dtKhs = [];
-    public $openTglSpToc = true;
+    public $openTglSpToc = false;
     public $minTglSp;
     public $noAman = null;
 
     public $formUpload = [];
     public $dtLok = [];
-    public $dtError = [];
+    public $dtError = "pass";
 
     public $msgLokasi;
     public $editId;
@@ -125,37 +125,6 @@ class EditSp extends Component
 
         $this->dt['file_lokasi'] = $this->formUpload['file'];
         $dtDesigAcuan = [];
-        // if(is_null($this->dt['khs_amandemen_id'])){
-        //     $dtDesigAcuan = (KhsIndukDesignator::query()
-        //         ->where('khs_induk_id',$this->dt['khs_induk_id'])
-        //         ->get())
-        //         ->map(function ($item) {
-        //                 unset(
-        //                     $item['id'],
-        //                     $item['khs_induk_id'],
-        //                     $item['created_at'],
-        //                     $item['updated_at'],
-        //                     $item['deleted_at'],
-        //                 );
-        //                 return $item;
-        //             })
-        //         ->toArray();   
-        // }else{
-        //     $dtDesigAcuan = (KhsAmandemenDesignator::query()
-        //         ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
-        //         ->get())
-        //         ->map(function ($item) {
-        //                 unset(
-        //                     $item['id'],
-        //                     $item['khs_amandemen_id'],
-        //                     $item['created_at'],
-        //                     $item['updated_at'],
-        //                     $item['deleted_at'],
-        //                 );
-        //                 return $item;
-        //             })
-        //         ->toArray();
-        // }
 
         $callback = function ($data) {
             $this->dtError = $data['dtError'];
@@ -195,7 +164,7 @@ class EditSp extends Component
             })
             ->first()
             ->toArray();
-        
+
         if(!is_null($this->dtEdit['khs_amandemens'])){
             $this->noAman = $this->dtEdit['khs_amandemens']['no'];
         }
@@ -265,6 +234,7 @@ class EditSp extends Component
     #[On('editsp-pickMitra')]
     public function pickMitra()
     {
+        // $this->dtError = 'pass';
         $this->reset(
             'dtKhs',
             'dt.tgl_sp',
@@ -274,11 +244,11 @@ class EditSp extends Component
         );
 
         $this->genKhs();
-            
+
         $this->dispatch('editspatc-generateKhs', data: $this->dtKhs);
     }
 
-    #[On('editsp-pickKhs')] 
+    #[On('editsp-pickKhs')]
     public function pickKhs()
     {
         $this->reset(

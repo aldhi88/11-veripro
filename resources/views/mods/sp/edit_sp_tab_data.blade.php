@@ -10,7 +10,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-012 col-md-4">
             <div class="form-group">
                 <label>Nomor SP</label>
                 <input autofocus type="text" wire:model="dt.no_sp" class="form-control @error('dt.no_sp') is-invalid @enderror">
@@ -29,7 +29,7 @@
                 <div wire:ignore>
                     <select id="select2-mitra" wire:model="dt.mitra_id" class="form-control">
                         @foreach ($mitras as $item)
-                            <option value="{{$item['auth_login_id']}}">{{ json_decode($item['detail'], true)['perusahaan'] }}</option>
+                            <option {{ ($dtEdit['khs_induks']['json']['perusahaan']==json_decode($item['detail'], true)['perusahaan'])?'selected':null }} value="{{$item['auth_login_id']}}">{{ json_decode($item['detail'], true)['perusahaan'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -113,9 +113,9 @@
                 @enderror
             </div>
         </div>
-        
+
     </div>
-    
+
 
 @if (!is_null($msgLokasi))
 <div class="alert alert-danger" role="alert">

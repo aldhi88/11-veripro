@@ -71,7 +71,7 @@ class CreateSp extends Component
 
     public function submit()
     {
-        
+
         $this->reset('msgLokasi');
         $this->validate();
         // dd($this->dt);
@@ -96,37 +96,6 @@ class CreateSp extends Component
 
         $this->dt['file_lokasi'] = $this->formUpload['file'];
         $dtDesigAcuan = [];
-        // if(is_null($this->dt['khs_amandemen_id'])){
-        //     $dtDesigAcuan = (KhsIndukDesignator::query()
-        //         ->where('khs_induk_id',$this->dt['khs_induk_id'])
-        //         ->get())
-        //         ->map(function ($item) {
-        //                 unset(
-        //                     $item['id'],
-        //                     $item['khs_induk_id'],
-        //                     $item['created_at'],
-        //                     $item['updated_at'],
-        //                     $item['deleted_at'],
-        //                 );
-        //                 return $item;
-        //             })
-        //         ->toArray();   
-        // }else{
-        //     $dtDesigAcuan = (KhsAmandemenDesignator::query()
-        //         ->where('khs_amandemen_id', $this->dt['khs_amandemen_id'])
-        //         ->get())
-        //         ->map(function ($item) {
-        //                 unset(
-        //                     $item['id'],
-        //                     $item['khs_amandemen_id'],
-        //                     $item['created_at'],
-        //                     $item['updated_at'],
-        //                     $item['deleted_at'],
-        //                 );
-        //                 return $item;
-        //             })
-        //         ->toArray();
-        // }
 
         $callback = function ($data) {
             // dd($data);
@@ -192,14 +161,14 @@ class CreateSp extends Component
                     }
                     return $item;
                 }
-            )->toArray();  
-            
+            )->toArray();
+
             // dd($this->all());
 
         $this->dispatch('createspatc-generateKhs', data: $this->dtKhs);
     }
 
-    #[On('createsp-pickKhs')] 
+    #[On('createsp-pickKhs')]
     public function pickKhs()
     {
         $this->reset(

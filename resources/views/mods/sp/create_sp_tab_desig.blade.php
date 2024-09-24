@@ -4,7 +4,7 @@
         Tanggal SP belum dipilih.
     </div>
 @else
-    
+
     <form wire:submit="uploadLokasi">
         <div class="row">
             <div class="col-12 col-md-4">
@@ -59,7 +59,7 @@
             <ol>
                 @foreach ($dtError as $iErrorSheet => $vErrorSheet)
                     <li>
-                        Lokasi: {{$iErrorSheet+1}}: 
+                        Lokasi: {{$iErrorSheet+1}}:
                         <ul>
                         @foreach ($vErrorSheet as $iErrorRow => $vErrorRow)
                             <li>Baris: {{$vErrorRow['row']}}</li>
@@ -78,7 +78,7 @@
     @endif --}}
 
     @if (isset($dtError) && $dtError=='pass')
-        
+
         <div class="row">
             <div class="col">
                 <table class="w-100">
@@ -106,7 +106,7 @@
         <br>
 
         @foreach ($dtLok['lokasi'] as $iLok => $vLok)
-            
+
             <div class="table-responsive mb-2">
                 <table class="w-100">
                     <tr class="text-center bg-warning">

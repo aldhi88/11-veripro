@@ -15,6 +15,8 @@
             }
             $("#select2-khs").attr('disabled', false);
             @this.set('dt.mitra_id', val);
+            // @this.set('openTglSpToc', null);
+            // @this.set('dt.mitra_id', val);
             @this.dispatch('editsp-pickMitra');
         });
 
