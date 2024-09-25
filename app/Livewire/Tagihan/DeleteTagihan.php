@@ -19,7 +19,7 @@ class DeleteTagihan extends Component
         HTML;
     }
 
-    #[On('deletetagihan-delete')] 
+    #[On('deletetagihan-delete')]
     public function delete($data)
     {
         $spId = Tagihan::select('sp_induk_id')->first()->getAttribute('sp_induk_id');

@@ -3,9 +3,7 @@
 namespace App\Livewire\Sp;
 
 use App\Imports\LokasiImport;
-use App\Models\KhsAmandemenDesignator;
 use App\Models\KhsInduk;
-use App\Models\KhsIndukDesignator;
 use App\Models\MasterUnit;
 use App\Models\MasterUser;
 use App\Models\SpInduk;
@@ -68,6 +66,12 @@ class CreateSp extends Component
     ];
 
     // ==========================
+    public function updatedFile()
+    {
+        // Mendapatkan nama file setelah dipilih
+        dd($this->formUpload['file']->getClientOriginalName());
+        // $this->fileName = $this->file->getClientOriginalName();
+    }
 
     public function submit()
     {

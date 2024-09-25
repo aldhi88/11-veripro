@@ -105,6 +105,7 @@ class CreateTagihan extends Component
         $this->setPejabat();
         $this->setDtEdit($data['key']);
         $this->setGudang();
+        // dd($this->all());
     }
 
     public function uploadLokasi()
@@ -331,8 +332,11 @@ class CreateTagihan extends Component
             // dd($this->dt);
             $iDesigMaterial = 0;
             $tempDesig = [];
+            $this->dt['dt_tagihan']['dt_gudang']['lokmat'] = [];
             $this->dt['dt_tagihan']['dt_gudang']['rekon'] = [];
+            $isLokMat = false;
             foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
+
                 foreach ($vLok['desig_items'] as $iDd => $vDd) {
 
                     if(
@@ -357,6 +361,7 @@ class CreateTagihan extends Component
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_jasa'] = $vDd['nama_jasa'];
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['lokasi'] = $vLok['nama_lokasi'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['gudang'] = 'Medan';
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['satuan'] = $vDd['satuan'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['sum_rekon'] =
@@ -367,11 +372,17 @@ class CreateTagihan extends Component
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['v_back'] =
                                 $this->dt['dt_tagihan']['dt_gudang']['kembali']['total'][$dtIndex];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['ket'] = '';
-                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['ket_matlok'] = '';
+                            $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['ket_matlok'] = $vLok['nama_lokasi'];
 
                             $iDesigMaterial++;
+                            $isLokMat = true;
                         }
                     }
+                }
+
+                if($isLokMat){
+                    $this->dt['dt_tagihan']['dt_gudang']['lokmat'][] = $vLok['nama_lokasi'];
+                    $isLokMat = false;
                 }
 
             }

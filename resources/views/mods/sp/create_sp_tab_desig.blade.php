@@ -8,10 +8,12 @@
     <form wire:submit="uploadLokasi">
         <div class="row">
             <div class="col-12 col-md-4">
-                <div class="custom-file">
+                {{-- <div class="custom-file">
                     <input type="file" wire:model="formUpload.file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Upload File Lokasi</label>
-                </div>
+                </div> --}}
+                <input type="file" wire:model="formUpload.file" class="form-control @error('formUpload.file') is-invalid @enderror">
+
                 @error('formUpload.file')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror

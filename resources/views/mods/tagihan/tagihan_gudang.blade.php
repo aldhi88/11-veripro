@@ -295,12 +295,18 @@
                             <h6>Keterangan Material Lokasi:
                             </h6>
                             <table class="w-100">
-                                @foreach ($dt['dt_tagihan']['dt_gudang']['rekon'] as $iDr => $vDr)
+                                {{-- @foreach ($dt['dt_tagihan']['dt_gudang']['rekon'] as $iDr => $vDr)
                                 @if ($vDr['sum_rekon'] > 0)
                                 <tr>
                                     <td><input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.rekon.{{$iDr}}.ket_matlok"></td>
                                 </tr>
                                 @endif
+                                @endforeach --}}
+
+                                @foreach ($dt['dt_tagihan']['dt_gudang']['lokmat'] as $iDr => $vDr)
+                                <tr>
+                                    <td><input class="w-100" type="text" wire:model="dt.dt_tagihan.dt_gudang.lokmat.{{$iDr}}"></td>
+                                </tr>
                                 @endforeach
                             </table>
                         </div>

@@ -194,6 +194,7 @@ class EditTagihan extends Component
 
     public function setGudangEdit()
     {
+        // dd($this->all());
         $this->allDesigs = [];
         $iAllDesig = 0;
         foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
@@ -205,7 +206,7 @@ class EditTagihan extends Component
                         ->where('nama_jasa', $vRow['nama_jasa'])
                         ->count() < 1
                 ){
-                    if($vRow['material']!=0){
+                    if($vRow['material']>=0){
                         $this->allDesigs[$iAllDesig] = $vRow;
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_designator'] = $vRow['nama_designator'];
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_material'] = $vRow['nama_material'];
@@ -286,6 +287,8 @@ class EditTagihan extends Component
         $this->allDesigs = [];
         $iAllDesig = 0;
         $this->dt['dt_tagihan']['dt_gudang']['all_desig'] = [];
+        $this->dt['dt_tagihan']['dt_gudang']['lokmat'] = [];
+        $isLokMat = false;
         foreach ($this->dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok) {
             foreach ($vLok['desig_items'] as $iRow => $vRow) {
                 if(
@@ -303,8 +306,14 @@ class EditTagihan extends Component
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_jasa'] = $vRow['nama_jasa'];
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['satuan'] = $vRow['satuan'];
                         $iAllDesig++;
+                        $isLokMat = true;
                     }
                 }
+            }
+
+            if($isLokMat){
+                $this->dt['dt_tagihan']['dt_gudang']['lokmat'][] = $vLok['nama_lokasi'];
+                $isLokMat = false;
             }
         }
 

@@ -1,5 +1,5 @@
 <div class="tab-pane {{ $tab==2?'active':null }}">
-    
+
     <div>
         <div class="row">
             <div class="col">
@@ -10,10 +10,11 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-4">
-                <div class="custom-file">
+                {{-- <div class="custom-file">
                     <input type="file" wire:model="formUpload.file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Upload File Lokasi Rekon</label>
-                </div>
+                </div> --}}
+                <input type="file" wire:model="formUpload.file" class="form-control @error('formUpload.file') is-invalid @enderror">
                 @error('formUpload.file')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -42,11 +43,11 @@
             </div>
         @endif
         <hr>
-    
+
         <h6 class="bg-secondary text-light p-1 text-center">
             <span>DATA GRAND TOTAL</span>
         </h6>
-        
+
         <div class="row">
             <div class="col">
                 <table class="w-100">
@@ -100,7 +101,7 @@
             <span>DATA LOKASI</span>
         </h6>
         @foreach ($dt['dt_tagihan']['dt_lokasi']['lokasi'] as $iLok => $vLok)
-    
+
             <div class="table-responsive mb-2">
                 <table class="w-100">
                     <tr class="text-center bg-soft-secondary">
@@ -185,7 +186,7 @@
                                 <th>Total</th>
                             </tr>
                         </thead>
-    
+
                         <tbody>
                             @foreach ($vLok['desig_items'] as $iDes=>$vDes)
                                 <tr>
@@ -209,8 +210,8 @@
                     </table>
                 </div>
             </div>
-    
+
         @endforeach
     </div>
-    
+
 </div>

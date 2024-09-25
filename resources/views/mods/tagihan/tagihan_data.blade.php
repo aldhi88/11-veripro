@@ -3,7 +3,7 @@
         <div class="col-12 col-md-4">
             <div class="form-group">
                 <label>Tgl. Permohonan Uji Terima</label>
-                <input type="date" wire:model="dt.dt_tagihan.tgl_ut" class="form-control @error('dt.dt_tagihan.tgl_ut') is-invalid @enderror">
+                <input type="date" wire:model="dt.dt_tagihan.tgl_ut" max="{{$dt['dt_sp']['tgl_toc']}}" class="form-control @error('dt.dt_tagihan.tgl_ut') is-invalid @enderror">
                 @error('dt.dt_tagihan.tgl_ut')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -21,7 +21,7 @@
         <div class="col-12 col-md-4">
             <div class="form-group">
                 <label>Tgl. Berita Acara Uji Terima</label>
-                <input type="date" wire:model="dt.dt_tagihan.tgl_baut" class="form-control @error('dt.dt_tagihan.tgl_baut') is-invalid @enderror">
+                <input type="date" wire:model="dt.dt_tagihan.tgl_baut" max="{{$dt['dt_sp']['tgl_toc']}}" class="form-control @error('dt.dt_tagihan.tgl_baut') is-invalid @enderror">
                 @error('dt.dt_tagihan.tgl_baut')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -31,7 +31,7 @@
         <div class="col-12 col-md-4">
             <div class="form-group">
                 <label>Tgl. Laporan Acara Uji Terima</label>
-                <input type="date" wire:model="dt.dt_tagihan.tgl_laut" class="form-control @error('dt.dt_tagihan.tgl_laut') is-invalid @enderror">
+                <input type="date" wire:model="dt.dt_tagihan.tgl_laut" max="{{$dt['dt_sp']['tgl_toc']}}" class="form-control @error('dt.dt_tagihan.tgl_laut') is-invalid @enderror">
                 @error('dt.dt_tagihan.tgl_laut')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
