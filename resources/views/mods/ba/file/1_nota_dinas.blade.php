@@ -10,7 +10,7 @@
             <tr>
                 <td>Kepada</td>
                 <td>:</td>
-                <td>{{$dt['dt_tagihan']['dt_ttd']['mgr_unit_pejabat']}}</td>
+                <td>{{$dt['dt_tagihan']['dt_ttd']['sm_unit_pejabat']}}</td>
             </tr>
             <tr>
                 <td>Dari</td>
@@ -54,7 +54,7 @@
                         @endforeach
 
                     @endif
-                    <li>Surat Direktur {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor : {{ $dt['dt_tagihan']['no_ut'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}, Perihal : Permohonan Uji Terima Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }}</li>
+                    <li>Surat Direktur {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }} Nomor : {{ $dt['dt_tagihan']['no_ut'] }}, Tanggal {{ Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ut'])->isoFormat('DD MMMM Y') }}, Perihal : Permohonan Uji Terima Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }}</li>
                 </ol>
             </li>
 

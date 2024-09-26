@@ -33,7 +33,7 @@
                 @foreach ($dt['aman_khs'] as $i=>$item)
 
                     <tr style="font-weight: bold;">
-                        <td style="padding-left: 20px">{{$i+1}}. No Amandemen {{$i+1}}</td>
+                        <td style="padding-left: 20px">No Amandemen {{$i+1}}</td>
                         <td style="text-align: center">:</td>
                         <td>{{ $item['no'] }}, Tanggal: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('D MMMM Y') }}</td>
                     </tr>
@@ -53,9 +53,9 @@
 
                     <tr style="font-weight: bold;">
                         <td>
-                            <ol style="margin: 0; padding-left: 25px;">
+                            <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                                 <li>No. Amandemen {{$i+1}}</li>
-                            </ol>
+                            </ul>
                         </td>
                         <td style="text-align: center">:</td>
                         <td>{{ $item['no_sp'] }}, Tanggal: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('D MMMM Y') }}</td>

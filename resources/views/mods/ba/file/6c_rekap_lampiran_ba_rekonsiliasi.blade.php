@@ -20,9 +20,9 @@
             @foreach ($dt['aman_khs'] as $i=>$item)
                 <tr style="font-weight: bold;">
                     <td>
-                        <ol style="margin: 0; padding-left: 25px;">
+                        <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                             <li>NO AMANDEMEN {{$i+1}} KHS</li>
-                        </ol>
+                        </ul>
                     </td>
                     <td>:</td>
                     <td>{{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
@@ -39,15 +39,21 @@
             @foreach ($dt['aman_sp'] as $i=>$item)
                 <tr style="font-weight: bold;">
                     <td>
-                        <ol style="margin: 0; padding-left: 25px;">
+                        <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                             <li>NO AMANDEMEN {{$i+1}} SP</li>
-                        </ol>
+                        </ul>
                     </td>
                     <td>:</td>
                     <td>{{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
                 </tr>
             @endforeach
         @endif
+
+        <tr style="font-weight: bold">
+            <td>TGL. SURAT PESANAN</td>
+            <td>:</td>
+            <td style="text-transform: uppercase">{{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
+        </tr>
 
         <tr style="font-weight: bold">
             <td>PELAKSANA</td>
@@ -74,14 +80,15 @@
             <td rowspan="2">{{ $item['nama_lokasi'] }}</td>
             @endforeach
             <td rowspan="2">TOTAL <br> VOLUME</td>
-            <td colspan="2">HARGA</td>
+            <td colspan="3">TOTAL</td>
         </tr>
 
         <tr style="font-weight: bold; text-align: center">
             <td>MATERIAL</td>
             <td>JASA</td>
-            <td>MATERIAL</td>
-            <td>JASA</td>
+            <td>TOTAL <br> MATERIAL</td>
+            <td>TOTAL <br> JASA</td>
+            <td>TOTAL</td>
         </tr>
 
         @php
@@ -156,6 +163,7 @@
                 <td style="text-align: right">{{ number_format($vDtDesig['vol_rekon'],0,',','.') }}</td>
                 <td style="text-align: right">{{ number_format($vDtDesig['total_material_rekon'],0,',','.') }}</td>
                 <td style="text-align: right">{{ number_format($vDtDesig['total_jasa_rekon'],0,',','.') }}</td>
+                <td style="text-align: right">{{ number_format(($vDtDesig['total_material_rekon']+$vDtDesig['total_jasa_rekon']),0,',','.') }}</td>
             </tr>
         @endforeach
 
@@ -203,6 +211,7 @@
             <td>{{number_format($grand_total_material_rekon,0,',','.')}}</td>
             <td>{{number_format($grand_total_material_sp,0,',','.')}}</td>
             <td></td>
+            <td></td>
         </tr>
         {{-- jasa --}}
         <tr style="text-align: right">
@@ -214,6 +223,7 @@
             <td>{{number_format($grand_total_jasa_rekon,0,',','.')}}</td>
             <td></td>
             <td>{{number_format($grand_total_jasa_sp,0,',','.')}}</td>
+            <td></td>
         </tr>
         {{-- material+jasa --}}
         <tr style="text-align: right">
@@ -223,6 +233,7 @@
             <td>{{number_format($grand_total_material_jasa_lokasi_rekon[$key],0,',','.')}}</td>
             @endforeach
             <td>{{number_format($grand_total_material_jasa_rekon,0,',','.')}}</td>
+            <td></td>
             <td></td>
             <td>{{number_format($grand_total_material_jasa_sp,0,',','.')}}</td>
         </tr>
@@ -235,6 +246,7 @@
             @endforeach
             <td>{{number_format($grand_total_material_jasa_rekon_ppn,0,',','.')}}</td>
             <td></td>
+            <td></td>
             <td>{{number_format($grand_total_material_jasa_sp_ppn,0,',','.')}}</td>
         </tr>
         {{-- total ppn --}}
@@ -245,6 +257,7 @@
             <td>{{number_format($grand_total_material_jasa_lokasi_rekon_ppn_total[$key],0,',','.')}}</td>
             @endforeach
             <td>{{number_format($grand_total_material_jasa_rekon_ppn_total,0,',','.')}}</td>
+            <td></td>
             <td></td>
             <td>{{number_format($grand_total_material_jasa_sp_ppn_total,0,',','.')}}</td>
         </tr>

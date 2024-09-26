@@ -35,7 +35,7 @@
                 @foreach ($dt['aman_khs'] as $i=>$item)
 
                     <tr style="font-weight: bold;">
-                        <td style="padding-left: 20px">{{$i+1}}. No Amandemen {{$i+1}}</td>
+                        <td style="padding-left: 20px">No Amandemen {{$i+1}}</td>
                         <td style="text-align: center">:</td>
                         <td>{{ $item['no'] }}, Tanggal: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('D MMMM Y') }}</td>
                     </tr>
@@ -55,9 +55,9 @@
 
                     <tr style="font-weight: bold;">
                         <td>
-                            <ol style="margin: 0; padding-left: 25px;">
+                            <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                                 <li>No. Amandemen {{$i+1}}</li>
-                            </ol>
+                            </ul>
                         </td>
                         <td style="text-align: center">:</td>
                         <td>{{ $item['no_sp'] }}, Tanggal: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('D MMMM Y') }}</td>
@@ -119,7 +119,31 @@
             </tr>
             <tr>
                 <td></td>
-                <td>Jumlah seluruh Material yang digunakan dalam pelaksanaan Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }}, pengadaannya oleh PT. Telkom Akses</td>
+                @php
+                    $byMitra = false;
+                    $byTa = false;
+                @endphp
+                @foreach ($dt['dt_tagihan']['dt_gudang']['rekon'] as $i=>$item)
+                @php
+                    if($item['v_ta']>0){
+                        $byTa = true;
+                    }
+                    if($item['v_mitra']>0){
+                        $byMitra = true;
+                    }
+
+                    if($byTa && $byMitra){
+                        $by = "PT. Telkom Akses dan Mitra";
+                    }else if($byTa && !$byMitra){
+                        $by = "PT. Telkom Akses";
+                    }else if(!$byTa && $byMitra){
+                        $by = "Mitra";
+                    }else{
+                        $by = "PT. Telkom Akses";
+                    }
+                @endphp
+                @endforeach
+                <td>Jumlah seluruh Material yang digunakan dalam pelaksanaan Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }}, pengadaannya oleh {{$by}}</td>
             </tr>
         </table>
     </span>
@@ -171,8 +195,8 @@
         </table>
 
         <p>Material tersebut digunakan pada lokasi :</p>
-            @foreach ($dt['dt_tagihan']['dt_gudang']['rekon'] as $i=>$item)
-             <span style="margin-left: 20px">{{$i+1}}. {{$item['ket_matlok']}}</span> <br>
+            @foreach ($dt['dt_tagihan']['dt_gudang']['lokmat'] as $i=>$item)
+             <span style="margin-left: 20px">{{$i+1}}. {{$item}}</span> <br>
             @endforeach
     </span>
 
@@ -198,7 +222,7 @@
                 <td>
                     <br>
                     PT. TELKOM AKSES <br>
-                    <span style="text-transform: capitalize">Petugas Gudang</span> <br>
+                    <span style="text-transform: capitalize">&nbsp;</span> <br>
                     <div style="height: 80px"></div>
                     <u>{{$dt['dt_tagihan']['dt_ttd']['gudang_pejabat']}}</u>
                     <br>
@@ -206,10 +230,10 @@
                 </td>
                 <td>
                     <span style="text-transform: capitalize">
-                        Medan, {{Carbon\Carbon::parse($dt['tagihan']['created_at'])->isoFormat('DD MMMM Y')}}
+                        Medan, {{Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ba_rekon'])->isoFormat('DD MMMM Y')}}
                     </span> <br>
                     PT. TELKOM AKSES <br>
-                    <span style="text-transform: capitalize">Waspang</span> <br>
+                    <span style="text-transform: capitalize">&nbsp;</span> <br>
                     <div style="height: 80px"></div>
                     <u>{{$dt['dt_tagihan']['dt_ttd']['waspang_pejabat']}}</u>
                     <br>

@@ -29,9 +29,9 @@
 
                     <tr style="font-weight: bold;vertical-align: top; padding: 0px">
                         <td style="padding: 0">
-                            <ol style="margin: 0; padding-left: 20px; text-align: left; padding-top:0px;vertical-align: top">
+                            <ul style="list-style-type: none; margin: 0; padding-left: 20px; text-align: left; padding-top:0px;vertical-align: top">
                                 <li>NO.AMANDEMEN {{$i+1}} PERJANJIAN KERJASAMA</li>
-                            </ol>
+                            </ul>
                         </td>
                         <td>:</td>
                         <td>{{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
@@ -52,9 +52,9 @@
 
                     <tr style="font-weight: bold;; vertical-align: top">
                         <td>
-                            <ol style="margin: 0; padding-left: 25px;">
+                            <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                                 <li>NO AMANDEMEN {{$i+1}}</li>
-                            </ol>
+                            </ul>
                         </td>
                         <td>:</td>
                         <td>{{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>

@@ -20,9 +20,9 @@
             @foreach ($dt['aman_khs'] as $i=>$item)
                 <tr style="font-weight: bold;">
                     <td>
-                        <ol style="margin: 0; padding-left: 25px;">
+                        <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                             <li>NO AMANDEMEN {{$i+1}} KHS</li>
-                        </ol>
+                        </ul>
                     </td>
                     <td>:</td>
                     <td>{{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
@@ -39,15 +39,21 @@
             @foreach ($dt['aman_sp'] as $i=>$item)
                 <tr style="font-weight: bold;">
                     <td>
-                        <ol style="margin: 0; padding-left: 25px;">
+                        <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                             <li>NO AMANDEMEN {{$i+1}} SP</li>
-                        </ol>
+                        </ul>
                     </td>
                     <td>:</td>
                     <td>{{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
                 </tr>
             @endforeach
         @endif
+
+        <tr style="font-weight: bold">
+            <td>TGL. SURAT PESANAN</td>
+            <td>:</td>
+            <td style="text-transform: uppercase">{{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
+        </tr>
 
         <tr style="font-weight: bold">
             <td>PELAKSANA</td>

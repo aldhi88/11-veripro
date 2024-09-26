@@ -37,9 +37,9 @@
 
                         <tr style="font-weight: bold;">
                             <td>
-                                <ol style="margin: 0; padding-left: 25px;">
+                                <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                                     <li>NO AMANDEMEN {{$i+1}}</li>
-                                </ol>
+                                </ul>
                             </td>
                             <td>:</td>
                             <td>{{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}</td>
@@ -60,9 +60,9 @@
 
                         <tr style="font-weight: bold;">
                             <td>
-                                <ol style="margin: 0; padding-left: 25px;">
+                                <ul style="list-style-type: none; margin: 0; padding-left: 25px;">
                                     <li>NO AMANDEMEN {{$i+1}}</li>
-                                </ol>
+                                </ul>
                             </td>
                             <td>:</td>
                             <td>{{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}</td>
@@ -156,7 +156,14 @@
     <div style="height: 15px;"></div>
 
     <div style="text-align: justify;">
-        Kepada TELKOM AKSES hasil pelaksanaan Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }} dengan nilai sebesar Rp. {{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total'],0,',','.')}},00 ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($dt['dt_tagihan']['dt_lokasi']['grand_total']))}} Rupiah) belum termasuk PPN {{$dt['dt_sp']['ppn']}}% atau sebesar Rp. {{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}},- ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']))}} Rupiah) sudah termasuk PPN {{$dt['dt_sp']['ppn']}}% (rincian terlampir), sesuai dengan ketentuan Perjanjian Kerja Sama Kontrak Harga Satuan (KHS)  Pekerjaan Pengadaan dan/atau Pemasangan Outside Plant Fiber Optik (OSP-FO) dan Surat Pesanan yang dilaksanakan oleh MITRA dan TELKOM AKSES menyatakan:
+        @php
+            $harga = $dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']; // Ambil harga
+            $ppn = $dt['dt_sp']['ppn']; // Ambil PPN (masih dalam bentuk persentase, misalnya 10 untuk 10%)
+
+            $ppn_value = ($ppn / 100) * $harga; // Hitung nilai PPN (harga * ppn/100)
+            $rekon_ppn = $harga + $ppn_value; // Total harga + PPN
+        @endphp
+        Kepada TELKOM AKSES hasil pelaksanaan Pekerjaan {{ $dt['dt_sp']['nama_pekerjaan'] }} dengan nilai sebesar Rp. {{number_format($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon'],0,',','.')}},00 ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($dt['dt_tagihan']['dt_lokasi']['grand_total_rekon']))}} Rupiah) belum termasuk PPN {{$dt['dt_sp']['ppn']}}% atau sebesar Rp. {{number_format($rekon_ppn,2,',','.')}},- ({{ucwords(Riskihajar\Terbilang\Facades\Terbilang::make($rekon_ppn))}} Rupiah) sudah termasuk PPN {{$dt['dt_sp']['ppn']}}% (rincian terlampir), sesuai dengan ketentuan Perjanjian Kerja Sama Kontrak Harga Satuan (KHS)  Pekerjaan Pengadaan dan/atau Pemasangan Outside Plant Fiber Optik (OSP-FO) dan Surat Pesanan yang dilaksanakan oleh MITRA dan TELKOM AKSES menyatakan:
     </div>
 
     <div style="height: 15px;"></div>

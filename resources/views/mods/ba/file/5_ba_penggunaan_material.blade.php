@@ -9,16 +9,17 @@
             NO.KHS {{$dt['dt_sp']['khs_induks']['no']}}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['khs_induks']['tgl_berlaku'])->isoFormat('DD MMMM Y') }}
             @if (count($dt['aman_khs'])>0)
                 @foreach ($dt['aman_khs'] as $i=>$item)
-                NO AMANDEMEN {{$i+1}} KHS {{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}
+                <br>NO AMANDEMEN {{$i+1}} KHS {{ $item['no'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_berlaku'])->isoFormat('DD MMMM Y') }}
                 @endforeach
             @endif
             <br>
             NO.SURAT PESANAN : {{ $dt['dt_sp']['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($dt['dt_sp']['tgl_sp'])->isoFormat('DD MMMM Y') }} <br>
             @if (count($dt['aman_sp'])>0)
                 @foreach ($dt['aman_sp'] as $i=>$item)
-                NO AMANDEMEN {{$i+1}} SP {{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}
+                <br>NO AMANDEMEN {{$i+1}} SP {{ $item['no_sp'] }}, TANGGAL: {{ Carbon\Carbon::parse($item['tgl_sp'])->isoFormat('DD MMMM Y') }}
                 @endforeach
             @endif
+            PELAKSANA : {{ $dt['dt_sp']['khs_induks']['json']['perusahaan'] }}
             </strong>
 
         </center>
@@ -203,7 +204,7 @@
     <div style="page-break-inside: avoid; width: 100%;">
         <table style="width: 100%; vertical-align: top; text-align:center; font-weight: bold;">
             <tr><td colspan="3" style="text-align: center; height: 30px;">
-                Medan, {{Carbon\Carbon::parse($dt['tagihan']['created_at'])->isoFormat('DD MMMM Y')}}
+                Medan, {{Carbon\Carbon::parse($dt['dt_tagihan']['tgl_ba_rekon'])->isoFormat('DD MMMM Y')}}
             </td></tr>
             <tr>
                 <td style="width: 33%; text-transform: uppercase">
@@ -218,13 +219,13 @@
                         <tr><td colspan="2">PT. TELKOM AKSES</td></tr>
                         <tr style="vertical-align: top">
                             <td style="width: 50%">
-                                WASPANG
+                                &nbsp;
                                 <div style="height: 100px"></div>
                                 <u>{{ $dt['dt_tagihan']['dt_ttd']['waspang_pejabat'] }}</u><br>
                                 {{$dt['dt_tagihan']['dt_ttd']['waspang_jabatan']}}
                             </td>
                             <td>
-                                PETUGAS GUDANG
+                                &nbsp;
                                 <div style="height: 100px"></div>
                                 <u>{{ $dt['dt_tagihan']['dt_ttd']['gudang_pejabat'] }}</u><br>
                                 {{$dt['dt_tagihan']['dt_ttd']['gudang_jabatan']}}

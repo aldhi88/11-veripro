@@ -206,7 +206,7 @@ class EditTagihan extends Component
                         ->where('nama_jasa', $vRow['nama_jasa'])
                         ->count() < 1
                 ){
-                    if($vRow['material']>=0){
+                    if(!is_null($vRow['material']) && $vRow['material']>=0){
                         $this->allDesigs[$iAllDesig] = $vRow;
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_designator'] = $vRow['nama_designator'];
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_material'] = $vRow['nama_material'];
@@ -264,7 +264,7 @@ class EditTagihan extends Component
                                 $item['nama_jasa'] == $vDd['nama_jasa'];
                         });
                         $tempDesig[] = $vDd;
-                        if($vDd['material']!=0){
+                        if(!is_null($vDd['material']) && $vDd['material']!=0){
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material'];
                             $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
@@ -299,7 +299,7 @@ class EditTagihan extends Component
                         ->count() < 1
                 ){
                     // dump($vRow);
-                    if($vRow['material']!=0){
+                    if(!is_null($vRow['material']) &&$vRow['material']>=0){
                         $this->allDesigs[$iAllDesig] = $vRow;
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_designator'] = $vRow['nama_designator'];
                         $this->dt['dt_tagihan']['dt_gudang']['all_desig'][$iAllDesig]['nama_material'] = $vRow['nama_material'];
@@ -371,7 +371,7 @@ class EditTagihan extends Component
                             $item['nama_jasa'] == $vDd['nama_jasa'];
                     });
                     $tempDesig[] = $vDd;
-                    if($vDd['material']!=0){
+                    if(!is_null($vDd['material']) && $vDd['material']>=0){
                         $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
                         $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_material'] = $vDd['nama_material'];
                         $this->dt['dt_tagihan']['dt_gudang']['rekon'][$iDesigMaterial]['nama_barang_alista'] = is_null($vDd['nama_designator'])?$vDd['nama_jasa']:$vDd['nama_designator'];
