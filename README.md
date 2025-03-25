@@ -14,7 +14,7 @@
 ## 🛠️ Tech Stack
 
 - **Framework:** Laravel 11  
-- **Frontend:** Livewire, Bootstrap 4  
+- **Frontend:** Livewire 3, Bootstrap 4  
 - **Database:** MySQL
 
 ## ⚙️ Installation & Setup
