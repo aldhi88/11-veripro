@@ -1,6 +1,6 @@
 # Veripro - Vendor Billing Management System
 
-**Veripro** is a billing management system developed for **Telkom Akses Medan**, designed to streamline collaboration between vendors and Telkom Akses in the submission, revision, and approval process of billing documents in a transparent and structured manner.
+**Veripro** is a billing management system developed for one of **Telecomunication Company in Medan**, designed to streamline collaboration between vendors and Telkom Akses in the submission, revision, and approval process of billing documents in a transparent and structured manner.
 
 ## 🚀 Key Features
 
@@ -48,4 +48,4 @@
 
 ## 📄 Notes
 
-This project was implemented internally for Telkom Akses Medan, reflecting the real business processes between vendors and the company. The system focuses on data validation, status transparency, and efficient document workflow.
+This project was implemented internally for one of Telecomunication Company in Medan, reflecting the real business processes between vendors and the company. The system focuses on data validation, status transparency, and efficient document workflow.
