@@ -28,7 +28,6 @@
 2. Install dependencies:
    ```bash
    composer install
-   npm install && npm run dev
    ```
 
 3. Copy the `.env.example` file to `.env`, and configure your database settings.
